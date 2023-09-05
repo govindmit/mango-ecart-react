@@ -1,38 +1,35 @@
 import React, { useState } from "react";
-import { TextField, FormControl, Button } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { TextField, Button } from "@mui/material/";
+import { Link } from "react-router-dom";
 import { funLogin } from "../../../apis/admin/auth";
-import { toast } from 'react-toastify';
-import CircularProgress from '@mui/material/CircularProgress';
-
+import { toast } from "react-toastify";
+import CircularProgress from "@mui/material/CircularProgress";
 
 function login() {
-  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [loading, setLoading] = useState(false);
 
-
   const handleSubmit = (event) => {
     event.preventDefault();
-    setLoading(true)
+    setLoading(true);
 
     setEmailError(false);
     setPasswordError(false);
 
     if (email == "") {
       setEmailError(true);
-      setLoading(false)
+      setLoading(false);
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
       setEmailError(true);
-      setLoading(false)
+      setLoading(false);
     }
 
     if (password === "") {
       setPasswordError(true);
-      setLoading(false)
+      setLoading(false);
     }
     if (email && password) {
       const user_details = { email: email, password: password };
@@ -41,12 +38,12 @@ function login() {
           let data = res.data;
           if (data.isError) {
             toast.error(data.message);
-            setLoading(false)
+            setLoading(false);
           } else {
             let token = data.result.token;
             toast.success(data.result.message);
-            localStorage.setItem('token', token);
-            setLoading(false)
+            localStorage.setItem("token", token);
+            setLoading(false);
             window.location.reload(false);
           }
         })
@@ -58,7 +55,7 @@ function login() {
 
   return (
     <React.Fragment>
-     <div>{loading ? <CircularProgress color="success" /> : ''}</div>
+      <div>{loading ? <CircularProgress color="success" /> : ""}</div>
       <form autoComplete="off" onSubmit={handleSubmit}>
         <h2>Login</h2>
         <TextField
@@ -86,9 +83,13 @@ function login() {
 
         <Button
           variant="outlined"
-          color="primary"
           fullWidth
-          sx={{ mb: 3 }}
+          sx={{
+            mb: 3,
+            color: "primary.contrastText",
+            bgcolor: "primary.dark",
+            "&:hover": { bgcolor: "primary.light" },
+          }}
           type="submit"
         >
           Login

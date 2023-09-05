@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import { TextField, Button } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { funForgotPassword } from "../../../apis/admin/auth";
 import { toast } from "react-toastify";
-import CircularProgress from '@mui/material/CircularProgress';
-
+import CircularProgress from "@mui/material/CircularProgress";
 
 function forgotpassword() {
-  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -15,44 +13,44 @@ function forgotpassword() {
   const handleSubmit = (event) => {
     event.preventDefault();
     setEmailError(false);
-    setLoading(true)
+    setLoading(true);
     if (email == "") {
       setEmailError(true);
-      setLoading(false)
+      setLoading(false);
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
       setEmailError(true);
-      setLoading(false)
+      setLoading(false);
     }
 
-   
-    if (email ) {
+    if (email) {
       const user_details = { email: email };
       funForgotPassword(user_details)
-      .then((res) => {
-        let data = res.data;
-        if(data.isError){
+        .then((res) => {
+          let data = res.data;
+          if (data.isError) {
             toast.error(data.message);
-            setLoading(false)
-        }else{
+            setLoading(false);
+          } else {
             toast.success(data.result);
-            setEmail('');
-            setLoading(false)
-        }
-       
-      })
-      .catch((e) => {
-        console.log("eror", e);
-      });
+            setEmail("");
+            setLoading(false);
+          }
+        })
+        .catch((e) => {
+          console.log("eror", e);
+        });
     }
   };
 
   return (
     <React.Fragment>
-    
-    <div>{loading ? <CircularProgress color="success" /> : ''}</div>
+      <div>{loading ? <CircularProgress color="success" /> : ""}</div>
       <form autoComplete="off" onSubmit={handleSubmit}>
         <h2>Forget Password</h2>
-        <p>Enter your email address. You will receive an email with a link to reset your password.</p>
+        <p>
+          Enter your email address. You will receive an email with a link to
+          reset your password.
+        </p>
         <TextField
           label="Email"
           onChange={(e) => setEmail(e.target.value)}
@@ -67,15 +65,20 @@ function forgotpassword() {
 
         <Button
           variant="outlined"
-          color="primary"
           fullWidth
-          sx={{ mb: 3 }}
+          sx={{
+            mb: 3,
+            color: "primary.contrastText",
+            bgcolor: "primary.dark",
+            "&:hover": { bgcolor: "primary.light" },
+          }}
           type="submit"
         >
           Submit
         </Button>
       </form>
-      <small>Already registered e-mail can 
+      <small>
+        Already registered e-mail can
         <Link to="/admin/"> Log-In </Link>
       </small>
     </React.Fragment>
