@@ -1,8 +1,13 @@
 import React from 'react'
+import Header from '../../../theme/frontend/header'
+import Login from '../../customer/login'
 
 function index() {
   return (
-    <div>front end home</div>
+   <>
+      <Header/>
+      <Login/>
+   </>
   )
 }
 
