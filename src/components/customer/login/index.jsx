@@ -10,12 +10,6 @@ const Login = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
 
-  const loginToApi = async (email, password)=>
-  {
-    try {
-      const response 
-    }
-  }
   const handleSubmit = (e) => {
     e.preventDefault();
     const enteredEmail = emailRef.current.value;
