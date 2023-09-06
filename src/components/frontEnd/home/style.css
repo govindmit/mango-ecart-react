@@ -1,0 +1,16 @@
+
+.all-products-div{
+    text-align: center;
+    display: flex;
+    /* margin: 100px; */
+    flex-direction: column;
+    gap: 40px;
+    padding-top: 40px;
+    padding-bottom: 20px;
+    background-color: aliceblue;
+}
+
+.all-products-div h1{
+    font-weight: 500;
+    color: #0E1133;
+}
