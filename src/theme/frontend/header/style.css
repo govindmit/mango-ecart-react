@@ -1,0 +1,10 @@
+.navContainer{
+    display: flex;
+    margin-inline: 96px;
+}
+
+.navContainer-2{
+    display: flex;
+    gap: 20px;
+    margin-left: 28px;
+}
