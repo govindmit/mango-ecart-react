@@ -1,15 +1,12 @@
 import React from 'react'
 import { Route, Routes } from 'react-router'
-import Dashboard from '../components/admin/dashboard'
 import Login from '../components/admin/login'
 import Forgotpassword from '../components/admin/forgotpassword'
 import Adminresetpassword from '../components/admin/resetpassword'
 import Frontend from '../components/frontEnd/home/index'
-import Admin from '../components/admin/dashboard/dashboard'
+import Admin from '../components/admin/dashboard'
 import Registration from '../components/customer/registration'
-import Dashboard from '../components/admin/dashboard/dashboard'
-import Login from '../components/admin/dashboard/login'
-import Forgotpassword from '../components/admin/dashboard/forgotpassword'
+import Dashboard from '../components/admin/dashboard'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
