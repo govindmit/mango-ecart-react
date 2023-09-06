@@ -1,45 +1,60 @@
 import ReCAPTCHA from "react-google-recaptcha";
-import RECAPTCHA_KEY from "../../../config/config";
-
 import "./style.css";
-import { useRef, useState, useEffect} from "react";
+import { useRef, useState, useEffect } from "react";
+import configs from "../../../config/config";
+import { userLogin } from "../../../apis/users/auth";
+import { toast } from "react-toastify";
+import Header from "../../../theme/frontend/header";
+import { Link } from "react-router-dom";
 
-const Login = () => {
-  // const [formData, setFormData] = useState({ email: "", password: "" });
-  const [errors, setErrors] = useState({});
-  const emailRef = useRef();
-  const passwordRef = useRef();
+const UserLogin = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const enteredEmail = emailRef.current.value;
-    const enteredPassword = passwordRef.current.value;
 
     let newErrors = {};
 
-    if (enteredEmail.trim() === "" || enteredPassword.trim() === "") {
-      (newErrors.email = "Email is required"),
-        (newErrors.password = "password is required");
-    }
-
-    if (!enteredEmail) {
+    if (email === "") {
+      newErrors.email = "Email is required";
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
       newErrors.email = "Email is required";
     }
-    if (!enteredPassword) {
-      newErrors.password = "Password is required";
+
+    if (password === "") {
+      newErrors.password = "password is required";
     }
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
-    } else {
-      console.log("Form data:");
+    }
+
+    if (email && password) {
+      const userLoginDetails = { email: email, password: password };
+      {
+        userLogin(userLoginDetails)
+          .then((res) => {
+            console.log(res)
+            let data = res.data;
+            if (data.isError)
+            {
+              toast.error(data.message);
+            }
+          })
+          .catch((e) => {
+            console.log("error", e);
+          });
+      }
     }
   };
   return (
     <>
+    <Header/>
       <div className="login-area">
         <div className="container">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} autoComplete="on">
             <div className="row justify-content-center">
               <div className="col-md-6 col-sm-6 col-xs-12">
                 <div className="customer-login text-left">
@@ -54,7 +69,8 @@ const Login = () => {
                       type="email"
                       placeholder="Enter Email"
                       name="email"
-                      ref={emailRef}
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                     />
                     {errors.email && (
                       <span className="danger ng-star-inserted">
@@ -68,7 +84,9 @@ const Login = () => {
                       type="password"
                       placeholder="Enter Password"
                       name="password"
-                      ref={passwordRef}
+                      value={password}
+                      error
+                      onChange={(e) => setPassword(e.target.value)}
                       //   autoComplete="on"
                     />
                     {errors.password && (
@@ -79,10 +97,10 @@ const Login = () => {
                   </div>
                   <br />
                   <div className="form-group">
-                    <ReCAPTCHA sitekey={RECAPTCHA_KEY} />
+                    <ReCAPTCHA sitekey={configs.RECAPTCHA_KEY} />
                   </div>
                   <p>
-                    <a className="font-weight-bold small">Forgot Password?</a>
+                    <Link className="font-weight-bold small" to="/userforgotpassword">Forgot Password?</Link>
                   </p>
                   <button
                     type="submit"
@@ -101,4 +119,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default UserLogin;

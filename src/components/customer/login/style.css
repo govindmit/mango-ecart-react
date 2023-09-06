@@ -33,6 +33,9 @@
 {
     background: #fff none repeat scroll 0 0;
     padding: 40px;
+    
+    margin-right: 150px;
+    min-width: 75%;
 }
 .title-1
 {
@@ -56,6 +59,7 @@
 }
 .small {
     font-size: .875em;
+    cursor: pointer;
 }
 a{
     color: #fb9400;
