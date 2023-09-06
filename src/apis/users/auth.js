@@ -48,3 +48,20 @@ export async function forgetPasswordUser(props)
       return error.response;
     }
   }
+
+export async function registerUser(props){
+    
+    try {
+        let res = await axios({
+          method: 'post',
+          url: `${configs.apiUrl}/user-auth/register`,
+          data: props
+        });
+        return res;
+       
+      
+    } catch (error) {
+        return error.response;
+      }
+
+}
