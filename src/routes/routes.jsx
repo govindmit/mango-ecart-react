@@ -1,6 +1,5 @@
 import React from 'react'
 import { Route, Routes } from 'react-router'
-import Frontend from '../components/frontEnd/home/index' 
 import Dashboard from '../components/admin/dashboard'
 import Login from '../components/admin/login'
 import Forgotpassword from '../components/admin/forgotpassword'
