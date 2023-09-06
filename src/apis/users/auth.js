@@ -31,3 +31,20 @@ export async function forgetPasswordUser(props)
       return error.response
     }
   }
+
+  export async function addAddress()
+  {
+    try
+    {
+   let res = await axios ({
+    method:"post",
+    url:`${configs.apiUrl}/user-address/create-address`,
+    data:props
+   })
+   return res;
+    }
+    catch(error)
+    {
+      return error.response;
+    }
+  }

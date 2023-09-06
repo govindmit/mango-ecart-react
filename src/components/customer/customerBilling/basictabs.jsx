@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import "./style.css"
 import { Button } from '@mui/material';
+import BillingAddress from './billingaddress';
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -42,18 +43,22 @@ function a11yProps(index) {
 
 export default function BasicTabs() {
   const [value, setValue] = React.useState(0);
+  const [isComponentVisible, setComponentVisible] = React.useState(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+  const handleClick =()=>
+  {
+    setComponentVisible(true);
+  }
   return (
-    <Box className="contain" sx={{ width: '100%' }} >
+    <Box className="contain" sx={{ width: '90%'}} >
       <Box sx={{ borderBottom: 1, borderColor: 'divider', marginRight:'100px'}}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
           <Tab  label="Billing Address" {...a11yProps(0)} />
           <Tab label="Shopping Address" {...a11yProps(1)} />
-           <button className='address-btn'> New Address</button>
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0} >
@@ -62,6 +67,9 @@ export default function BasicTabs() {
       <CustomTabPanel value={value} index={1}>
        <p className='content'> Shopping Address</p>
       </CustomTabPanel>
+      <button className='address-btn' onClick={handleClick}> New Address</button>
+           {isComponentVisible ? (<BillingAddress/>):""}
     </Box>
+
   );
 }
