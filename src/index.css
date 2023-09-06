@@ -36,6 +36,27 @@ h1 {
   line-height: 1.1;
 }
 
+h2 {
+  font-size: 26px;
+  color: #1a3353;
+
+}
+
+h5 {
+  color: #fb9400;
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+p {
+  font-size: 28px;
+  margin: 0 0 15px;
+}
+
+
+.css-mhc70k-MuiGrid-root {
+  margin-left: 255px !important;
+}
 
 button {
   border-radius: 8px;

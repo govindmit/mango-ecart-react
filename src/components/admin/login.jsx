@@ -1,19 +1,24 @@
 import React, { useState } from "react";
-import { TextField, Button } from "@mui/material";
+import { TextField, Button } from "@mui/material/";
 import { Link } from "react-router-dom";
-import { funForgotPassword } from "../../../apis/admin/auth";
+import { funLogin } from "../../apis/admin/auth";
 import { toast } from "react-toastify";
 import CircularProgress from "@mui/material/CircularProgress";
 
-function forgotpassword() {
+function login() {
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setEmailError(false);
     setLoading(true);
+
+    setEmailError(false);
+    setPasswordError(false);
+
     if (email == "") {
       setEmailError(true);
       setLoading(false);
@@ -22,18 +27,27 @@ function forgotpassword() {
       setLoading(false);
     }
 
-    if (email) {
-      const user_details = { email: email };
-      funForgotPassword(user_details)
+    if (password === "") {
+      setPasswordError(true);
+      setLoading(false);
+    }
+    if (email && password) {
+      const user_details = { email: email, password: password };
+      funLogin(user_details)
         .then((res) => {
           let data = res.data;
           if (data.isError) {
             toast.error(data.message);
             setLoading(false);
           } else {
-            toast.success(data.result);
-            setEmail("");
+            let token = data.result.token;
+            let fullname = data.result.user.firstName + ' ' +data.result.user.lastName 
+            toast.success(data.result.message);
+            localStorage.setItem("token", token);
+            localStorage.setItem("fullname", fullname)
+            console.log(fullname);
             setLoading(false);
+            window.location.reload(false);
           }
         })
         .catch((e) => {
@@ -46,11 +60,7 @@ function forgotpassword() {
     <React.Fragment>
       <div>{loading ? <CircularProgress color="success" /> : ""}</div>
       <form autoComplete="off" onSubmit={handleSubmit}>
-        <h2>Forget Password</h2>
-        <p>
-          Enter your email address. You will receive an email with a link to
-          reset your password.
-        </p>
+        <h2>Login</h2>
         <TextField
           label="Email"
           onChange={(e) => setEmail(e.target.value)}
@@ -61,6 +71,17 @@ function forgotpassword() {
           fullWidth
           value={email}
           error={emailError}
+        />
+        <TextField
+          label="Password"
+          onChange={(e) => setPassword(e.target.value)}
+          variant="outlined"
+          color="primary"
+          type="password"
+          value={password}
+          error={passwordError}
+          fullWidth
+          sx={{ mb: 3 }}
         />
 
         <Button
@@ -74,15 +95,14 @@ function forgotpassword() {
           }}
           type="submit"
         >
-          Submit
+          Login
         </Button>
       </form>
       <small>
-        Already registered e-mail can
-        <Link to="/admin/"> Log-In </Link>
+        <Link to="/admin/forgotpassword">Forgot Password?</Link>
       </small>
     </React.Fragment>
   );
 }
 
-export default forgotpassword;
+export default login;

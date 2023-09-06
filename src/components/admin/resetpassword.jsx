@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { TextField, Button } from "@mui/material";
 import { Link, useNavigate  } from "react-router-dom";
-import { funResetPassword } from "../../../apis/admin/auth";
+import { funResetPassword } from "../../apis/admin/auth";
 import { toast } from "react-toastify";
 import CircularProgress from "@mui/material/CircularProgress";
 
