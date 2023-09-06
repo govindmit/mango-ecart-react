@@ -1,8 +1,9 @@
 .main-container {
-    color: #999;
+    /* color: #999; */
     /* margin: 20px; */
-    margin-left: 175px;
-    min-width: 130%;
+    margin-left: 100px;
+    margin-right: 100px;
+    min-width: 80%;
 }
 
 .register-page {
@@ -181,3 +182,41 @@
 .error-input {
   border: 1px solid red;
 }
+
+.successful-register{
+    text-align:center;
+    box-sizing: border-box;
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 1140px;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+.successful-register h1{
+   text-align: center;
+    box-sizing: border-box;
+    color: #434343;
+    font-family: serif;
+    margin: 0 0 10px;
+    margin-top: 0;
+    margin-bottom: .5rem;
+    font-weight: 500;
+    line-height: 1.2;
+    font-size: 2.5rem;
+}
+
+.successful-register p{
+    text-align: center;
+    box-sizing: border-box;
+    margin: 0 0 15px;
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.successful-register a{
+    color: #fb9400;
+
+}
+   
