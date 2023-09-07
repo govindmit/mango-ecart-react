@@ -1,28 +1,42 @@
-import { useLocation, useNavigate,  useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Header from "../../../theme/frontend/header";
 import "./style.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getUser, updateUser } from "../../../apis/users/auth";
 
 const UpdateProfile = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const { data } = location.state;
-  const { id } = useParams();
-const [formData, setFormData] = useState(data.find((item)=>item.id === parseInt(id)));
-const [name, setName] = useState(data[0].name);
-const [lastName, setLastName] = useState(data[0].lastname);
-const [email, setEmail] = useState(data[0].email);
-const [contact, setContact] = useState(data[0].contact)
+  const [users, setUsers] = useState([]);
+  // const [updateUsers, setUpdateUsers] = useState(users);
+  
+  useEffect(() => {
+    getUser()
+      .then((data) => {
+        setUsers(data.data.result.data);
+      })
+      .catch((e) => {
+        console.log("error", e);
+      });
+  }, []);
 
-const handleSubmit = ()=>
-{
-  e.preventDefault();
-  const updatedData = data.map((item)=>
-  item.id === formData.id ? formData : item)
-  console.log(updatedData);
-  navigate("/profile-table",{state:{updatedData}, });
-};
-
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUsers({
+      ...users,
+      [name]: value,
+    });
+  };
+ const handleSubmit = ()=>
+ {
+   updateUser()
+   .then((data)=>
+   {
+    
+   })
+   .catch((e) =>
+   {
+     console.log("error", e)
+   })
+ }
   return (
     <>
       <Header />
@@ -38,15 +52,14 @@ const handleSubmit = ()=>
                     </div>
                     <div className="panel-body">
                       <div className="billing-details shop-cart-table">
-                        <form onSubmit={handleSubmit}>
+                        <form>
                           <div className="form-group">
                             <input
                               type="text"
                               placeholder="Enter First name"
-                              value={name}
-                              onChange={(e)=>setName(e.target.value)}
-                            
-                              
+                              name="firstName"
+                              value={users.firstName}
+                              onChange={handleChange}
                             />
                           </div>
                           <br />
@@ -54,8 +67,9 @@ const handleSubmit = ()=>
                             <input
                               type="text"
                               placeholder="Enter last name"
-                              value={lastName}
-                              onChange={(e)=>setLastName(e.target.value)}
+                              value={users.lastName}
+                              name="lastName"
+                              onChange={handleChange}
                             />
                           </div>
                           <br />
@@ -63,16 +77,17 @@ const handleSubmit = ()=>
                             <input
                               type="email"
                               placeholder="Enter Email"
-                              value={email}
-                              onChange={(e)=>setEmail(e.target.value)}
+                              value={users.email}
+                              name="email"
+                              onChange={handleChange}
                             />
                           </div>
                           <br />
                           <div className="form-group">
                             <div style={{ display: "inline-flex" }}>
-                              Male <input type="radio" value="male"></input>
-                              Female
-                              <input type="radio" value="female"></input>
+                              <input type="radio" value="Male" />
+                              Male
+                              <input type="radio" value="female" /> Female
                             </div>
                           </div>
                           <br />
@@ -80,8 +95,9 @@ const handleSubmit = ()=>
                             <input
                               type="number"
                               placeholder="Enter mobile number"
-                              value={contact}
-                              onChange={(e)=>setContact(e.target.value)}
+                              value={users.mobileNumber}
+                              name="mobileNumber"
+                              onChange={handleChange}
                             />
                           </div>
                           <br />
@@ -91,13 +107,14 @@ const handleSubmit = ()=>
                         <button
                           type="submit"
                           className="button-one submit-button"
-                          
+                          onClick={handleSubmit}
                         >
                           Update
                         </button>
                         <button
                           type="submit"
                           className="button-one submit-button"
+                         
                         >
                           Back
                         </button>

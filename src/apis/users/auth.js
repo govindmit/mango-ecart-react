@@ -1,10 +1,10 @@
 import axios from "axios";
 import configs from "../../config/config";
+const targetId = localStorage.getItem("token");
 
 export async function userLogin(props) {
-  // console.log(props);
   try {
-   let res = await axios({
+    let res = await axios({
       method: "post",
       url: `${configs.apiUrl}/user-auth/login`,
       data: props,
@@ -15,53 +15,77 @@ export async function userLogin(props) {
   }
 }
 
-export async function forgetPasswordUser(props)
-{
-  try
-  {
-    let res = await axios ({
-      method:"post",
+export async function forgetPasswordUser(props) {
+  try {
+    let res = await axios({
+      method: "post",
       url: `${configs.apiUrl}/user-auth/forgot-password`,
-      data: props
-    })
+      data: props,
+    });
     return res;
+  } catch (error) {
+    return error.response;
   }
+}
+
+export async function getUser() {
+  try {
+    let res = await axios({
+      method: "get",
+      url: `${configs.apiUrl}/user-auth/user`,
+      headers: {
+        "Content-Type": "application/json", // Modify as needed
+        Authorization: `Bearer ${targetId}`, // Include the Bearer token
+      },
+    });
+    return res;
+  } catch (error) {
+    return error.response;
+  }
+}
+
+export async function updateUser()
+{
+  try {
+    let res = await axios(
+      {
+        method:'put',
+        url: `${configs.apiUrl}/user-auth/user`,
+        headers: {
+          "Content-Type": "application/json", // Modify as needed
+          Authorization: `Bearer ${targetId}`, // Include the Bearer token
+        },
+      });
+      return res;
+    }
     catch (error)
     {
-      return error.response
+       return error.response
     }
   }
 
-  export async function addAddress()
-  {
-    try
-    {
-   let res = await axios ({
-    method:"post",
-    url:`${configs.apiUrl}/user-address/create-address`,
-    data:props
-   })
-   return res;
-    }
-    catch(error)
-    {
-      return error.response;
-    }
+export async function addAddress(props) {
+  try {
+    let res = await axios({
+      method: "post",
+      url: `${configs.apiUrl}/user-address/create-address`,
+      data: props,
+    });
+    return res;
+  } catch (error) {
+    return error.response;
   }
+}
 
-export async function registerUser(props){
-    
-    try {
-        let res = await axios({
-          method: 'post',
-          url: `${configs.apiUrl}/user-auth/register`,
-          data: props
-        });
-        return res;
-       
-      
-    } catch (error) {
-        return error.response;
-      }
-
+export async function registerUser(props) {
+  try {
+    let res = await axios({
+      method: "post",
+      url: `${configs.apiUrl}/user-auth/register`,
+      data: props,
+    });
+    return res;
+  } catch (error) {
+    return error.response;
+  }
 }

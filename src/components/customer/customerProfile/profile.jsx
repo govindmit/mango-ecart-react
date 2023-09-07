@@ -1,29 +1,29 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./style.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getUser } from "../../../apis/users/auth";
 
 const Profile = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  
+  const [users, setUsers] = useState([]);
 
-  const [data, setData] = useState([
-    {
-      name: "Govind",
-      lastname: "Namdev",
-      gender: "Male",
-      contact: "9876543210",
-      email: "govind.mangoitsolutions@gmail.com",
-    },
-  ]);
+  useEffect(() => {
+    getUser()
+      .then((data) => {
+        // console.log(data.data.result.data);
+        setUsers(data.data.result.data);
+      })
+      .catch((e) => {
+        console.log("error", e);
+      });
+  }, []);
 
-  const handleEdit = (id) => {
+  const handleEdit = () => {
 
-    navigate(`/profile/${id}`,{state:{data}});
+    navigate("/profile");
   };
-
-  // const updatedData = (location.state.updatedData);
-
-  // setTableData(location.state.updatedData )
 
   return (
     <>
@@ -37,48 +37,47 @@ const Profile = () => {
                     <div className="my-account-menu">
                       <a>MY Personal Informtion</a>
                     </div>
-                    {data.map((item) => (
+                    {/* {targetUser.map((value) => */}
                     <div className="panel-body">
-                      
-                        <div className="billing-details shop-cart-table">
-                          <table>
-                            <tbody key={item.id}>
-                              <tr>
-                                <td>First Name</td>
-                                <td>{item.name}</td>
-                              </tr>
-                              <tr>
-                                <td>Last Name</td>
-                                <td>{item.lastname}</td>
-                              </tr>
-                              <tr>
-                                <td>Gender</td>
-                                <td>{item.gender}</td>
-                              </tr>
-                              <tr>
-                                <td>Contact</td>
-                                <td>{item.contact}</td>
-                              </tr>
-                              <tr>
-                                <td>Email</td>
-                                <td>{item.email}</td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                      
-                      <div>
-                        <button
-                          // to="/profile"
-                          type="submit"
-                          className="button-one submit-button"
-                          onClick={() => handleEdit(item.id)}
-                        >
-                          Edit
-                        </button>
-                      </div>
+                    <div className="billing-details shop-cart-table">
+                      <table>
+                        <tbody>
+                          <tr>
+                            <td>First Name</td>
+                            <td>{users.firstName}</td>
+                          </tr>
+                          <tr>
+                            <td>Last Name</td>
+                            <td>{users.lastName}</td>
+                          </tr>
+                          <tr>
+                            <td>Gender</td>
+                            <td>{users.gender}</td>
+                          </tr>
+                          <tr>
+                            <td>Contact</td>
+                            <td>{users.mobileNumber}</td>
+                          </tr>
+                          <tr>
+                            <td>Email</td>
+                            <td>{users.email}</td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </div>
-                    ))}
+
+                    <div>
+                      <button
+                        // to="/profile"
+                        type="submit"
+                        className="button-one submit-button"
+                        onClick={() => handleEdit()}
+                      >
+                        Edit
+                      </button>
+                    </div>
+                  </div>
+                    
                   </div>
                 </div>
               </div>

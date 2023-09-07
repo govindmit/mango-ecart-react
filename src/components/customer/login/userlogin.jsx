@@ -5,12 +5,15 @@ import configs from "../../../config/config";
 import { userLogin } from "../../../apis/users/auth";
 import { toast } from "react-toastify";
 import Header from "../../../theme/frontend/header";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Footer from "../../../theme/frontend/fotter";
+import NavBar from "../../../theme/frontend/header/navBar";
 
 const UserLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -42,6 +45,16 @@ const UserLogin = () => {
             {
               toast.error(data.message);
             }
+            else{
+              let token = data.result.token;
+              let user = data.result.user.id;
+              // console.log(user);
+              toast.success(data.result.message)
+              localStorage.setItem('token',token)
+              localStorage.setItem('user',user);
+              // localStorage.setItem('user',JSON.stringify(user));
+              navigate('/profile-table')
+            }
           })
           .catch((e) => {
             console.log("error", e);
@@ -52,6 +65,7 @@ const UserLogin = () => {
   return (
     <>
     <Header/>
+    <NavBar/>
       <div className="login-area">
         <div className="container">
           <form onSubmit={handleSubmit} autoComplete="on">
@@ -61,7 +75,7 @@ const UserLogin = () => {
                   <h4 className="title-1">Registered Customers</h4>
                   <p className="text-gray">
                     If you do not have an account with us, Please{" "}
-                    <a className="font-weight-bold small">Register</a>{" "}
+                    <Link className="font-weight-bold small" to='/register'>Register</Link>{" "}
                   </p>
                   <div className="form-group">
                     <input
@@ -106,7 +120,7 @@ const UserLogin = () => {
                     type="submit"
                     className="button-one submit-button mt-15"
                   >
-                    Login
+                   Login 
                   </button>
                 </div>
               </div>
@@ -115,6 +129,7 @@ const UserLogin = () => {
           <br />
         </div>
       </div>
+      <Footer/>
     </>
   );
 };

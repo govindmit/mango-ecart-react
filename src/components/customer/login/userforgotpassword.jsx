@@ -31,6 +31,10 @@ const UserForgotPassword = () => {
             if (data.isError) {
               toast.error(data.message);
             }
+            else
+            {
+              toast.success(data.result);
+            }
           })
           .catch((e) => {
             console.log("error", e);

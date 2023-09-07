@@ -22,7 +22,7 @@ const Header = () => {
               <ul>
                 <li>
                   <div className="ng-star-inserted">
-                    <a className="link">Register /</a>
+                    <Link  className="link" to="/register">Register /</Link>
                     <Link className="link" to="/userlogin">Login</Link>
                   </div>
                 </li>

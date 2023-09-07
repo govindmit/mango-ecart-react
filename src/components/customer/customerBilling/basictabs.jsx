@@ -57,15 +57,16 @@ export default function BasicTabs() {
     <Box className="contain" sx={{ width: '90%'}} >
       <Box sx={{ borderBottom: 1, borderColor: 'divider', marginRight:'100px'}}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab  label="Billing Address" {...a11yProps(0)} />
+          <Tab  label="Billing Address"  {...a11yProps(0)} />
           <Tab label="Shopping Address" {...a11yProps(1)} />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0} >
         <p className='content'>Billing Address</p>
+        {/* {<BillingAddress/>} */}
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-       <p className='content'> Shopping Address</p>
+       <p className='content'> Shipping Address</p>
       </CustomTabPanel>
       <button className='address-btn' onClick={handleClick}> New Address</button>
            {isComponentVisible ? (<BillingAddress/>):""}
