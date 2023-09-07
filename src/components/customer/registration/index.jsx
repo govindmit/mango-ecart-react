@@ -5,42 +5,50 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import { useForm } from 'react-hook-form';
 import { registerUser } from '../../../apis/users/auth';
 import { toast } from 'react-toastify';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import NavBar from '../../../theme/frontend/header/navBar';
 
 const Registration = () => {
 
     const { register, handleSubmit, control, formState: { errors }, getValues } = useForm();
     const [isRegister, setIsRegister] = useState(false);
+    const recaptchaRef = useRef(null); // Create a ref for ReCAPTCHA
 
     const handleRagister = (userData) => {
 
         if (userData) {
-            const userDetails = {
-                firstName: userData.firstName,
-                lastName: userData.lastName,
-                email: userData.email,
-                password: userData.password,
-                contact: userData.mobileNumber,
-                gender: userData.gender
-            };
+            if (recaptchaRef.current.getValue()) {
+                // ReCAPTCHA was checked
 
-            const res = registerUser(userDetails)
-                .then((res) => {
-                    console.log("=>", res);
-                    let data = res.data;
-                    if (data.isError) {
-                        toast.error(data.message);
+                const userDetails = {
+                    firstName: userData.firstName,
+                    lastName: userData.lastName,
+                    email: userData.email,
+                    password: userData.password,
+                    mobileNumber: userData.mobileNumber,
+                    gender: userData.gender
+                };
 
-                    } else {
-                        toast.success(data.result.message);
-                        setIsRegister(true);
-                    }
+                const res = registerUser(userDetails)
+                    .then((res) => {
+                        // console.log("=>", res);
+                        let data = res.data;
+                        if (data.isError) {
+                            toast.error(data.message);
 
-                })
-                .catch((e) => {
-                    console.log("eror", e);
-                });
+                        } else {
+                            toast.success(data.result.message);
+                            setIsRegister(true);
+                        }
+
+                    })
+                    .catch((e) => {
+                        console.log("eror", e);
+                    });
+            } else {
+                // ReCAPTCHA was not checked
+                toast.error("Please check the ReCAPTCHA.");
+            }
         }
     }
     return (
@@ -113,24 +121,31 @@ const Registration = () => {
                                         )}
                                     </div>
                                     <div className='input-radio'>
-                                        <input type="radio" value="male" name="gender"
-                                            {...register("gender", {
-
-                                            })} formcontrolname="gender" />Male
-                                        <input type="radio" value="female" name="gender"   {...register("gender", {
-
-                                        })} formcontrolname="gender" />Female
-
+                                        <input
+                                            type="radio"
+                                            value="male"
+                                            name="gender"
+                                            {...register("gender", { required: true })}
+                                            formcontrolname="gender"
+                                        />
+                                        Male
+                                        <input
+                                            type="radio"
+                                            value="female"
+                                            name="gender"
+                                            {...register("gender", { required: true })}
+                                            formcontrolname="gender"
+                                        />
+                                        Female
                                         {errors.gender && (
                                             <p className="errorMsg">Gender is required.</p>
                                         )}
-
                                     </div>
                                 </div>
 
                                 <div className="form-group input-div-2">
                                     <div className='input-text'>
-                                        <input type="text"
+                                        <input type="number"
                                             placeholder="Enter mobile number"
                                             name="mobileNumber"
                                             formcontrolname="mobileNumber"
@@ -187,7 +202,11 @@ const Registration = () => {
                                 </div>
                             </div>
                             <div>
-                                <ReCAPTCHA sitekey={configs.RECAPTCHA_KEY} />
+                                <ReCAPTCHA
+                                    ref={recaptchaRef} // Set the ref
+                                    sitekey={configs.RECAPTCHA_KEY}
+                                />
+
                             </div>
                             <div>
                                 <button type="submit" data-text="register" className="button-one submit-button mt-15">register</button>
