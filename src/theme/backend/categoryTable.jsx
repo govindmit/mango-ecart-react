@@ -12,12 +12,13 @@ import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 
 const rowsPerPageOptions = [10, 25, 50];
 
-function FunCustomTable({ data }) {
+function categoryTable({ data }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [searchText, setSearchText] = useState("");
   const [sortedData, setSortedData] = useState(data);
 
+  console.log(sortedData);
   const handleSearch = (event) => {
     const value = event.target.value.toLowerCase();
     setSearchText(value);
@@ -50,12 +51,10 @@ function FunCustomTable({ data }) {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>id</TableCell>
               <TableCell>Name</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Grand Total</TableCell>
-              <TableCell>Order Date</TableCell>
-              <TableCell>Status</TableCell>
+              <TableCell>Position</TableCell>
+              <TableCell>Visible in menu</TableCell>
+              <TableCell>Visible in filter</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
@@ -64,12 +63,10 @@ function FunCustomTable({ data }) {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((item) => (
                 <TableRow key={item.id}>
-                  <TableCell>{item.id}</TableCell>
-                  <TableCell>{item.customerFirstName}</TableCell>
-                  <TableCell>{item.customerEmail}</TableCell>
-                  <TableCell>{item.subTotal}</TableCell>
-                  <TableCell>{item.updatedAt}</TableCell>
-                  <TableCell>{item.status}</TableCell>
+                  <TableCell>{item.categoryTranslations[0].name}</TableCell>
+                  <TableCell>{item.position}</TableCell>
+                  <TableCell>{item.is_filter? 'Yes':'No'}</TableCell>
+                  <TableCell>{item.status? 'Yes': 'No'}</TableCell>
                   <TableCell>
                     <RemoveRedEyeIcon />
                   </TableCell>
@@ -88,7 +85,8 @@ function FunCustomTable({ data }) {
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
     </div>
+   
   );
 }
 
-export default FunCustomTable;
+export default categoryTable;

@@ -32,23 +32,8 @@ import ContactEmergencyOutlinedIcon from "@mui/icons-material/ContactEmergencyOu
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import AlternateEmailOutlinedIcon from "@mui/icons-material/AlternateEmailOutlined";
 import SupervisorAccountOutlinedIcon from "@mui/icons-material/SupervisorAccountOutlined";
-import Dashboard from "../../../components/admin/dashboard/dashboardinfo";
-import Category from "../../../components/admin/dashboard/category";
-import Attribute from "../../../components/admin/dashboard/attribute";
-import Attributefamily from "../../../components/admin/dashboard/attributefamily";
-import Products from "../../../components/admin/dashboard/products";
-import Banners from "../../../components/admin/dashboard/banners";
-import Orders from "../../../components/admin/dashboard/orders";
-import Invoices from "../../../components/admin/dashboard/Invoices";
-import Shipmments from "../../../components/admin/dashboard/shipmments";
-import Refunds from "../../../components/admin/dashboard/refund";
-import StaticPage from "../../../components/admin/dashboard/staticpages";
-import Configuration from "../../../components/admin/dashboard/configure";
-import Contactconfig from "../../../components/admin/dashboard/contactusconfig";
-import HomePage from "../../../components/admin/dashboard/homepage";
-import EmailSub from "../../../components/admin/dashboard/emailsub";
-import ContactAdmin from "../../../components/admin/dashboard/contactadmin";
-import Header from "../header/index"
+import Header from "../header/index";
+import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -102,64 +87,7 @@ export default function PersistentDrawerRight() {
   const [open, setOpen] = React.useState(true);
   const [currentComponent, setCurrentComponent] = useState("Dashboard");
 
-  const changeComponent = (component) => {
-    setCurrentComponent(component);
-  };
-
-  let componentToRender;
-
-  switch (currentComponent) {
-    case "Dashboard":
-      componentToRender = <Dashboard />;
-      break;
-    case "Category":
-      componentToRender = <Category />;
-      break;
-    case "Attribute":
-      componentToRender = <Attribute />;
-      break;
-    case "Attributefamily":
-      componentToRender = <Attributefamily />;
-      break;
-    case "Products":
-      componentToRender = <Products />;
-      break;
-    case "Banners":
-      componentToRender = <Banners />;
-      break;
-    case "Orders":
-      componentToRender = <Orders />;
-      break;
-    case "Invoices":
-      componentToRender = <Invoices />;
-      break;
-    case "Shipmments":
-      componentToRender = <Shipmments />;
-      break;
-    case "Refunds":
-      componentToRender = <Refunds />;
-      break;
-    case "StaticPage":
-      componentToRender = <StaticPage />;
-      break;
-    case "Contactconfig":
-      componentToRender = <Contactconfig />;
-      break;
-    case "Configuration":
-      componentToRender = <Configuration />;
-      break;
-    case "HomePage":
-      componentToRender = <HomePage />;
-      break;
-    case "EmailSub":
-      componentToRender = <EmailSub />;
-      break;
-    case "ContactAdmin":
-      componentToRender = <ContactAdmin />;
-      break;
-    default:
-      componentToRender = <div>Invalid component selection</div>;
-  }
+  const navigate = useNavigate();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -190,13 +118,12 @@ export default function PersistentDrawerRight() {
             align="right"
             component="div"
           >
-            <Header/>
+            <Header />
           </Typography>
         </Toolbar>
       </AppBar>
       <Main open={open}>
         <DrawerHeader />
-        {componentToRender}
       </Main>
       <Drawer
         sx={{
@@ -222,7 +149,7 @@ export default function PersistentDrawerRight() {
         <Divider />
         <List>
           <ListItem key={"Dashboard"} disablePadding>
-            <ListItemButton onClick={() => changeComponent("Dashboard")}>
+            <ListItemButton onClick={() => navigate("/admin/dashboard")}>
               <ListItemIcon>
                 <PersonalVideoIcon />
               </ListItemIcon>
@@ -230,7 +157,7 @@ export default function PersistentDrawerRight() {
             </ListItemButton>
           </ListItem>
           <ListItem key={"Category"} disablePadding>
-            <ListItemButton onClick={() => changeComponent("Category")}>
+            <ListItemButton onClick={() => navigate("/admin/category-list")}>
               <ListItemIcon>
                 <CategoryIcon />
               </ListItemIcon>
@@ -238,7 +165,7 @@ export default function PersistentDrawerRight() {
             </ListItemButton>
           </ListItem>
           <ListItem key={"Attribute"} disablePadding>
-            <ListItemButton  onClick={() => changeComponent("Attribute")}>
+            <ListItemButton onClick={() => navigate("/admin/attribute-list")}>
               <ListItemIcon>
                 <EditAttributesOutlinedIcon />
               </ListItemIcon>
@@ -246,7 +173,7 @@ export default function PersistentDrawerRight() {
             </ListItemButton>
           </ListItem>
           <ListItem key={"Attribute Family"} disablePadding>
-            <ListItemButton  onClick={() => changeComponent("Attributefamily")}>
+            <ListItemButton onClick={() => navigate("/admin/attribute-family")}>
               <ListItemIcon>
                 <AttributionOutlinedIcon />
               </ListItemIcon>
@@ -254,7 +181,7 @@ export default function PersistentDrawerRight() {
             </ListItemButton>
           </ListItem>
           <ListItem key={"Product"} disablePadding>
-            <ListItemButton  onClick={() => changeComponent("Products")}>
+            <ListItemButton onClick={() => navigate("/admin/products")}>
               <ListItemIcon>
                 <Inventory2OutlinedIcon />
               </ListItemIcon>
@@ -262,7 +189,7 @@ export default function PersistentDrawerRight() {
             </ListItemButton>
           </ListItem>
           <ListItem key={"Banners"} disablePadding>
-            <ListItemButton  onClick={() => changeComponent("Banners")}>
+            <ListItemButton onClick={() => navigate("/admin/banners")}>
               <ListItemIcon>
                 <ViewCarouselOutlinedIcon />
               </ListItemIcon>
@@ -270,7 +197,7 @@ export default function PersistentDrawerRight() {
             </ListItemButton>
           </ListItem>
           <ListItem key={"Orders"} disablePadding>
-            <ListItemButton  onClick={() => changeComponent("Orders")}>
+            <ListItemButton onClick={() => navigate("/admin/orders")}>
               <ListItemIcon>
                 <StorefrontOutlinedIcon />
               </ListItemIcon>
@@ -278,7 +205,7 @@ export default function PersistentDrawerRight() {
             </ListItemButton>
           </ListItem>
           <ListItem key={"Invoices"} disablePadding>
-            <ListItemButton  onClick={() => changeComponent("Invoices")}>
+            <ListItemButton onClick={() => navigate("/admin/invoices")}>
               <ListItemIcon>
                 <ReceiptOutlinedIcon />
               </ListItemIcon>
@@ -286,7 +213,7 @@ export default function PersistentDrawerRight() {
             </ListItemButton>
           </ListItem>
           <ListItem key={"Shipmments"} disablePadding>
-            <ListItemButton  onClick={() => changeComponent("StaticPage")}>
+            <ListItemButton onClick={() => navigate("/admin/shipmments")}>
               <ListItemIcon>
                 <LocalShippingOutlinedIcon />
               </ListItemIcon>
@@ -294,7 +221,7 @@ export default function PersistentDrawerRight() {
             </ListItemButton>
           </ListItem>
           <ListItem key={"Refunds"} disablePadding>
-            <ListItemButton  onClick={() => changeComponent("Refunds")}>
+            <ListItemButton onClick={() => navigate("/admin/refunds")}>
               <ListItemIcon>
                 <AssignmentReturnOutlinedIcon />
               </ListItemIcon>
@@ -305,7 +232,7 @@ export default function PersistentDrawerRight() {
         <Divider />
         <List>
           <ListItem key={"Static Pages"} disablePadding>
-            <ListItemButton onClick={() => changeComponent("StaticPage")}>
+            <ListItemButton onClick={() => navigate("/admin/pages-list")}>
               <ListItemIcon>
                 <AutoStoriesOutlinedIcon />
               </ListItemIcon>
@@ -313,7 +240,7 @@ export default function PersistentDrawerRight() {
             </ListItemButton>
           </ListItem>
           <ListItem key={"Configuration"} disablePadding>
-            <ListItemButton onClick={() => changeComponent("Configuration")}>
+            <ListItemButton onClick={() => navigate("/admin/configure")}>
               <ListItemIcon>
                 <ToggleOffOutlinedIcon />
               </ListItemIcon>
@@ -321,7 +248,7 @@ export default function PersistentDrawerRight() {
             </ListItemButton>
           </ListItem>
           <ListItem key={"Contact-Config"} disablePadding>
-            <ListItemButton onClick={() => changeComponent("Contactconfig")}>
+            <ListItemButton onClick={() => navigate("/admin/contactUs-configure")}>
               <ListItemIcon>
                 <ContactEmergencyOutlinedIcon />
               </ListItemIcon>
@@ -332,7 +259,7 @@ export default function PersistentDrawerRight() {
         <Divider />
         <List>
           <ListItem key={"Manage Home Page"} disablePadding>
-            <ListItemButton onClick={() => changeComponent("HomePage")}>
+            <ListItemButton onClick={() => navigate("/admin/manage-home-page")}>
               <ListItemIcon>
                 <HomeOutlinedIcon />
               </ListItemIcon>
@@ -340,7 +267,7 @@ export default function PersistentDrawerRight() {
             </ListItemButton>
           </ListItem>
           <ListItem key={"Email-Subscribs"} disablePadding>
-            <ListItemButton onClick={() => changeComponent("EmailSub")}>
+            <ListItemButton onClick={() => navigate("/admin/email-subscribe-list")}>
               <ListItemIcon>
                 <AlternateEmailOutlinedIcon />
               </ListItemIcon>
@@ -348,7 +275,7 @@ export default function PersistentDrawerRight() {
             </ListItemButton>
           </ListItem>
           <ListItem key={"Contact To Admins"} disablePadding>
-            <ListItemButton onClick={() => changeComponent("ContactAdmin")}>
+            <ListItemButton onClick={() => navigate("/admin/contact-to-admin")}>
               <ListItemIcon>
                 <SupervisorAccountOutlinedIcon />
               </ListItemIcon>

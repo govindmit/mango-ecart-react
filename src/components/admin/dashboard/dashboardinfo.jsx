@@ -3,6 +3,7 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Lastorder from "./dashinfo/lastorder";
 import {dashboard} from "../../../apis/admin/dashboard"
+import PersistentDrawerRight from "../../../theme/backend/sidebar/index"
 
 function dashboardinfo() {
   const [data, setData] = useState(null);
@@ -16,6 +17,10 @@ function dashboardinfo() {
   }, []);
 
   return (
+
+    <>
+      
+    <PersistentDrawerRight/>
     <div>
       <h2>Dashboard</h2>
       <Grid container spacing={2}>
@@ -50,6 +55,7 @@ function dashboardinfo() {
         <Lastorder />
       </Grid>
     </div>
+     </>
   );
 }
 
