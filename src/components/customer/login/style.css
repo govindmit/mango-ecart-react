@@ -1,0 +1,158 @@
+.login-area {
+    padding-bottom: 80px;
+    padding-top: 80px;
+    background: #f6f6f6;
+}
+.container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+.justify-content-center
+{
+    justify-content: center !important;
+}
+.row
+{
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+.col-md-6 .col-sm-6 
+{
+    position: relative;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+.text-left
+{
+    text-align: left !important;
+}
+.customer-login
+{
+    background: #fff none repeat scroll 0 0;
+    padding: 40px;
+    
+    margin-right: 150px;
+    min-width: 75%;
+}
+.title-1
+{
+    text-transform: uppercase!important;
+    position: relative;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 28px;
+    color: #434343;
+    font-family: 'Josefin Sans', sans-serif;
+    margin: 0 0 10px;
+}
+.text-gray
+{
+    color: #999;
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+.font-weight-bold {
+    font-weight: 700!important;
+}
+.small {
+    font-size: .875em;
+    cursor: pointer;
+}
+a{
+    color: #fb9400;
+    text-decoration: none;
+    background-color: transparent;
+}
+.form-group
+{
+    margin-top: 20px;
+    margin-bottom: 1rem;
+}
+input 
+{
+    background: #f6f6f6 none repeat scroll 0 0;
+    box-shadow: none;
+    color: #999;
+    height: 39px;
+    margin-bottom: 15px;
+    padding: 0 20px;
+    transition: all 0.5s ease 0s;
+    width: 90%;
+    border: 1px solid #e1e1e1;
+    outline: none;
+    border-radius: 5px;
+    font-family: inherit;
+}
+.form-control
+{
+    display: block;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    width: 80%;
+}
+.danger {
+    color: red;
+}
+p{
+    margin-top: 0;
+    margin-bottom: 1rem;
+    margin: 0 0 15px;
+}
+.submit-button
+{
+    background: #333 none repeat scroll 0 0;
+    color: #fff;
+    height: 35px;
+    line-height: 35px;
+    padding: 0 30px;
+    text-transform: uppercase;
+}
+.button-one
+{
+    display: inline-block;
+    position: relative;
+}
+button{
+    overflow: visible;
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    border: none;
+    transition: all 0.3s ease 0s;
+    margin-top: 15px;
+}
+.button-one::before
+{
+    background: #FB9400 none repeat scroll 0 0;
+    bottom: 0;
+    color: #fff;
+    content: attr(data-text);
+    left: -100%;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 100%;
+    visibility: hidden;
+    z-index: 11;
+}
+.submit-button.button-one::after {
+    border-color: transparent;
+}
+.button-one::after {
+    border: 2px solid #d3d3d3;
+    bottom: 0;
+    content: "";
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+[type=submit] {
+    cursor: pointer;
+}

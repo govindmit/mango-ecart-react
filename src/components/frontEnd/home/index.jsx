@@ -7,6 +7,7 @@ import FeatureProductsCard from '../../../theme/frontend/products-card/feature-p
 import LatestsProductsCard from '../../../theme/frontend/products-card/latest-product'
 import TrendingProductsCard from '../../../theme/frontend/products-card/trending-product'
 import { getHomeData } from '../../../apis/users/home'
+import Header from '../../../theme/frontend/header'
 
 
 function index() {
@@ -33,6 +34,7 @@ function index() {
       <div>
     
         <div>
+          <Header />
           <NavBar />
         </div>
          <div> 
@@ -73,4 +75,4 @@ function index() {
   )
 }
 
-export default index
+export default index;
