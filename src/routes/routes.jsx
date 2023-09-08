@@ -1,23 +1,4 @@
-import React from "react";
-import { Route, Routes } from "react-router";
-import Frontend from "../components/frontEnd/home/index";
-import Admin from "../components/admin/dashboard/dashboard";
-import UserLogin from "../components/customer/login/userlogin";
-import Dashboard from "../components/admin/dashboard/dashboard";
-import Login from "../components/admin/dashboard/login";
-import Forgotpassword from "../components/admin/dashboard/forgotpassword";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import UserForgotPassword from "../components/customer/login/userforgotpassword";
-import UpdateProfile from "../components/customer/customerProfile/updateProfile";
-import Profile from "../components/customer/customerProfile/profile";
-// import Frontend from "../components/frontEnd/home/index";
-// import Admin from "../components/admin/dashboard/dashboard";
-import Registration from "../components/customer/registration";
-// import Dashboard from "../components/admin/dashboard/dashboard";
-// import Login from "../components/admin/dashboard/login";
-// import Forgotpassword from "../components/admin/dashboard/forgotpassword";
-// import { ToastContainer } from "react-toastify";
+
 import "react-toastify/dist/ReactToastify.css";
 import React from 'react'
 import { Route, Routes } from 'react-router'
@@ -45,6 +26,11 @@ import Bcndcontactconfig from "../components/admin/dashboard/contactusconfig";
 import BcndhomePage from "../components/admin/dashboard/homepage";
 import BcndemailSub from "../components/admin/dashboard/emailsub";
 import BcndcontactAdmin from "../components/admin/dashboard/contactadmin";
+import { Dashboard } from "@mui/icons-material";
+import UserLogin from "../components/customer/login/userlogin";
+import Profile from "../components/customer/customerProfile/profile";
+import UserForgotPassword from "../components/customer/login/userforgotpassword";
+import UpdateProfile from "../components/customer/customerProfile/updateProfile";
 
 function routes() {
   let adminlogin = localStorage.getItem("token");
@@ -82,20 +68,6 @@ function routes() {
         <Route path="/admin" element={<Admin login={false} />} />
         <Route path="/register" element={<Registration />} />
         <Route path="/" element={<Frontend />} />
-<<<<<<< HEAD
-        <Route
-          path="/admin/"
-          element={adminlogin ? <Dashboard /> : <Login />}
-        />
-        <Route
-          path="/admin/dashboard"
-          element={adminlogin ? <Dashboard /> : <Login />}
-        />
-        <Route
-          path="/admin/forgotpassword"
-          element={adminlogin ? <Dashboard /> : <Forgotpassword />}
-        />
-=======
 
         {/*Admin Routs Start */}
         <Route path="/admin/" element={adminlogin ? <Bcndashboard /> : <Login />} />
@@ -118,7 +90,6 @@ function routes() {
         <Route path="/admin/forgotpassword" element={adminlogin ? <Bcndashboard /> : <Forgotpassword />} />
         <Route path="/admin/reset-password" element={adminlogin ? <Bcndashboard /> : <Adminresetpassword />} />
          {/*Admin Routs End*/}
->>>>>>> c81da7e98d9e4a679d6af2c88cae3363be2db7fe
       </Routes>
     </>
   );
