@@ -1,5 +1,6 @@
 import axios from "axios";
 import configs from "../../config/config";
+import { useEffect } from "react";
 const targetId = localStorage.getItem("token");
 
 export async function userLogin(props) {
@@ -9,6 +10,7 @@ export async function userLogin(props) {
       url: `${configs.apiUrl}/user-auth/login`,
       data: props,
     });
+    // console.log(res);
     return res;
   } catch (error) {
     return error.response;
@@ -37,6 +39,7 @@ export async function getUser() {
         "Content-Type": "application/json", // Modify as needed
         Authorization: `Bearer ${targetId}`, // Include the Bearer token
       },
+
     });
     return res;
   } catch (error) {
@@ -44,7 +47,7 @@ export async function getUser() {
   }
 }
 
-export async function updateUser()
+export async function updateUser(userData)
 {
   try {
     let res = await axios(
@@ -54,8 +57,10 @@ export async function updateUser()
         headers: {
           "Content-Type": "application/json", // Modify as needed
           Authorization: `Bearer ${targetId}`, // Include the Bearer token
-        }
+        },
+        data: userData, 
       });
+      // console.log(res)
       return res;
     }
     catch (error)
@@ -64,11 +69,11 @@ export async function updateUser()
     }
   }
 
-export async function addAddress(props) {
+export async function registerUser(props) {
   try {
     let res = await axios({
       method: "post",
-      url: `${configs.apiUrl}/user-address/create-address`,
+      url: `${configs.apiUrl}/user-auth/register`,
       data: props,
     });
     return res;
@@ -77,12 +82,16 @@ export async function addAddress(props) {
   }
 }
 
-export async function registerUser(props) {
+export async function addAddress(props) {
   try {
     let res = await axios({
       method: "post",
-      url: `${configs.apiUrl}/user-auth/register`,
-      data: props,
+      url: `${configs.apiUrl}/user-address/create-address`,
+      headers: {
+        "Content-Type": "application/json", // Modify as needed
+        Authorization: `Bearer ${targetId}`, // Include the Bearer token
+      }
+
     });
     return res;
   } catch (error) {

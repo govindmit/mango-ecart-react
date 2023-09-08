@@ -39,20 +39,18 @@ const UserLogin = () => {
       {
         userLogin(userLoginDetails)
           .then((res) => {
-            console.log(res)
             let data = res.data;
-            if (data.isError)
+            if(data.isError)
             {
               toast.error(data.message);
             }
-            else{
+            else
+            {
               let token = data.result.token;
               let user = data.result.user.id;
-              // console.log(user);
               toast.success(data.result.message)
               localStorage.setItem('token',token)
               localStorage.setItem('user',user);
-              // localStorage.setItem('user',JSON.stringify(user));
               navigate('/profile-table')
             }
           })

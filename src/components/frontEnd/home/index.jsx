@@ -1,7 +1,5 @@
 import React from "react";
 import Header from "../../../theme/frontend/header";
-import Login from "../../customer/login/userlogin";
-import CustomerProfile from "../../customer/customerProfile/profile";
 import BasicTabs from "../../customer/customerBilling/basictabs";
 
 import NavBar from "../../../theme/frontend/header/navBar";
@@ -19,7 +17,7 @@ function index() {
           <NavBar />
         </div>
 
-        {/* <div>
+        <div>
           <ImageSlider />
         </div>
         <div className="all-products-div">
@@ -32,11 +30,9 @@ function index() {
         </div>
         <div>
           <Footer />
-        </div> */}
-        <BasicTabs/>
+        </div>
+        {/* <BasicTabs/> */}
       </div>
-
-      {/* <CustomerProfile/> */}
       
     </>
   );

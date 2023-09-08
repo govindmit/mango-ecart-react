@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./style.css";
 import { addAddress } from "../../../apis/users/auth";
+import PaymentDetails from "./paymentdetails";
 
 const BillingAddress = () => {
   const [formData, setFormData] = useState({
@@ -260,6 +261,7 @@ const BillingAddress = () => {
           </div>
         </div>
       </div>
+      <PaymentDetails/>
     </>
   );
 };
