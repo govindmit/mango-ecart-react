@@ -1,3 +1,50 @@
+
+.top-header {
+    background:#333;
+    padding: 8px 0px 3px;
+    height: 6vh;
+}
+.container
+{
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    margin-right: auto;
+    margin-left: auto;
+
+}
+.th-main
+{
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+    flex-wrap: wrap;
+    margin-top: -10px;
+}
+.th-main ul li {
+    display: inline-block;
+    list-style: none;
+    margin-right: 20px;
+}
+.th-main ul li a.link {
+    color: #fff;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    padding-left: 8px;
+    cursor: pointer;
+}
+.th-right
+{
+   margin-right: 100px;
+}
+.th-right ul{
+    margin-bottom: 8px;
+    display: flex;
+}
+.ng-star-inserted
+{
+    display: flex;
+}
 .navContainer{
     display: flex;
     margin-inline: 96px;
