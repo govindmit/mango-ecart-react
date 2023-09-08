@@ -54,7 +54,7 @@ export async function updateUser()
         headers: {
           "Content-Type": "application/json", // Modify as needed
           Authorization: `Bearer ${targetId}`, // Include the Bearer token
-        },
+        }
       });
       return res;
     }

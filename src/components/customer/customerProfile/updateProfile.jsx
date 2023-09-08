@@ -5,8 +5,10 @@ import { useEffect, useState } from "react";
 import { getUser, updateUser } from "../../../apis/users/auth";
 
 const UpdateProfile = () => {
+  const navigate = useNavigate();
   const [users, setUsers] = useState([]);
-  // const [updateUsers, setUpdateUsers] = useState(users);
+  const [errors, setErrors] = useState({});
+  // const [editedUser, setEditedUser] = useState();
   
   useEffect(() => {
     getUser()
@@ -25,12 +27,20 @@ const UpdateProfile = () => {
       [name]: value,
     });
   };
- const handleSubmit = ()=>
+  const handleSubmit = (e)=>
+  {
+     e.preventDefault();
+     const newErrors ={};
+  }
+ const handleClick = () =>
  {
-   updateUser()
+   updateUser() 
    .then((data)=>
    {
-    
+     console.log(data);
+    // setUsers(updateUser)
+    // alert("update Successfully");
+    navigate("/profile-table");
    })
    .catch((e) =>
    {
@@ -52,13 +62,14 @@ const UpdateProfile = () => {
                     </div>
                     <div className="panel-body">
                       <div className="billing-details shop-cart-table">
-                        <form>
+                        <form onSubmit={handleSubmit}>
                           <div className="form-group">
                             <input
                               type="text"
                               placeholder="Enter First name"
                               name="firstName"
                               value={users.firstName}
+                              // value={editedUser.name}
                               onChange={handleChange}
                             />
                           </div>
@@ -107,7 +118,7 @@ const UpdateProfile = () => {
                         <button
                           type="submit"
                           className="button-one submit-button"
-                          onClick={handleSubmit}
+                          onClick={handleClick}
                         >
                           Update
                         </button>
