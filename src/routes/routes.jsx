@@ -31,6 +31,7 @@ import UserLogin from "../components/customer/login/userlogin";
 import Profile from "../components/customer/customerProfile/profile";
 import UserForgotPassword from "../components/customer/login/userforgotpassword";
 import UpdateProfile from "../components/customer/customerProfile/updateProfile";
+import ProductsPage from "../components/frontEnd/product";
 
 function routes() {
   let adminlogin = localStorage.getItem("token");
@@ -40,6 +41,7 @@ function routes() {
      <ToastContainer />
 
       <Routes>
+      <Route path="/product" element={<ProductsPage />} />
         <Route path="/" element={<Frontend />} />
         <Route path="/userlogin" element={<UserLogin login={true}/>} />
         <Route path="/userforgotpassword" element={<UserForgotPassword />} />
