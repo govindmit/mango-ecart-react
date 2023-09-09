@@ -3,6 +3,7 @@ import "./style.css";
 import { useContext, useEffect, useState } from "react";
 import { getUser } from "../../../apis/users/auth";
 import { useUser } from "../../../context/usercontext";
+import ProfileHeader from "../../../theme/frontend/profileheader";
 
 
 const Profile = () => {
@@ -14,7 +15,6 @@ const Profile = () => {
   {
     getUser()
     .then((data) => {
-      console.log(data)
       setUser(data.data.result.data);
     })
     .catch((e) => {
@@ -29,6 +29,7 @@ const Profile = () => {
 
   return (
     <>
+    <ProfileHeader/>
       <div className="my-account-area">
         <div className="container">
           <div className="my-account">

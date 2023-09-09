@@ -51,7 +51,7 @@ const UserLogin = () => {
               toast.success(data.result.message)
               localStorage.setItem('token',token)
               localStorage.setItem('user',user);
-              navigate('/profile-table')
+              navigate('/profile-header')
             }
           })
           .catch((e) => {

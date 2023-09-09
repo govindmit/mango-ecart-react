@@ -14,6 +14,7 @@ const UpdateProfile = () => {
   useEffect(() => {
     setEditedUser(user);
   }, [user]);
+
   useEffect(() => {
     setData({
       firstName: editedUser.firstName,
@@ -33,6 +34,7 @@ const UpdateProfile = () => {
   };
 
   const handleSubmit = (e) => {
+    console.log("hyyy")
     e.preventDefault();
     updateUser(data)
       .then((data) => {
@@ -53,7 +55,7 @@ const UpdateProfile = () => {
               <div className="column">
                 <div className="panel-group">
                   <div className="panel">
-                    <div className="my-account-menu">
+                    <div className="my-account-menu-update">
                       <a>MY Personal Information</a>
                     </div>
 

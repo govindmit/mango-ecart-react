@@ -1,9 +1,7 @@
-<<<<<<< HEAD
 import React from "react";
 import Header from "../../../theme/frontend/header";
 import BasicTabs from "../../customer/customerBilling/basictabs";
-=======
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import NavBar from '../../../theme/frontend/header/navBar'
 import ImageSlider from '../../../theme/frontend/sliders'
 import Footer from '../../../theme/frontend/fotter'
@@ -12,11 +10,11 @@ import FeatureProductsCard from '../../../theme/frontend/products-card/feature-p
 import LatestsProductsCard from '../../../theme/frontend/products-card/latest-product'
 import TrendingProductsCard from '../../../theme/frontend/products-card/trending-product'
 import { getHomeData } from '../../../apis/users/home'
-import Header from '../../../theme/frontend/header'
->>>>>>> 70463d6087d068a2676b1fcd5cc0e576d41e2748
+import ProfileHeader from "../../../theme/frontend/profileheader";
 
 
 function index() {
+
   const [homeData, setHomeData] = useState([]);
 
   useEffect(() => {
@@ -70,10 +68,6 @@ function index() {
           ): " "}
          
         </div>
-        <div>
-          <Footer />
-        </div>
-        {/* <BasicTabs/> */}
       </div>
       
         { homeData.length >0 &&
@@ -82,6 +76,8 @@ function index() {
           ): " "}
         
         </div>
+
+        {/* <BasicTabs/> */}
     </>
   )
 }

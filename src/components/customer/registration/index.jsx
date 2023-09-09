@@ -7,6 +7,7 @@ import { registerUser } from '../../../apis/users/auth';
 import { toast } from 'react-toastify';
 import { useRef, useState } from 'react';
 import NavBar from '../../../theme/frontend/header/navBar';
+import Header from '../../../theme/frontend/header';
 
 const Registration = () => {
 
@@ -31,7 +32,7 @@ const Registration = () => {
 
         const res = registerUser(userDetails)
           .then((res) => {
-            // console.log("=>", res);
+           
             let data = res.data;
             if (data.isError) {
               toast.error(data.message);
@@ -54,6 +55,7 @@ const Registration = () => {
   return (
 
     <div>
+      <Header/>
       <NavBar />
       <div className='main-container'>
         {isRegister ? (
