@@ -1,0 +1,36 @@
+.product-card-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-inline: 20px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .product-card-slider {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 900px;
+    gap: 20px;
+    margin: 40px auto; /* Center-align the entire slider */
+  }
+  
+  .product-card {
+    flex: 0 0 calc(30.33% - 10px); /* Set to 33.33% to fit 3 cards in a row */
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    margin-bottom: 20px; /* Add some spacing between rows */
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  }
+  
+  .product-media-button {
+    background: orange;
+    position: absolute;
+    top: 2%;
+    left: 2%;
+    color: white;
+    border-radius: 8px;
+  }
+  

@@ -3,22 +3,16 @@ import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import MuiAppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import CssBaseline from "@mui/material/CssBaseline";
 import List from "@mui/material/List";
-import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
-import CategoryIcon from "@mui/icons-material/Category";
+import { Checkbox } from "@mui/material";
+import './style.css'
+import ProductDataCard from "../product-data";
 
 const drawerWidth = 240;
 
@@ -70,20 +64,22 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 export default function SideBar() {
     const theme = useTheme();
     const [open, setOpen] = React.useState(true);
-    const [currentComponent, setCurrentComponent] = useState("Dashboard");
+    // const [currentComponent, setCurrentComponent] = useState("Dashboard");
     const [categoriesOpen, setCategoriesOpen] = useState(false);
     const [mensWearOpen, setMensWearOpen] = useState(false);
     const [womensWearOpen, setWomensWearOpen] = useState(false);
     const [mensFootwearOpen, setMensFootwearOpen] = useState(false);
     const [womensFootWearOpen, setWomensFootWearOpen] = useState(false)
+    const [decorationOpen, setDecorationOpen] = useState(false);
+    const [furniterOpen, setFurnitureOpen] = useState(false);
+    const [livingRoomOpen, setLivingRoomOpen] = useState(false);
+    const [kitchenOpen, setKitchenOpen] = useState(false);
+    const [bedroomOpen, setBedroomOpen] = useState(false);
+    const [appliancesopen, setAppliancesOpen] = useState(false);
+    const [homeAppliancesOpen, setHomeAppliancesOpen] = useState(false);
+    const [kitchenAppliancesOpen, setKitchenAppliancesOpen] = useState(false);
+    const [mobileAccessoriesOpen, setMobileAccessoriesOpen] = useState(false)
 
-    const handleDrawerOpen = () => {
-        setOpen(true);
-    };
-
-    const handleDrawerClose = () => {
-        setOpen(false);
-    };
 
     const handleCategoriesClick = () => {
         setCategoriesOpen(!categoriesOpen);
@@ -104,142 +100,656 @@ export default function SideBar() {
         setWomensFootWearOpen(!womensFootWearOpen);
     };
 
+    const handleHomeDecorationClick = () => {
+        setDecorationOpen(!decorationOpen);
+    };
+    const handleFurnitureClick = () => {
+        setFurnitureOpen(!furniterOpen);
+    };
+    const handleLivingClick = () => {
+        setLivingRoomOpen(!livingRoomOpen);
+    };
+    const handleKitchenClick = () => {
+        setKitchenOpen(!kitchenOpen);
+    };
+    const handleBedRoomclick = () => {
+        setBedroomOpen(!bedroomOpen);
+    };
+
+    const handleAppliancesClick = () => {
+        setAppliancesOpen(!appliancesopen);
+    };
+    const handleHomeAppliancesClick = () => {
+        setHomeAppliancesOpen(!homeAppliancesOpen);
+    };
+    const handleKitchenAppliancesClick = () => {
+        setKitchenAppliancesOpen(!kitchenAppliancesOpen);
+    };
+    const handleMobileAccessoriesClick = () => {
+        setMobileAccessoriesOpen(!mobileAccessoriesOpen);
+    };
     return (
-        <Box sx={{ display: "flex" }}>
-            <Drawer
-                sx={{
-                    width: drawerWidth,
-                    flexShrink: 0,
-                    "& .MuiDrawer-paper": {
-                        width: drawerWidth,
-                    },
-                }}
-                variant="persistent"
-                anchor="left"
-                open={open}
-            >
-                <DrawerHeader>
-                    <IconButton onClick={handleDrawerClose}>
-                        {theme.direction === "rtl" ? (
-                            <ChevronLeftIcon />
-                        ) : (
-                            <ChevronRightIcon />
-                        )}
-                    </IconButton>
-                </DrawerHeader>
-                <Divider />
-                <List>
-                    <ListItem key={"Categories"} disablePadding>
-                        <ListItemButton onClick={handleCategoriesClick}>
-                            <ListItemText primary="Apparels" />
-                            {categoriesOpen ? <ExpandLess /> : <ExpandMore />}
-                        </ListItemButton>
-                    </ListItem>
-                    {categoriesOpen && (
-                        <List sx={{ pl: 3 }}>
-                            <ListItem key={"MensWear"} disablePadding>
-                                <ListItemButton onClick={handleMensWearClick}>
-                                    <ListItemText primary=" Men's wear" />
-                                    {mensWearOpen ? <ExpandLess /> : <ExpandMore />}
+        <div className="myDivxyz">
+            <div className="sidebarDiv">
+                {/* <Box sx={{ display: "flex" }}> */}
+                    <div className="sideBarDiv"
+                        sx={{
+                            width: drawerWidth,
+                            flexShrink: 0,
+                            "& .MuiDrawer-paper": {
+                                width: drawerWidth,
+                            },
+                        }}
+                        variant="persistent"
+                        anchor="left"
+                        open={open}
+                    >
+                        <Divider />
+                        <h3>CATEGORIES</h3>
+                        <List>
+
+                            <ListItem key={"Categories"} disablePadding>
+                                <ListItemButton onClick={handleCategoriesClick}>
+                                    <Checkbox
+                                        edge="start"
+                                        // checked={categoriesOpen}
+                                        tabIndex={-1}
+                                        disableRipple
+                                        disablePadding
+                                    />
+                                    <ListItemText primary="Apparels" />
+                                    {categoriesOpen ? <ExpandLess /> : <ExpandMore />}
                                 </ListItemButton>
                             </ListItem>
-                            {mensWearOpen && (
+                            {categoriesOpen && (
                                 <List sx={{ pl: 3 }}>
-                                    <ListItem key={"MensBottoms"} disablePadding>
-                                        <ListItemButton>
-                                            <ListItemText primary=" Men's bottoms" />
+                                    <ListItem key={"MensWear"} disablePadding>
+                                        <ListItemButton onClick={handleMensWearClick}>
+                                            <Checkbox
+                                                edge="start"
+                                                // checked={categoriesOpen}
+                                                tabIndex={-1}
+                                                disableRipple
+                                                disablePadding
+                                            />
+                                            <ListItemText primary=" Men's wear" />
+                                            {mensWearOpen ? <ExpandLess /> : <ExpandMore />}
                                         </ListItemButton>
                                     </ListItem>
-                                    <ListItem key={"MensShirts"} disablePadding>
-                                        <ListItemButton>
-                                            <ListItemText primary="Men's Shirts" />
+                                    {mensWearOpen && (
+                                        <List sx={{ pl: 3 }}>
+                                            <ListItem key={"MensBottoms"} disablePadding>
+                                                <ListItemButton>
+                                                    <Checkbox
+                                                        edge="start"
+                                                        // checked={categoriesOpen}
+                                                        tabIndex={-1}
+                                                        disableRipple
+                                                        disablePadding
+                                                    />
+                                                    <ListItemText primary=" Men's bottoms" />
+                                                </ListItemButton>
+                                            </ListItem>
+                                            <ListItem key={"MensShirts"} disablePadding>
+                                                <ListItemButton>
+                                                    <Checkbox
+                                                        edge="start"
+                                                        // checked={categoriesOpen}
+                                                        tabIndex={-1}
+                                                        disableRipple
+                                                        disablePadding
+                                                    />
+                                                    <ListItemText primary="Men's Shirts" />
+                                                </ListItemButton>
+                                            </ListItem>
+
+                                            <ListItem key={"MensAccessories"} disablePadding>
+                                                <ListItemButton>
+                                                    <Checkbox
+                                                        edge="start"
+                                                        // checked={categoriesOpen}
+                                                        tabIndex={-1}
+                                                        disableRipple
+                                                        disablePadding
+                                                    />
+                                                    <ListItemText primary="Men's accessories" />
+                                                </ListItemButton>
+                                            </ListItem>
+                                            {/* Add more subcategories here */}
+                                        </List>
+                                    )}
+
+                                    {/* Add more top-level categories here */}
+
+
+                                    <ListItem key={"MensFootwear"} disablePadding>
+                                        <ListItemButton onClick={handleMensFootwearClick}>
+
+                                            <Checkbox
+                                                edge="start"
+                                                // checked={categoriesOpen}
+                                                tabIndex={-1}
+                                                disableRipple
+                                                disablePadding
+                                            />
+                                            <ListItemText primary=" Men's footwear" />
+                                            {mensFootwearOpen ? <ExpandLess /> : <ExpandMore />}
                                         </ListItemButton>
                                     </ListItem>
-                                    <ListItem key={"MensAccessories"} disablePadding>
-                                        <ListItemButton>
-                                            <ListItemText primary="Men's accessories" />
+                                    {mensFootwearOpen && (
+                                        <List sx={{ pl: 3 }}>
+
+                                            <ListItem key={"Shoes"} disablePadding>
+                                                <ListItemButton>
+                                                    <Checkbox
+                                                        edge="start"
+                                                        // checked={categoriesOpen}
+                                                        tabIndex={-1}
+                                                        disableRipple
+                                                        disablePadding
+                                                    />
+                                                    <ListItemText primary=" Shoes" />
+                                                </ListItemButton>
+                                            </ListItem>
+                                            {/* Add more subcategories for Men's footwear */}
+                                        </List>
+                                    )}
+
+                                    <ListItem key={"WomensWear"} disablePadding>
+                                        <ListItemButton onClick={handleWomensWearClick}>
+                                            <Checkbox
+                                                edge="start"
+                                                // checked={categoriesOpen}
+                                                tabIndex={-1}
+                                                disableRipple
+                                                disablePadding
+                                            />
+                                            <ListItemText primary=" Women's wear" />
+                                            {womensWearOpen ? <ExpandLess /> : <ExpandMore />}
                                         </ListItemButton>
                                     </ListItem>
-                                    {/* Add more subcategories here */}
+                                    {womensWearOpen && (
+                                        <List sx={{ pl: 3 }}>
+
+                                            <ListItem key={"WomensBottoms"} disablePadding>
+                                                <ListItemButton>
+                                                    <Checkbox
+                                                        edge="start"
+                                                        // checked={categoriesOpen}
+                                                        tabIndex={-1}
+                                                        disableRipple
+                                                        disablePadding
+                                                    />
+                                                    <ListItemText primary=" Women's bottoms" />
+                                                </ListItemButton>
+                                            </ListItem>
+
+                                            <ListItem key={"WomensShirts"} disablePadding>
+                                                <ListItemButton>
+
+                                                    <Checkbox
+                                                        edge="start"
+                                                        // checked={categoriesOpen}
+                                                        tabIndex={-1}
+                                                        disableRipple
+                                                        disablePadding
+                                                    />
+                                                    <ListItemText primary="Women's Shirts" />
+                                                </ListItemButton>
+                                            </ListItem>
+                                            {/* Add more subcategories for Women's wear */}
+                                        </List>
+                                    )}
+
+                                    <ListItem key={"WomensFootWear"} disablePadding>
+                                        <ListItemButton onClick={handleWomensFootWearClick}>
+                                            <Checkbox
+                                                edge="start"
+                                                // checked={categoriesOpen}
+                                                tabIndex={-1}
+                                                disableRipple
+                                                disablePadding
+                                            />
+                                            <ListItemText primary=" Women's foot wear" />
+                                            {womensFootWearOpen ? <ExpandLess /> : <ExpandMore />}
+                                        </ListItemButton>
+                                    </ListItem>
+                                    {womensFootWearOpen && (
+                                        <List sx={{ pl: 3 }}>
+
+                                            <ListItem key={"Heels"} disablePadding>
+                                                <ListItemButton>
+                                                    <Checkbox
+                                                        edge="start"
+                                                        // checked={categoriesOpen}
+                                                        tabIndex={-1}
+                                                        disableRipple
+                                                        disablePadding
+                                                    />
+                                                    <ListItemText primary="Heels" />
+                                                </ListItemButton>
+                                            </ListItem>
+
+                                            <ListItem key={"Flats"} disablePadding>
+                                                <ListItemButton>
+                                                    <Checkbox
+                                                        edge="start"
+                                                        // checked={categoriesOpen}
+                                                        tabIndex={-1}
+                                                        disableRipple
+                                                        disablePadding
+                                                    />
+                                                    <ListItemText primary="Flats" />
+                                                </ListItemButton>
+                                            </ListItem>
+                                            {/* Add more subcategories for Women's wear */}
+                                        </List>
+                                    )}
                                 </List>
                             )}
 
-                            {/* Add more top-level categories here */}
 
+                            <ListItem key={"homeDecoration"} disablePadding>
 
-                            <ListItem key={"MensFootwear"} disablePadding>
-                                <ListItemButton onClick={handleMensFootwearClick}>
-                                    <ListItemText primary=" Men's footwear" />
-                                    {mensFootwearOpen ? <ExpandLess /> : <ExpandMore />}
+                                <ListItemButton onClick={handleHomeDecorationClick}>
+                                    <Checkbox
+                                        edge="start"
+                                        // checked={categoriesOpen}
+                                        tabIndex={-1}
+                                        disableRipple
+                                        disablePadding
+                                    />
+                                    <ListItemText primary="Home Decoration" />
+                                    {decorationOpen ? <ExpandLess /> : <ExpandMore />}
                                 </ListItemButton>
                             </ListItem>
-                            {mensFootwearOpen && (
+                            {decorationOpen && (
                                 <List sx={{ pl: 3 }}>
-                                    <ListItem key={"Shoes"} disablePadding>
+
+                                    <ListItem key={"Monitors"} disablePadding>
                                         <ListItemButton>
-                                            <ListItemText primary=" Shoes" />
+                                            <Checkbox
+                                                edge="start"
+                                                // checked={categoriesOpen}
+                                                tabIndex={-1}
+                                                disableRipple
+                                                disablePadding
+                                            />
+                                            <ListItemText primary="Monitors" />
                                         </ListItemButton>
                                     </ListItem>
-                                    {/* Add more subcategories for Men's footwear */}
-                                </List>
-                            )}
-                            <ListItem key={"WomensWear"} disablePadding>
-                                <ListItemButton onClick={handleWomensWearClick}>
-                                    <ListItemText primary=" Women's wear" />
-                                    {womensWearOpen ? <ExpandLess /> : <ExpandMore />}
-                                </ListItemButton>
-                            </ListItem>
-                            {womensWearOpen && (
-                                <List sx={{ pl: 3 }}>
-                                    <ListItem key={"WomensBottoms"} disablePadding>
-                                        <ListItemButton>
-                                            <ListItemText primary=" Women's bottoms" />
-                                        </ListItemButton>
-                                    </ListItem>
-                                    <ListItem key={"WomensShirts"} disablePadding>
-                                        <ListItemButton>
-                                            <ListItemText primary="Women's Shirts" />
-                                        </ListItemButton>
-                                    </ListItem>
-                                    {/* Add more subcategories for Women's wear */}
+
                                 </List>
                             )}
 
-                            <ListItem key={"WomensFootWear"} disablePadding>
-                                <ListItemButton onClick={handleWomensFootWearClick}>
-                                    <ListItemText primary=" Women's foot wear" />
-                                    {womensFootWearOpen ? <ExpandLess /> : <ExpandMore />}
+
+
+                            <ListItem key={"Furniture"} disablePadding>
+                                <ListItemButton onClick={handleFurnitureClick}>
+                                    <Checkbox
+                                        edge="start"
+                                        // checked={categoriesOpen}
+                                        tabIndex={-1}
+                                        disableRipple
+                                        disablePadding
+
+                                    />
+                                    <ListItemText primary="Furniture" />
+                                    {furniterOpen ? <ExpandLess /> : <ExpandMore />}
                                 </ListItemButton>
+
                             </ListItem>
-                            {womensFootWearOpen && (
+                            {furniterOpen && (
                                 <List sx={{ pl: 3 }}>
-                                    <ListItem key={"Heels"} disablePadding>
-                                        <ListItemButton>
-                                            <ListItemText primary="Heels" />
+
+                                    <ListItem key={"LivingRoom"} disablePadding>
+                                        <ListItemButton onClick={handleLivingClick}>
+                                            <Checkbox
+                                                edge="start"
+                                                // checked={categoriesOpen}
+                                                tabIndex={-1}
+                                                disableRipple
+                                                disablePadding
+                                            />
+                                            <ListItemText primary="Living Room" />
+                                            {livingRoomOpen ? <ExpandLess /> : <ExpandMore />}
                                         </ListItemButton>
                                     </ListItem>
-                                    <ListItem key={"Flats"} disablePadding>
-                                        <ListItemButton>
-                                            <ListItemText primary="Flats" />
+                                    {livingRoomOpen && (
+                                        <List sx={{ pl: 3 }}>
+
+                                            <ListItem key={"ShoeCabinet"} disablePadding>
+                                                <ListItemButton>
+                                                    <Checkbox
+                                                        edge="start"
+                                                        // checked={categoriesOpen}
+                                                        tabIndex={-1}
+                                                        disableRipple
+                                                        disablePadding
+                                                    />
+                                                    <ListItemText primary="Shoe cabinet" />
+                                                </ListItemButton>
+                                            </ListItem>
+
+                                            <ListItem key={"Sofas"} disablePadding>
+                                                <ListItemButton>
+                                                    <Checkbox
+                                                        edge="start"
+                                                        // checked={categoriesOpen}
+                                                        tabIndex={-1}
+                                                        disableRipple
+                                                        disablePadding
+                                                    />
+                                                    <ListItemText primary=" Sofas" />
+                                                </ListItemButton>
+                                            </ListItem>
+
+                                        </List>
+                                    )}
+
+
+                                    <ListItem key={"KitcenDining"} disablePadding>
+                                        <ListItemButton onClick={handleKitchenClick}>
+                                            <Checkbox
+                                                edge="start"
+                                                // checked={categoriesOpen}
+                                                tabIndex={-1}
+                                                disableRipple
+                                                disablePadding
+                                            />
+                                            <ListItemText primary="Kitchen and Dining" />
+                                            {kitchenOpen ? <ExpandLess /> : <ExpandMore />}
                                         </ListItemButton>
                                     </ListItem>
-                                    {/* Add more subcategories for Women's wear */}
+                                    {kitchenOpen && (
+                                        <List sx={{ pl: 3 }}>
+
+                                            <ListItem key={"DiningTable"} disablePadding>
+                                                <ListItemButton>
+                                                    <Checkbox
+                                                        edge="start"
+                                                        // checked={categoriesOpen}
+                                                        tabIndex={-1}
+                                                        disableRipple
+                                                        disablePadding
+                                                    />
+                                                    <ListItemText primary="Dining Table" />
+                                                </ListItemButton>
+                                            </ListItem>
+                                        </List>
+                                    )}
+
+                                    <ListItem key={"BedRoom"} disablePadding>
+                                        <ListItemButton onClick={handleBedRoomclick}>
+                                            <Checkbox
+                                                edge="start"
+                                                // checked={categoriesOpen}
+                                                tabIndex={-1}
+                                                disableRipple
+                                                disablePadding
+                                            />
+                                            <ListItemText primary="Bedroom" />
+                                            {bedroomOpen ? <ExpandLess /> : <ExpandMore />}
+                                        </ListItemButton>
+                                    </ListItem>
+                                    {bedroomOpen && (
+                                        <List sx={{ pl: 3 }}>
+
+                                            <ListItem key={"Bed"} disablePadding>
+                                                <ListItemButton>
+                                                    <Checkbox
+                                                        edge="start"
+                                                        // checked={categoriesOpen}
+                                                        tabIndex={-1}
+                                                        disableRipple
+                                                        disablePadding
+                                                    />
+                                                    <ListItemText primary="Bed" />
+                                                </ListItemButton>
+                                            </ListItem>
+
+                                            <ListItem key={"Chair"} disablePadding>
+                                                <ListItemButton>
+                                                    <Checkbox
+                                                        edge="start"
+                                                        // checked={categoriesOpen}
+                                                        tabIndex={-1}
+                                                        disableRipple
+                                                        disablePadding
+                                                    />
+                                                    <ListItemText primary="Chair" />
+                                                </ListItemButton>
+                                            </ListItem>
+
+                                        </List>
+                                    )}
+
                                 </List>
                             )}
+
+
+
+                            <ListItem key={"Appliances"} disablePadding>
+
+                                <ListItemButton onClick={handleAppliancesClick}>
+                                    <Checkbox
+                                        edge="start"
+                                        // checked={categoriesOpen}
+                                        tabIndex={-1}
+                                        disableRipple
+                                        disablePadding
+                                    />
+                                    <ListItemText primary="Appliances" />
+                                    {appliancesopen ? <ExpandLess /> : <ExpandMore />}
+                                </ListItemButton>
+                            </ListItem>
+                            {appliancesopen && (
+                                <List sx={{ pl: 3 }}>
+
+                                    <ListItem key={"HomeAppliances"} disablePadding>
+                                        <ListItemButton onClick={handleHomeAppliancesClick}>
+                                            <Checkbox
+                                                edge="start"
+                                                // checked={categoriesOpen}
+                                                tabIndex={-1}
+                                                disableRipple
+                                                disablePadding
+                                            />
+                                            <ListItemText primary="Home Appliances" />
+                                            {homeAppliancesOpen ? <ExpandLess /> : <ExpandMore />}
+                                        </ListItemButton>
+                                    </ListItem>
+                                    {homeAppliancesOpen && (
+                                        <List sx={{ pl: 3 }}>
+
+                                            <ListItem key={"Telivision"} disablePadding>
+                                                <ListItemButton>
+                                                    <Checkbox
+                                                        edge="start"
+                                                        // checked={categoriesOpen}
+                                                        tabIndex={-1}
+                                                        disableRipple
+                                                        disablePadding
+                                                    />
+                                                    <ListItemText primary="Telivision" />
+                                                </ListItemButton>
+                                            </ListItem>
+
+                                            <ListItem key={"Ac"} disablePadding>
+                                                <ListItemButton>
+                                                    <Checkbox
+                                                        edge="start"
+                                                        // checked={categoriesOpen}
+                                                        tabIndex={-1}
+                                                        disableRipple
+                                                        disablePadding
+                                                    />
+                                                    <ListItemText primary=" AC" />
+                                                </ListItemButton>
+                                            </ListItem>
+
+                                        </List>
+                                    )}
+
+                                    <ListItem key={"KitchenAppliances"} disablePadding>
+                                        <ListItemButton onClick={handleKitchenAppliancesClick}>
+                                            <Checkbox
+                                                edge="start"
+                                                // checked={categoriesOpen}
+                                                tabIndex={-1}
+                                                disableRipple
+                                                disablePadding
+                                            />
+                                            <ListItemText primary="Kitchen appliances" />
+                                            {kitchenAppliancesOpen ? <ExpandLess /> : <ExpandMore />}
+                                        </ListItemButton>
+                                    </ListItem>
+                                    {kitchenAppliancesOpen && (
+                                        <List sx={{ pl: 3 }}>
+
+                                            <ListItem key={"Handblender"} disablePadding>
+                                                <ListItemButton>
+                                                    <Checkbox
+                                                        edge="start"
+                                                        // checked={categoriesOpen}
+                                                        tabIndex={-1}
+                                                        disableRipple
+                                                        disablePadding
+                                                    />
+                                                    <ListItemText primary="Hand blender" />
+                                                </ListItemButton>
+                                            </ListItem>
+                                        </List>
+                                    )}
+
+                                </List>
+                            )}
+
+                            <ListItem key={"Car Accessories"} >
+
+                                <ListItemButton >
+                                    <Checkbox
+                                        edge="start"
+                                        // checked={categoriesOpen}
+                                        tabIndex={-1}
+                                        disableRipple
+                                        disablePadding
+                                    />
+                                    <ListItemText primary="Car Accessories" />
+                                </ListItemButton>
+                            </ListItem>
+
+                            <ListItem key={"Toys "} >
+
+                                <ListItemButton >
+                                    <Checkbox
+                                        edge="start"
+                                        // checked={categoriesOpen}
+                                        tabIndex={-1}
+                                        disableRipple
+                                        disablePadding
+                                    />
+                                    <ListItemText primary="Toys " />
+                                </ListItemButton>
+                            </ListItem>
+
+                            <ListItem key={"MobileAccessories"} disablePadding>
+
+                                <ListItemButton onClick={handleMobileAccessoriesClick}>
+                                    <Checkbox
+                                        edge="start"
+                                        // checked={categoriesOpen}
+                                        tabIndex={-1}
+                                        disableRipple
+                                        disablePadding
+                                    />
+                                    <ListItemText primary="Mobile Accessories" />
+                                    {mobileAccessoriesOpen ? <ExpandLess /> : <ExpandMore />}
+                                </ListItemButton>
+                            </ListItem>
+                            {mobileAccessoriesOpen && (
+                                <List sx={{ pl: 3 }}>
+
+                                    <ListItem key={"Charger"} disablePadding>
+                                        <ListItemButton>
+                                            <Checkbox
+                                                edge="start"
+                                                // checked={categoriesOpen}
+                                                tabIndex={-1}
+                                                disableRipple
+                                                disablePadding
+                                            />
+                                            <ListItemText primary="Charger" />
+                                        </ListItemButton>
+                                    </ListItem>
+
+                                    <ListItem key={"BackCover"} disablePadding>
+                                        <ListItemButton>
+                                            <Checkbox
+                                                edge="start"
+                                                // checked={categoriesOpen}
+                                                tabIndex={-1}
+                                                disableRipple
+                                                disablePadding
+                                            />
+                                            <ListItemText primary="Back Cover" />
+                                        </ListItemButton>
+                                    </ListItem>
+
+                                    <ListItem key={"EarBuds"} disablePadding>
+                                        <ListItemButton>
+                                            <Checkbox
+                                                edge="start"
+                                                // checked={categoriesOpen}
+                                                tabIndex={-1}
+                                                disableRipple
+                                                disablePadding
+                                            />
+                                            <ListItemText primary="Ear Buds" />
+                                        </ListItemButton>
+                                    </ListItem>
+                                </List>
+                            )}
+
+                            <ListItem key={"Virtual Products"} >
+
+                                <ListItemButton >
+                                    <Checkbox
+                                        edge="start"
+                                        // checked={categoriesOpen}
+                                        tabIndex={-1}
+                                        disableRipple
+                                        disablePadding
+                                    />
+                                    <ListItemText primary="Virtual Products" />
+                                </ListItemButton>
+                            </ListItem>
+
+                            <ListItem key={"testing"} >
+
+                                <ListItemButton >
+                                    <Checkbox
+                                        edge="start"
+                                        // checked={categoriesOpen}
+                                        tabIndex={-1}
+                                        disableRipple
+                                        disablePadding
+                                    />
+                                    <ListItemText primary="testing" />
+                                </ListItemButton>
+                            </ListItem>
+
+
                         </List>
-                    )}
+                        <Divider />
+                        {/* Add more lists for other sections */}
+                    </div>
 
-                    <ListItem key={"Categories"} disablePadding>
-                        <ListItemButton onClick={handleCategoriesClick}>
-                            <ListItemText primary="" />
-                            {categoriesOpen ? <ExpandLess /> : <ExpandMore />}
-                        </ListItemButton>
-                    </ListItem>
-
-                </List>
-                <Divider />
-                {/* Add more lists for other sections */}
-            </Drawer>
-        </Box>
+                {/* </Box> */}
+            </div>
+            <div>
+                <ProductDataCard />
+            </div>
+        </div>
     );
 }

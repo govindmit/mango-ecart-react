@@ -1,0 +1,9 @@
+.sideBarDiv {
+    max-width: 231px;
+    text-align: center;
+    margin-inline: 80px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 2px 7px;
+}
+.myDivxyz{
+    display: flex;
+}
