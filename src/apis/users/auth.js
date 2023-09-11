@@ -100,3 +100,65 @@ try {
   return error.response;
 }
 }
+
+export async function allAddress()
+{
+  try {
+    let res = await axios (
+      {
+        method:'get',
+        url:`${configs.apiUrl}/user-address/get-all-address`,
+        headers: {
+          'Content-Type': 'application/json', // Modify as needed
+          'Authorization': `Bearer ${targetId}` // Include the Bearer token
+        },
+  });
+  return res;
+  }
+  catch(error)
+  {
+    return error.response;
+  }
+}
+
+export async function getUserAddressById(id)
+{
+  try {
+    let res = await axios (
+      {
+        method:'get',
+        url:`${configs.apiUrl}/user-address/get-address/${id}`,
+        headers: {
+          'Content-Type': 'application/json', // Modify as needed
+          'Authorization': `Bearer ${targetId}` // Include the Bearer token
+        },
+  });
+  return res;
+  }
+  catch(error)
+  {
+    return error.response;
+  }
+}
+
+export async function updateAddress(id,userData)
+{
+  try 
+  {
+    let res = await axios(
+      {
+        method:'put',
+        url:`${configs.apiUrl}/user-address/update-address/${id}`,
+        headers: {
+          'Content-Type': 'application/json', // Modify as needed
+          'Authorization': `Bearer ${targetId}` // Include the Bearer token
+        },
+        data:userData,
+      });
+      return res;
+  }
+  catch(error)
+  {
+    return error.response;
+  }
+}

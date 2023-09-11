@@ -34,7 +34,6 @@ const UpdateProfile = () => {
   };
 
   const handleSubmit = (e) => {
-    console.log("hyyy")
     e.preventDefault();
     updateUser(data)
       .then((data) => {

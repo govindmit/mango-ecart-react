@@ -32,6 +32,8 @@ import UserForgotPassword from "../components/customer/login/userforgotpassword"
 import UpdateProfile from "../components/customer/customerProfile/updateProfile";
 import ProfileHeader from "../theme/frontend/profileheader";
 import BasicTabs from "../components/customer/customerBilling/basictabs";
+import AddressList from "../components/customer/customerBilling/addresslist";
+import BillingAddress from "../components/customer/customerBilling/billingaddress";
 
 function routes() {
   let adminlogin = localStorage.getItem("token");
@@ -58,7 +60,8 @@ function routes() {
           element={customerlogin ? <UpdateProfile /> : <UserLogin />}
         />
         <Route path="/my-address" element={customerlogin ? <BasicTabs/> : <UserLogin/>}/>
-        
+  
+        <Route path="/my-new-address" element={<BillingAddress/>}/>
         <Route path="/admin" element={<Admin login={true} />} />
 
         <Route path="/" element={<Frontend />} />

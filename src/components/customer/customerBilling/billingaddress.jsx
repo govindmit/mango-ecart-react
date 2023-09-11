@@ -1,92 +1,170 @@
 import { useEffect, useState } from "react";
 import "./style.css";
-import { addAddress } from "../../../apis/users/auth";
-import PaymentDetails from "./paymentdetails";
+import {
+  addAddress,
+  getUserAddressById,
+  updateAddress,
+} from "../../../apis/users/auth";
 import { toast } from "react-toastify";
+import { useUser } from "../../../context/usercontext";
+import { Link, useNavigate } from "react-router-dom";
+import ProfileHeader from "../../../theme/frontend/profileheader";
 
-const BillingAddress = () => {
-
+const BillingAddress = (props) => {
+  const navigate = useNavigate();
+  const { addressId } = useUser();
   const [errors, setErrors] = useState({});
+  const { addresses, setAddresses } = useUser();
   const [formData, setFormData] = useState({
-    fullname:"",
-    countrycode:"",
-    phone:"",
-    address:"",
-    country:"",
-    state:"",
-    city:"",
-    postcode:""
+    addressType: "Billing",
+    firstName: "",
+    lastName: "",
+    gender: "",
+    address1: "",
+    postcode: "",
+    city: "",
+    state: "",
+    country: "",
+    email: "",
+    phone: "",
+    countrycode: "",
+    fullname: "",
   });
+
+  const formValue = formData[0];
+  useEffect(() => {
+    if (addressId) {
+      getUserAddressById(addressId)
+        .then((data) => {
+          const addressData = data.data.result.addressData;
+          const { firstName, lastName } = addressData;
+          const fullName = `${firstName} ${lastName}`;
+          setFormData({
+            ...addressData,
+            firstName:firstName,
+            lastName:lastName,
+            fullname: fullName,
+          });
+        })
+        .catch((e) => {
+          console.log(e, "error");
+        });
+    }
+  }, [addressId]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-    setErrors("");
+    if (name === "firstName" || name === "lastName") {
+      setFormData({
+        ...formData,
+        fullname: `${formData.firstName} ${formData.lastName}`,
+        [name]: value,
+        
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+      setErrors("");
+    }
+
+    if (addressId) {
+      if (name === "fullname") 
+      {
+        const [newFirstName,newLastName] = value.split('');
+        setFormData({
+          ...formValue,
+          firstName:newFirstName,
+          lastName:newLastName,
+          [name]: value,
+        });
+      } else {
+        setFormData({
+          ...formValue,
+          [name]: value,
+        });
+        setErrors("");
+      }
+    }
   };
 
   const handleSubmit = () => {
-    const fullname = `${formData.firstname} ${formData.lastname}`
-    const newErrors ={};
-    if(formData.fullname.trim() === '')
-    {
-      newErrors.fullname="Full Name is required";
-    }
-    if(formData.email.trim() === '')
-    {
-      newErrors.email="Email is required";
-    }
-    if(formData.countrycode.trim() === '')
-    {
-      newErrors.countryCode="Country Code is required";
-    }
-    if(formData.phone.trim() === '')
-    {
-      newErrors.phone = "Mobile Number is required";
-    }
-    if(formData.address.trim() === "")
-    {
-      newErrors.address = "Address is required";
-    }
-    if(formData.country.trim() === "")
-    {
-      newErrors.country="Country is required";
-    }
-    if(formData.state.trim() === "")
-    {
-      newErrors.state="State is required";
-    }
-    if(formData.city.trim() === '')
-    {
-      newErrors.city = "City is required";
-    }
-    if(formData.postcode.trim() === "")
-    {
-      newErrors.postcode = "Post Code is required";
-    }
-    setErrors(newErrors);
-    
-addAddress(formData)
-      .then((res) => {
-        // console.log(res)
-        let data = res.data;
-        // console.log(data);
-        if (data.isError) {
-          toast.error(data.message);
-        } else {
-          toast.success(data.result.message);
-        }
-      })
-      .catch((e) => {
-        console.log("error", e);
-      });
+    const newErrors = {};
+    if (addressId) {
+      updateAddress(addressId, formData)
+        .then(() => {
+          navigate("/my-address");
+        })
+        .catch((e) => {
+          console.log(e, "error");
+        });
+    } else {
+      if (formData.fullname.trim() === "") {
+        newErrors.fullname = "Full Name is required";
+      }
 
-     return Object.keys(newErrors).length === 0;
+      if (formData.email.trim() === "") {
+        newErrors.email = "Email is required";
+      } else if (
+        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(formData.email)
+      ) {
+        newErrors.email = "Email should have @";
+      }
+
+      if (formData.countrycode.trim() === "") {
+        newErrors.countrycode = "Country Code is required";
+      }
+
+      if (formData.phone.trim() === "") {
+        newErrors.phone = "Mobile Number is required";
+      } else if (!/^\d{10}$/.test(formData.phone)) {
+        newErrors.phone = "Mobile number should be only 10 digit";
+      }
+      if (formData.address1.trim() === "") {
+        newErrors.address1 = "Address is required";
+      }
+      if (formData.country.trim() === "") {
+        newErrors.country = "Country is required";
+      }
+      if (formData.state.trim() === "") {
+        newErrors.state = "State is required";
+      }
+      if (formData.city.trim() === "") {
+        newErrors.city = "City is required";
+      }
+      if (formData.postcode.trim() === "") {
+        newErrors.postcode = "Post Code is required";
+      }
+      setErrors(newErrors);
+
+      if (Object.keys(newErrors).length === 0) {
+        const [firstName, lastName] = formData.fullname.split(" ");
+        addAddress({
+          ...formData,
+          firstName,
+          lastName,
+          // fullname: `${formData.firstName} ${formData.lastName}`,
+        })
+          .then((res) => {
+            // console.log(res)
+            let data = res.data;
+            // console.log(data);
+            if (data.isError) {
+              toast.error(data.message);
+            } else {
+              toast.success(data.result.message);
+            }
+          })
+          .catch((e) => {
+            console.log("error", e);
+          });
+      }
+    }
   };
   return (
     <>
+      <ProfileHeader />
       <div className="customer-column">
         <div className="customer-billing-details">
           <div className="heading-container">
@@ -105,13 +183,17 @@ addAddress(formData)
                 className="form-control"
                 type="text"
                 name="fullname"
-                value={formData.fullname}
+                value={
+                  addressId
+                    ? `${formValue?.firstName} ${formValue?.lastName}`
+                    : formData.fullname
+                }
                 placeholder="Enter full Name"
                 onChange={handleChange}
               />
-              {errors.fullName && (
+              {errors.fullname && (
                 <span className="danger ng-star-inserted">
-                  {errors.fullName}
+                  {errors.fullname}
                 </span>
               )}
             </div>
@@ -123,7 +205,7 @@ addAddress(formData)
                 type="email"
                 name="email"
                 placeholder="Enter email"
-                value={formData.email}
+                value={addressId ? formValue?.email : formData.email}
                 onChange={handleChange}
               />
               {errors.email && (
@@ -134,17 +216,17 @@ addAddress(formData)
               <label>Country Code:</label>
               <select
                 className="form-control-select"
-                value={formData.countryCode}
+                value={formData.countrycode}
                 onChange={handleChange}
                 name="countrycode"
               >
-                <option>Select a country code</option>
-                <option>USA (+1)</option>
-                <option>India (+91)</option>
+                <option value="">Select a country code</option>
+                <option value="USA">USA (+1)</option>
+                <option value="India">India (+91)</option>
               </select>
-              {errors.countryCode && (
+              {errors.countrycode && (
                 <span className="danger ng-star-inserted">
-                  {errors.countryCode}
+                  {errors.countrycode}
                 </span>
               )}
             </div>
@@ -156,13 +238,11 @@ addAddress(formData)
                 type="number"
                 name="phone"
                 placeholder="Enter Last Mobile Number"
-                value={formData.mobileNumber}
+                value={addressId ? formValue?.phone : formData.phone}
                 onChange={handleChange}
               />
-              {errors.mobileNumber && (
-                <span className="danger ng-star-inserted">
-                  {errors.mobileNumber}
-                </span>
+              {errors.phone && (
+                <span className="danger ng-star-inserted">{errors.phone}</span>
               )}
             </div>
             <br />
@@ -171,14 +251,14 @@ addAddress(formData)
               <input
                 className="form-control"
                 type="text"
-                name="address"
+                name="address1"
                 placeholder="Enter address"
-                value={formData.address}
+                value={addressId ? formValue?.address1 : formData.address1}
                 onChange={handleChange}
               />
-              {errors.address && (
+              {errors.address1 && (
                 <span className="danger ng-star-inserted">
-                  {errors.address}
+                  {errors.address1}
                 </span>
               )}
             </div>
@@ -186,13 +266,13 @@ addAddress(formData)
               <label>Country:</label>
               <select
                 className="form-control-select"
-                value={formData.country}
+                value={addressId ? formValue?.country : formData.country}
                 onChange={handleChange}
                 name="country"
               >
-                <option>Choose your country</option>
-                <option>India</option>
-                <option>United States</option>
+                <option value="">Choose your country</option>
+                <option value="India">India</option>
+                <option value="United States">United States</option>
               </select>
               {errors.country && (
                 <span className="danger ng-star-inserted">
@@ -205,11 +285,11 @@ addAddress(formData)
               <select
                 className="form-control-select"
                 name="state"
-                value={formData.state}
+                value={addressId ? formValue?.state : formData.state}
                 onChange={handleChange}
               >
-                <option>Choose Your State</option>
-                <option>Madhya Pradesh</option>
+                <option value="">Choose Your State</option>
+                <option value="Madhya Pradesh">Madhya Pradesh</option>
               </select>
               {errors.state && (
                 <span className="danger ng-star-inserted">{errors.state}</span>
@@ -223,7 +303,7 @@ addAddress(formData)
                 type="text"
                 name="city"
                 placeholder="Enter City"
-                value={formData.city}
+                value={addressId ? formValue?.city : formData.city}
                 onChange={handleChange}
               />
               {errors.city && (
@@ -238,17 +318,21 @@ addAddress(formData)
                 type="text"
                 name="postcode"
                 placeholder="Enter Post Code"
-                value={formData.postCode}
+                value={addressId ? formValue?.postcode : formData.postcode}
                 onChange={handleChange}
               />
-              {errors.postCode && (
+              {errors.postcode && (
                 <span className="danger ng-star-inserted">
-                  {errors.postCode}
+                  {errors.postcode}
                 </span>
               )}
             </div>
             <br />
-            <button type="submit">Submit</button>
+            <button type="submit">Save and Deliver Here</button>
+            <button type="submit">
+              {" "}
+              <Link to="/my-address"> Cancel </Link>{" "}
+            </button>
           </form>
 
           <div>

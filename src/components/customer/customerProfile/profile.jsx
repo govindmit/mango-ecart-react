@@ -10,7 +10,6 @@ const Profile = () => {
   const navigate = useNavigate();
   const {user, setUser} = useUser();
   
-
   useEffect(()=>
   {
     getUser()
