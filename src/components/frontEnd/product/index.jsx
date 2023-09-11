@@ -2,9 +2,7 @@ import Banner from "../../../theme/frontend/banner"
 import Footer from "../../../theme/frontend/fotter"
 import Header from "../../../theme/frontend/header"
 import NavBar from "../../../theme/frontend/header/navBar"
-import ProductDataCard from "../../../theme/frontend/product-data"
-import Sidebar from "../../../theme/frontend/product-sidebar"
-// import Sidebar from "../../../theme/frontend/product-sidebar"
+import ProductBanner from "../../../theme/frontend/product-sidebar"
 
 const ProductsPage = () => {
 
@@ -19,7 +17,7 @@ return(
         </div>
         <div className="productDetailsDiv">
             <div>
-                <Sidebar/>
+                <ProductBanner/>
             </div>
             
         </div>
