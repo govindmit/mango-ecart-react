@@ -15,7 +15,7 @@ function category() {
       setData(result?.data?.result?.data?.rows);
     });
   }, []);
-
+console.log(data);
   return (
     <>
       <PersistentDrawerRight />
