@@ -13,6 +13,7 @@ const UserLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState("");
+  const [recaptchaValue, setRecaptchaValue] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -34,26 +35,24 @@ const UserLogin = () => {
       setErrors(newErrors);
     }
 
-    if (email && password) {
+    if (email && password && recaptchaValue) {
       const userLoginDetails = { email: email, password: password };
       {
         userLogin(userLoginDetails)
           .then((res) => {
-            console.log(res)
             let data = res.data;
-            if (data.isError)
+            if(data.isError)
             {
               toast.error(data.message);
             }
-            else{
+            else
+            {
               let token = data.result.token;
               let user = data.result.user.id;
-              // console.log(user);
               toast.success(data.result.message)
               localStorage.setItem('token',token)
               localStorage.setItem('user',user);
-              // localStorage.setItem('user',JSON.stringify(user));
-              navigate('/profile-table')
+              navigate('/profile-header')
             }
           })
           .catch((e) => {
@@ -61,6 +60,10 @@ const UserLogin = () => {
           });
       }
     }
+      else
+      {
+        toast.error("Please complete the reCAPTCHA challenge.");
+      }
   };
   return (
     <>
@@ -111,7 +114,7 @@ const UserLogin = () => {
                   </div>
                   <br />
                   <div className="form-group">
-                    <ReCAPTCHA sitekey={configs.RECAPTCHA_KEY} />
+                    <ReCAPTCHA sitekey={configs.RECAPTCHA_KEY}  onChange={(value) => setRecaptchaValue(value)}/>
                   </div>
                   <p>
                     <Link className="font-weight-bold small" to="/userforgotpassword">Forgot Password?</Link>

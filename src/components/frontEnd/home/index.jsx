@@ -1,4 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React from "react";
+import Header from "../../../theme/frontend/header";
+import BasicTabs from "../../customer/customerBilling/basictabs";
+import { useEffect, useState } from 'react'
 import NavBar from '../../../theme/frontend/header/navBar'
 import ImageSlider from '../../../theme/frontend/sliders'
 import Footer from '../../../theme/frontend/fotter'
@@ -7,10 +10,11 @@ import FeatureProductsCard from '../../../theme/frontend/products-card/feature-p
 import LatestsProductsCard from '../../../theme/frontend/products-card/latest-product'
 import TrendingProductsCard from '../../../theme/frontend/products-card/trending-product'
 import { getHomeData } from '../../../apis/users/home'
-import Header from '../../../theme/frontend/header'
+import ProfileHeader from "../../../theme/frontend/profileheader";
 
 
 function index() {
+
   const [homeData, setHomeData] = useState([]);
 
   useEffect(() => {
@@ -37,6 +41,8 @@ function index() {
           <Header />
           <NavBar />
         </div>
+
+        <div>
          <div> 
            { homeData.length >0 &&
            (homeData[0].isBanner ==1 )?(
@@ -62,15 +68,16 @@ function index() {
           ): " "}
          
         </div>
-        <div>
+      </div>
+      
         { homeData.length >0 &&
           (homeData[0].isFooter==1)?(
             <Footer />
           ): " "}
         
         </div>
-        
-      </div>
+
+        {/* <BasicTabs/> */}
     </>
   )
 }

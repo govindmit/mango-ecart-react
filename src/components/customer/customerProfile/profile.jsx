@@ -1,32 +1,34 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./style.css";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getUser } from "../../../apis/users/auth";
+import { useUser } from "../../../context/usercontext";
+import ProfileHeader from "../../../theme/frontend/profileheader";
+
 
 const Profile = () => {
   const navigate = useNavigate();
-  const location = useLocation();
+  const {user, setUser} = useUser();
   
-  const [users, setUsers] = useState([]);
-
-  useEffect(() => {
+  useEffect(()=>
+  {
     getUser()
-      .then((data) => {
-        // console.log(data.data.result.data);
-        setUsers(data.data.result.data);
-      })
-      .catch((e) => {
-        console.log("error", e);
-      });
-  }, []);
-
+    .then((data) => {
+      setUser(data.data.result.data);
+    })
+    .catch((e) => {
+      console.log("error", e);
+    });
+  },[])  
+  
   const handleEdit = () => {
-
+    setUser(user);
     navigate("/profile");
   };
 
   return (
     <>
+    <ProfileHeader/>
       <div className="my-account-area">
         <div className="container">
           <div className="my-account">
@@ -37,47 +39,44 @@ const Profile = () => {
                     <div className="my-account-menu">
                       <a>MY Personal Informtion</a>
                     </div>
-                    {/* {targetUser.map((value) => */}
                     <div className="panel-body">
-                    <div className="billing-details shop-cart-table">
-                      <table>
-                        <tbody>
-                          <tr>
-                            <td>First Name</td>
-                            <td>{users.firstName}</td>
-                          </tr>
-                          <tr>
-                            <td>Last Name</td>
-                            <td>{users.lastName}</td>
-                          </tr>
-                          <tr>
-                            <td>Gender</td>
-                            <td>{users.gender}</td>
-                          </tr>
-                          <tr>
-                            <td>Contact</td>
-                            <td>{users.mobileNumber}</td>
-                          </tr>
-                          <tr>
-                            <td>Email</td>
-                            <td>{users.email}</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
+                      <div className="billing-details shop-cart-table">
+                        <table>
+                          <tbody>
+                            <tr>
+                              <td>First Name</td>
+                              <td>{user.firstName}</td>
+                            </tr>
+                            <tr>
+                              <td>Last Name</td>
+                              <td>{user.lastName}</td>
+                            </tr>
+                            <tr>
+                              <td>Gender</td>
+                              <td>{user.gender}</td>
+                            </tr>
+                            <tr>
+                              <td>Contact</td>
+                              <td>{user.mobileNumber}</td>
+                            </tr>
+                            <tr>
+                              <td>Email</td>
+                              <td>{user.email}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
 
-                    <div>
-                      <button
-                        // to="/profile"
-                        type="submit"
-                        className="button-one submit-button"
-                        onClick={() => handleEdit()}
-                      >
-                        Edit
-                      </button>
+                      <div>
+                        <button
+                          type="submit"
+                          className="button-one submit-button"
+                          onClick={() => handleEdit()}
+                        >
+                          Edit
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                    
                   </div>
                 </div>
               </div>

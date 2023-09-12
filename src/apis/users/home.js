@@ -18,7 +18,6 @@ export async function bannerData() {
 
 
 export async function customerContact() {
-
   try {
     let res = await axios({
       method: 'get',
