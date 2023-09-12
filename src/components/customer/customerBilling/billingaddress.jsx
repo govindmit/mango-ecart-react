@@ -1,126 +1,210 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./style.css";
-import { addAddress } from "../../../apis/users/auth";
+import {
+  addAddress,
+  getUserAddressById,
+  updateAddress,
+} from "../../../apis/users/auth";
+import { toast } from "react-toastify";
+import { useUser } from "../../../context/usercontext";
+import { Link, useNavigate } from "react-router-dom";
+import ProfileHeader from "../../../theme/frontend/profileheader";
 
-const BillingAddress = () => {
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    countryCode: "",
-    mobileNumber: "",
-    address: "",
-    country: "",
-    state: "",
-    city: "",
-    postCode: "",
-  });
+const BillingAddress = (props) => {
+  const navigate = useNavigate();
+  const { addressId } = useUser();
   const [errors, setErrors] = useState({});
+  const { addresses, setAddresses } = useUser();
+  const [formData, setFormData] = useState({
+    addressType: "Billing",
+    firstName: "",
+    lastName: "",
+    gender: "",
+    address1: "",
+    postcode: "",
+    city: "",
+    state: "",
+    country: "",
+    email: "",
+    phone: "",
+    countrycode: "",
+    fullname: "",
+  });
 
-  const handleChange= (e)=>
-  {
+  const formValue = formData[0];
+  useEffect(() => {
+    if (addressId) {
+      getUserAddressById(addressId)
+        .then((data) => {
+          const addressData = data.data.result.addressData;
+          const { firstName, lastName } = addressData;
+          const fullName = `${firstName} ${lastName}`;
+          setFormData({
+            ...addressData,
+            firstName: firstName,
+            lastName: lastName,
+            fullname: fullName,
+          });
+        })
+        .catch((e) => {
+          console.log(e, "error");
+        });
+    }
+  }, [addressId]);
+
+  const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-    setErrors("");
-  }
-
-  const validateForm =()=>
-  {
-    const newErrors ={};
-
-    if(formData.fullName.trim() === '')
-    {
-      newErrors.fullName="Full Name is required";
-    }
-    if(formData.email.trim() === '')
-    {
-      newErrors.email="Email is required";
-    }
-    if(formData.countryCode.trim() === '')
-    {
-      newErrors.countryCode="Country Code is required";
-    }
-    if(formData.mobileNumber.trim() === '')
-    {
-      newErrors.mobileNumber = "Mobile Number is required";
-    }
-    if(formData.address.trim() === "")
-    {
-      newErrors.address = "Address is required";
-    }
-    if(formData.country.trim() === "")
-    {
-      newErrors.country="Country is required";
-    }
-    if(formData.country.trim() === "")
-    {
-      newErrors.state="State is required";
-    }
-    if(formData.city.trim() === '')
-    {
-      newErrors.city = "City is required";
-    } 
-    if(formData.postCode.trim() === "")
-    {
-      newErrors.postCode = "Post Code is required";
+    if (name === "firstName" || name === "lastName") {
+      setFormData({
+        ...formData,
+        fullname: `${formData.firstName} ${formData.lastName}`,
+        [name]: value,
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+      setErrors("");
     }
 
-      addAddress(formData)
-      .then((res)=>
+    if (addressId) {
+      if (name === "fullname") {
+        const [newFirstName, newLastName] = value.split("");
+        setFormData({
+          ...formValue,
+          firstName: newFirstName,
+          lastName: newLastName,
+          [name]: value,
+        });
+      } else {
+        setFormData({
+          ...formValue,
+          [name]: value,
+        });
+        setErrors("");
+      }
+    }
+  };
+
+  const handleSubmit = () => {
+    const newErrors = {};
+    if (addressId) {
+      if(formValue?.email === "")
       {
-        console.log(res);
-        let data = res.data;
-        if(data.isError)
-        {
-          toast.error(data.message);
-        }
-      })
-      .catch((e)=>
+        newErrors.email = "Email is required";
+      }
+      setErrors(newErrors);
+      if(Object.keys(newErrors).length === 0)
       {
-        console.log("error",e)
-      })
+        updateAddress(addressId, formData)
+        .then((res) => {
+          let data = res.data;
+          if (data.isError) {
+            toast.error(data.message);
+          } else {
+            toast.success(data.result.message);
+            navigate("/my-address");
+          }
+        })
+        .catch((e) => {
+          console.log(e, "error");
+        });
+      }
+     
+    } else {
+      if (formData.fullname.trim() === "") {
+        newErrors.fullname = "Full Name is required";
+      }
 
-    setErrors(newErrors);
+      if (formData.email.trim() === ""){
+        newErrors.email = "Email is required";
+      } else if (
+        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(formData.email)
+      ) {
+        newErrors.email = "Email should have @";
+      }
 
-    return Object.keys(newErrors).length === 0;
-  }
-  const handleSubmit=()=>
-  {
-    if(validateForm())
-    {
-      alert('Form Submited Successfully');
+      if (formData.countrycode.trim() === "") {
+        newErrors.countrycode = "Country Code is required";
+      }
+
+      if (formData.phone.trim() === "") {
+        newErrors.phone = "Mobile Number is required";
+      } else if (!/^\d{10}$/.test(formData.phone)) {
+        newErrors.phone = "Mobile number should be only 10 digit";
+      }
+      if (formData.address1.trim() === "") {
+        newErrors.address1 = "Address is required";
+      }
+      if (formData.country.trim() === "") {
+        newErrors.country = "Country is required";
+      }
+      if (formData.state.trim() === "") {
+        newErrors.state = "State is required";
+      }
+      if (formData.city.trim() === "") {
+        newErrors.city = "City is required";
+      }
+      if (formData.postcode.trim() === "") {
+        newErrors.postcode = "Post Code is required";
+      }
+      setErrors(newErrors);
+
+      if (Object.keys(newErrors).length === 0) {
+        const [firstName, lastName] = formData.fullname.split(" ");
+        addAddress({
+          ...formData,
+          firstName,
+          lastName,
+        })
+          .then((res) => {
+            let data = res.data;
+            if (data.isError) {
+              toast.error(data.message);
+            } else {
+              toast.success(data.result.message);
+              navigate("/my-address");
+            }
+          })
+          .catch((e) => {
+            console.log("error", e);
+          });
+      }
     }
-    else{
-      alert("form has validation error. please correct them")
-    }
-
-  }
+  };
   return (
     <>
+      <ProfileHeader />
       <div className="customer-column">
         <div className="customer-billing-details">
           <div className="heading-container">
             <h4>Billing details</h4>
           </div>
-          <form autoComplete="on" onSubmit={(e) => {
-                e.preventDefault(); // Prevent the default form submission
-                handleSubmit(); // Call your submit function manually
-              }}>
+          <form
+            autoComplete="on"
+            onSubmit={(e) => {
+              e.preventDefault(); // Prevent the default form submission
+              handleSubmit(); // Call your submit function manually
+            }}
+          >
             <div className="form-group">
               <label>Full Name:</label>
               <input
                 className="form-control"
                 type="text"
-                name="fullName"
-                value={formData.fullName}
+                name="fullname"
+                value={
+                  addressId
+                    ? `${formValue?.firstName} ${formValue?.lastName}`
+                    : formData.fullname
+                }
                 placeholder="Enter full Name"
                 onChange={handleChange}
               />
-              {errors.fullName && (
+              {errors.fullname && (
                 <span className="danger ng-star-inserted">
-                  {errors.fullName}
+                  {errors.fullname}
                 </span>
               )}
             </div>
@@ -132,25 +216,28 @@ const BillingAddress = () => {
                 type="email"
                 name="email"
                 placeholder="Enter email"
-                value={formData.email}
+                value={addressId ? formValue?.email : formData.email}
                 onChange={handleChange}
               />
               {errors.email && (
-                <span className="danger ng-star-inserted">
-                  {errors.email}
-                </span>
+                <span className="danger ng-star-inserted">{errors.email}</span>
               )}
             </div>
             <div className="select-form-group">
               <label>Country Code:</label>
-              <select className="form-control-select" value={formData.countryCode} onChange={handleChange} name="countryCode">
-                <option >Select a country code</option>
-                <option>USA (+1)</option>
-                <option>India (+91)</option>
+              <select
+                className="form-control-select"
+                value={formData.countrycode}
+                onChange={handleChange}
+                name="countrycode"
+              >
+                <option value="">Select a country code</option>
+                <option value="USA">USA (+1)</option>
+                <option value="India">India (+91)</option>
               </select>
-              {errors.countryCode && (
+              {errors.countrycode && (
                 <span className="danger ng-star-inserted">
-                  {errors.countryCode}
+                  {errors.countrycode}
                 </span>
               )}
             </div>
@@ -160,15 +247,13 @@ const BillingAddress = () => {
               <input
                 className="form-control"
                 type="number"
-                name="mobileNumber"
+                name="phone"
                 placeholder="Enter Last Mobile Number"
-                value={formData.mobileNumber}
+                value={addressId ? formValue?.phone : formData.phone}
                 onChange={handleChange}
               />
-              {errors.mobileNumber && (
-                <span className="danger ng-star-inserted">
-                  {errors.mobileNumber}
-                </span>
+              {errors.phone && (
+                <span className="danger ng-star-inserted">{errors.phone}</span>
               )}
             </div>
             <br />
@@ -177,23 +262,28 @@ const BillingAddress = () => {
               <input
                 className="form-control"
                 type="text"
-                name="address"
+                name="address1"
                 placeholder="Enter address"
-                value={formData.address}
+                value={addressId ? formValue?.address1 : formData.address1}
                 onChange={handleChange}
               />
-              {errors.address && (
+              {errors.address1 && (
                 <span className="danger ng-star-inserted">
-                  {errors.address}
+                  {errors.address1}
                 </span>
               )}
             </div>
             <div className="select-form-group">
               <label>Country:</label>
-              <select className="form-control-select" value={formData.country} onChange={handleChange} name="country">
-                <option>Choose your country</option>
-                <option>India</option>
-                <option>United States</option>
+              <select
+                className="form-control-select"
+                value={addressId ? formValue?.country : formData.country}
+                onChange={handleChange}
+                name="country"
+              >
+                <option value="">Choose your country</option>
+                <option value="India">India</option>
+                <option value="United States">United States</option>
               </select>
               {errors.country && (
                 <span className="danger ng-star-inserted">
@@ -203,13 +293,17 @@ const BillingAddress = () => {
             </div>
             <div className="select-form-group">
               <label>State:</label>
-              <select className="form-control-select" name="state" value={formData.state} onChange={handleChange}>
-                <option>Choose Your State</option>
+              <select
+                className="form-control-select"
+                name="state"
+                value={addressId ? formValue?.state : formData.state}
+                onChange={handleChange}
+              >
+                <option value="">Choose Your State</option>
+                <option value="Madhya Pradesh">Madhya Pradesh</option>
               </select>
               {errors.state && (
-                <span className="danger ng-star-inserted">
-                  {errors.state}
-                </span>
+                <span className="danger ng-star-inserted">{errors.state}</span>
               )}
             </div>
             <br />
@@ -220,13 +314,11 @@ const BillingAddress = () => {
                 type="text"
                 name="city"
                 placeholder="Enter City"
-                value={formData.city}
+                value={addressId ? formValue?.city : formData.city}
                 onChange={handleChange}
               />
-               {errors.city && (
-                <span className="danger ng-star-inserted">
-                  {errors.city}
-                </span>
+              {errors.city && (
+                <span className="danger ng-star-inserted">{errors.city}</span>
               )}
             </div>
             <br />
@@ -235,19 +327,23 @@ const BillingAddress = () => {
               <input
                 className="form-control"
                 type="text"
-                name="postCode"
+                name="postcode"
                 placeholder="Enter Post Code"
-                value={formData.postCode}
+                value={addressId ? formValue?.postcode : formData.postcode}
                 onChange={handleChange}
               />
-               {errors.postCode && (
+              {errors.postcode && (
                 <span className="danger ng-star-inserted">
-                  {errors.postCode}
+                  {errors.postcode}
                 </span>
               )}
             </div>
             <br />
-            <button type="submit">Submit</button>
+            <button type="submit">Save and Deliver Here</button>
+            <button type="submit">
+              {" "}
+              <Link to="/my-address"> Cancel </Link>{" "}
+            </button>
           </form>
 
           <div>

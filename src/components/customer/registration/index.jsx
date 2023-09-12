@@ -33,7 +33,7 @@ const Registration = () => {
 
         const res = registerUser(userDetails)
           .then((res) => {
-            // console.log("=>", res);
+           
             let data = res.data;
             if (data.isError) {
               toast.error(data.message);

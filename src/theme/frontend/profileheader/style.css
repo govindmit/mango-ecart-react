@@ -1,0 +1,53 @@
+.dropdown
+{
+ position: relative;
+}
+.th-right ul li.dropdown.dropdown-toggle
+{
+    cursor: pointer;
+}
+.dropdown .dropdown-menu
+{
+    font-size: .85rem;
+    box-shadow: 0 .15rem 1.75rem #3a3b4526!important;
+}
+.dropdown-menu.show
+{
+    display: block;
+}
+.dropdown-menu{
+    position: absolute;
+    top: 100%;
+    z-index: 1000;
+    float: left;
+    padding: 0.5rem 0;
+    margin: 2.125rem 0 0;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 0.25rem;
+}
+ul .dropdown-menu .show li
+{
+    margin-right: 0;
+}
+.dropdown-item
+{
+    display: block;
+    width: 100%;
+    padding: 0.25rem 1.5rem;
+    clear: both;
+    font-weight: 400;
+    color: #212529;
+    text-align: inherit;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+}
+.dropdown .dropdown-menu
+{
+    font-size: -85rem;
+}

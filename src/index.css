@@ -19,7 +19,11 @@
     color: #213547;
     background-color: #ffffff;
   }
+<<<<<<< HEAD
+
+=======
 }
+>>>>>>> 66cc4aaff974011094ab5411236ec702c680136d
 /* a {
   font-weight: 500;
   color: #646cff;
@@ -32,6 +36,7 @@ a {
   font-weight: 700;
   color: #fb9400;
   text-decoration: inherit;
+  cursor: pointer;
 }
 a:hover {
   color: #ffba5a;
@@ -73,7 +78,7 @@ h5 {
   margin-left: 255px !important;
 }
 
-button {
+/* button {
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
@@ -83,16 +88,12 @@ button {
   background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
-} */
-/* button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-} */
+}  */
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> 66cc4aaff974011094ab5411236ec702c680136d
   /* a:hover {
     color: #747bff;
   } */

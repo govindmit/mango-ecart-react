@@ -3,72 +3,70 @@ import Header from "../../../theme/frontend/header";
 import "./style.css";
 import { useEffect, useState } from "react";
 import { getUser, updateUser } from "../../../apis/users/auth";
+import { useUser } from "../../../context/usercontext";
 
 const UpdateProfile = () => {
   const navigate = useNavigate();
-  const [users, setUsers] = useState([]);
-  const [errors, setErrors] = useState({});
-  // const [editedUser, setEditedUser] = useState();
-  
+  const { user } = useUser();
+  const [editedUser, setEditedUser] = useState(user);
+  const [data, setData] =useState([]);
+
   useEffect(() => {
-    getUser()
+    setEditedUser(user);
+  }, [user]);
+
+  useEffect(() => {
+    setData({
+      firstName: editedUser.firstName,
+      lastName: editedUser.lastName,
+      email: editedUser.email,
+      mobileNumber: editedUser.mobileNumber,
+      gender: editedUser.gender,
+    });
+  }, [editedUser]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEditedUser({
+      ...editedUser,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    updateUser(data)
       .then((data) => {
-        setUsers(data.data.result.data);
+        navigate("/profile-table");
       })
       .catch((e) => {
         console.log("error", e);
       });
-  }, []);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUsers({
-      ...users,
-      [name]: value,
-    });
   };
-  const handleSubmit = (e)=>
-  {
-     e.preventDefault();
-     const newErrors ={};
-  }
- const handleClick = () =>
- {
-   updateUser() 
-   .then((data)=>
-   {
-     console.log(data);
-    // setUsers(updateUser)
-    // alert("update Successfully");
-    navigate("/profile-table");
-   })
-   .catch((e) =>
-   {
-     console.log("error", e)
-   })
- }
+
   return (
     <>
       <Header />
       <div className="my-account-area">
         <div className="container profile-container">
-          <div className="my-account">
+          <div className="console.log(editedUser)my-account">
             <div className="row jutify-content-center">
               <div className="column">
                 <div className="panel-group">
                   <div className="panel">
-                    <div className="my-account-menu">
+                    <div className="my-account-menu-update">
                       <a>MY Personal Information</a>
                     </div>
+
                     <div className="panel-body">
-                      <div className="billing-details shop-cart-table">
-                        <form onSubmit={handleSubmit}>
+                      <form>
+                        <div className="billing-details shop-cart-table">
                           <div className="form-group">
                             <input
                               type="text"
                               placeholder="Enter First name"
                               name="firstName"
-                              value={users.firstName}
+                              value={editedUser.firstName}
                               // value={editedUser.name}
                               onChange={handleChange}
                             />
@@ -78,7 +76,7 @@ const UpdateProfile = () => {
                             <input
                               type="text"
                               placeholder="Enter last name"
-                              value={users.lastName}
+                              value={editedUser.lastName}
                               name="lastName"
                               onChange={handleChange}
                             />
@@ -88,7 +86,7 @@ const UpdateProfile = () => {
                             <input
                               type="email"
                               placeholder="Enter Email"
-                              value={users.email}
+                              value={editedUser.email}
                               name="email"
                               onChange={handleChange}
                             />
@@ -96,9 +94,18 @@ const UpdateProfile = () => {
                           <br />
                           <div className="form-group">
                             <div style={{ display: "inline-flex" }}>
-                              <input type="radio" value="Male" />
+                              {editedUser.gender === "male" ? (
+                                <input type="radio" value="Male" checked />
+                              ) : (
+                                <input type="radio" value="Male" />
+                              )}
                               Male
-                              <input type="radio" value="female" /> Female
+                              {editedUser.gender === "female" ? (
+                                <input type="radio" value="Female" checked />
+                              ) : (
+                                <input type="radio" value="Female" />
+                              )}
+                              Female
                             </div>
                           </div>
                           <br />
@@ -106,26 +113,28 @@ const UpdateProfile = () => {
                             <input
                               type="number"
                               placeholder="Enter mobile number"
-                              value={users.mobileNumber}
+                              value={editedUser.mobileNumber}
                               name="mobileNumber"
                               onChange={handleChange}
                             />
+              
                           </div>
                           <br />
-                        </form>
-                      </div>
+                        </div>
+                      </form>
+
                       <div>
                         <button
                           type="submit"
                           className="button-one submit-button"
-                          onClick={handleClick}
+                          onClick={handleSubmit}
                         >
                           Update
                         </button>
                         <button
                           type="submit"
                           className="button-one submit-button"
-                         
+                          onClick={() => navigate("/profile-table")}
                         >
                           Back
                         </button>
