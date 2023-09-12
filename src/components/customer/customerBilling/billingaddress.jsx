@@ -41,8 +41,8 @@ const BillingAddress = (props) => {
           const fullName = `${firstName} ${lastName}`;
           setFormData({
             ...addressData,
-            firstName:firstName,
-            lastName:lastName,
+            firstName: firstName,
+            lastName: lastName,
             fullname: fullName,
           });
         })
@@ -59,7 +59,6 @@ const BillingAddress = (props) => {
         ...formData,
         fullname: `${formData.firstName} ${formData.lastName}`,
         [name]: value,
-        
       });
     } else {
       setFormData({
@@ -70,13 +69,12 @@ const BillingAddress = (props) => {
     }
 
     if (addressId) {
-      if (name === "fullname") 
-      {
-        const [newFirstName,newLastName] = value.split('');
+      if (name === "fullname") {
+        const [newFirstName, newLastName] = value.split("");
         setFormData({
           ...formValue,
-          firstName:newFirstName,
-          lastName:newLastName,
+          firstName: newFirstName,
+          lastName: newLastName,
           [name]: value,
         });
       } else {
@@ -92,19 +90,34 @@ const BillingAddress = (props) => {
   const handleSubmit = () => {
     const newErrors = {};
     if (addressId) {
-      updateAddress(addressId, formData)
-        .then(() => {
-          navigate("/my-address");
+      if(formValue?.email === "")
+      {
+        newErrors.email = "Email is required";
+      }
+      setErrors(newErrors);
+      if(Object.keys(newErrors).length === 0)
+      {
+        updateAddress(addressId, formData)
+        .then((res) => {
+          let data = res.data;
+          if (data.isError) {
+            toast.error(data.message);
+          } else {
+            toast.success(data.result.message);
+            navigate("/my-address");
+          }
         })
         .catch((e) => {
           console.log(e, "error");
         });
+      }
+     
     } else {
       if (formData.fullname.trim() === "") {
         newErrors.fullname = "Full Name is required";
       }
 
-      if (formData.email.trim() === "") {
+      if (formData.email.trim() === ""){
         newErrors.email = "Email is required";
       } else if (
         !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(formData.email)
@@ -144,16 +157,14 @@ const BillingAddress = (props) => {
           ...formData,
           firstName,
           lastName,
-          // fullname: `${formData.firstName} ${formData.lastName}`,
         })
           .then((res) => {
-            // console.log(res)
             let data = res.data;
-            // console.log(data);
             if (data.isError) {
               toast.error(data.message);
             } else {
               toast.success(data.result.message);
+              navigate("/my-address");
             }
           })
           .catch((e) => {

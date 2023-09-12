@@ -9,12 +9,13 @@ import {
   IconButton,
   Paper,
 } from "@mui/material";
-import { allAddress } from "../../../apis/users/auth";
+import { allAddress, deleteAddress } from "../../../apis/users/auth";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Edit } from "@mui/icons-material";
 import BillingAddress from "./billingaddress";
 import { useUser } from "../../../context/usercontext";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const AddressList = (props) => {
   const navigate = useNavigate();
@@ -43,6 +44,30 @@ const AddressList = (props) => {
     setComponentVisible(!isComponentVisible)
     navigate("/my-new-address");
   };
+
+  const handleDeleteClick = (Id)=>
+  {
+    deleteAddress(Id)
+    .then((res)=>
+    {
+      let data = res.data
+      if(data.isError)
+      {
+        toast.error(data.message);
+      }
+      else
+      {
+        setAddresses ((prevAddress)=>
+          prevAddress.filter((address) => address.id !== Id)
+        )
+        toast.success(data.result.message);
+      }
+    })
+    .catch((e)=>
+    {
+      console.log(e,"error")
+    })
+  }
   return (
     <Container>
       <Typography variant="h4" gutterBottom>
@@ -61,6 +86,10 @@ const AddressList = (props) => {
                   edge="end"
                   aria-label="delete"
                   style={{ margin: "5px" }}
+                  onClick={() =>
+                  {
+                    handleDeleteClick(address.id);
+                  }}
                 >
                   <DeleteIcon />
                 </IconButton>

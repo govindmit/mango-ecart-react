@@ -13,6 +13,7 @@ const UserLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState("");
+  const [recaptchaValue, setRecaptchaValue] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -34,7 +35,7 @@ const UserLogin = () => {
       setErrors(newErrors);
     }
 
-    if (email && password) {
+    if (email && password && recaptchaValue) {
       const userLoginDetails = { email: email, password: password };
       {
         userLogin(userLoginDetails)
@@ -59,6 +60,10 @@ const UserLogin = () => {
           });
       }
     }
+      else
+      {
+        toast.error("Please complete the reCAPTCHA challenge.");
+      }
   };
   return (
     <>
@@ -109,7 +114,7 @@ const UserLogin = () => {
                   </div>
                   <br />
                   <div className="form-group">
-                    <ReCAPTCHA sitekey={configs.RECAPTCHA_KEY} />
+                    <ReCAPTCHA sitekey={configs.RECAPTCHA_KEY}  onChange={(value) => setRecaptchaValue(value)}/>
                   </div>
                   <p>
                     <Link className="font-weight-bold small" to="/userforgotpassword">Forgot Password?</Link>
