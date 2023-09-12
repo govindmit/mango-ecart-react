@@ -9,6 +9,7 @@ import { useRef, useState } from 'react';
 import NavBar from '../../../theme/frontend/header/navBar';
 import Header from '../../../theme/frontend/header';
 import Banner from '../../../theme/frontend/banner';
+import Footer from '../../../theme/frontend/fotter';
 
 const Registration = () => {
 
@@ -97,9 +98,7 @@ const Registration = () => {
                     )}
                     <input type="text"
                       placeholder="Enter last name"
-                      name="lastName"
-                      formcontrolname={`custom-input form-control ${errors.lastName ? 'error-input' : ''}`}
-                      className='custom-input'
+                      className={`custom-input form-control ${errors.lastName ? 'error-input' : ''}`}
                       {...register("lastName",
                         {
                           required: true,
@@ -220,6 +219,7 @@ const Registration = () => {
           </div>
         )}
       </div>
+      <Footer />
     </div>
   );
 }
