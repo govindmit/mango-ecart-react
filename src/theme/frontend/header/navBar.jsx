@@ -1,3 +1,4 @@
+import Aboutus from '../../../components/frontEnd/aboutus';
 import './style.css'
 
 const NavBar =()=>{

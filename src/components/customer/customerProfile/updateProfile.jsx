@@ -9,7 +9,7 @@ const UpdateProfile = () => {
   const navigate = useNavigate();
   const { user } = useUser();
   const [editedUser, setEditedUser] = useState(user);
-  const [data, setData] =useState([]);
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     setEditedUser(user);
@@ -67,7 +67,7 @@ const UpdateProfile = () => {
                               placeholder="Enter First name"
                               name="firstName"
                               value={editedUser.firstName}
-                              // value={editedUser.name}
+                              
                               onChange={handleChange}
                             />
                           </div>
@@ -94,17 +94,21 @@ const UpdateProfile = () => {
                           <br />
                           <div className="form-group">
                             <div style={{ display: "inline-flex" }}>
-                              {editedUser.gender === "male" ? (
-                                <input type="radio" value="Male" checked />
-                              ) : (
-                                <input type="radio" value="Male" />
-                              )}
+                              <input
+                                type="radio"
+                                value="male"
+                                name="gender"
+                                checked={editedUser.gender === "male"}
+                                onChange={handleChange}
+                              />
                               Male
-                              {editedUser.gender === "female" ? (
-                                <input type="radio" value="Female" checked />
-                              ) : (
-                                <input type="radio" value="Female" />
-                              )}
+                              <input
+                                type="radio"
+                                value="female"
+                                name="gender"
+                                checked={editedUser.gender === "female"}
+                                onChange={handleChange}
+                              />
                               Female
                             </div>
                           </div>
@@ -117,7 +121,6 @@ const UpdateProfile = () => {
                               name="mobileNumber"
                               onChange={handleChange}
                             />
-              
                           </div>
                           <br />
                         </div>

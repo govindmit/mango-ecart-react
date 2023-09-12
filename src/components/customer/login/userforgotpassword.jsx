@@ -62,7 +62,7 @@ const UserForgotPassword = () => {
                       placeholder="Enter email"
                       name="email"
                       value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      onChange={(e) => {setEmail(e.target.value), setErrors(" ")}}
                     />
                     {errors.email && (
                       <span className="danger ng-star-inserted">

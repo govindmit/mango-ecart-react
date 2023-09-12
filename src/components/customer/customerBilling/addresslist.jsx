@@ -14,7 +14,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { Edit } from "@mui/icons-material";
 import BillingAddress from "./billingaddress";
 import { useUser } from "../../../context/usercontext";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const AddressList = (props) => {
@@ -23,13 +23,13 @@ const AddressList = (props) => {
   const setBillingComponent = props.setBillingComponent;
   const isComponentVisible = props.isComponentVisible;
   const setComponentVisible = props.setComponentVisible;
- 
-  const {addressId,setAddressId} = useUser();
-  const {addresses, setAddresses} = useUser();
+  const { addressId, setAddressId } = useUser();
+  const { addresses, setAddresses } = useUser();
 
   useEffect(() => {
     allAddress()
       .then((data) => {
+        console.log(data);
         setAddresses(data.data.result.addressData);
       })
       .catch((e) => {
@@ -37,37 +37,30 @@ const AddressList = (props) => {
       });
   }, []);
 
-  const handleEditClick = (Id) => 
-  {
+  const handleEditClick = (Id) => {
     setAddressId(Id);
-    setBillingComponent(!isBillingComponent)
-    setComponentVisible(!isComponentVisible)
-    navigate("/my-new-address");
+    setBillingComponent(!isBillingComponent);
+    setComponentVisible(!isComponentVisible);
+    navigate("/my-new-address" , {state:{addressId}})
   };
 
-  const handleDeleteClick = (Id)=>
-  {
+  const handleDeleteClick = (Id) => {
     deleteAddress(Id)
-    .then((res)=>
-    {
-      let data = res.data
-      if(data.isError)
-      {
-        toast.error(data.message);
-      }
-      else
-      {
-        setAddresses ((prevAddress)=>
-          prevAddress.filter((address) => address.id !== Id)
-        )
-        toast.success(data.result.message);
-      }
-    })
-    .catch((e)=>
-    {
-      console.log(e,"error")
-    })
-  }
+      .then((res) => {
+        let data = res.data;
+        if (data.isError) {
+          toast.error(data.message);
+        } else {
+          setAddresses((prevAddress) =>
+            prevAddress.filter((address) => address.id !== Id)
+          );
+          toast.success(data.result.message);
+        }
+      })
+      .catch((e) => {
+        console.log(e, "error");
+      });
+  };
   return (
     <Container>
       <Typography variant="h4" gutterBottom>
@@ -76,7 +69,8 @@ const AddressList = (props) => {
       <Paper elevation={3}>
         <List>
           {addresses.map((address) => (
-            <ListItem key={address.id}>
+            (address.addressType == "Shipping" && isBillingComponent)?(
+              <ListItem key={address.id}>
               <ListItemText
                 primary={`${address.firstName} ${address.lastName}`}
                 secondary={`${address.email}, ${address.countrycode}, ${address.phone}, ${address.address1}, ${address.country}, ${address.state}, ${address.city}, ${address.postcode}`}
@@ -86,8 +80,7 @@ const AddressList = (props) => {
                   edge="end"
                   aria-label="delete"
                   style={{ margin: "5px" }}
-                  onClick={() =>
-                  {
+                  onClick={() => {
                     handleDeleteClick(address.id);
                   }}
                 >
@@ -105,6 +98,38 @@ const AddressList = (props) => {
                 </IconButton>
               </ListItemSecondaryAction>
             </ListItem>
+
+            ):(address.addressType == "Billing" && (!isBillingComponent))?(
+            <ListItem key={address.id}>
+              <ListItemText
+                primary={`${address.firstName} ${address.lastName}`}
+                secondary={`${address.email}, ${address.countrycode}, ${address.phone}, ${address.address1}, ${address.country}, ${address.state}, ${address.city}, ${address.postcode}`}
+              />
+              <ListItemSecondaryAction>
+                <IconButton
+                  edge="end"
+                  aria-label="delete"
+                  style={{ margin: "5px" }}
+                  onClick={() => {
+                    handleDeleteClick(address.id);
+                  }}
+                >
+                  <DeleteIcon />
+                </IconButton>
+                <IconButton
+                  edge="end"
+                  aria-label="edit"
+                  style={{ margin: "5px" }}
+                  onClick={() => {
+                    handleEditClick(address.id);
+                  }}
+                >
+                  <Edit />
+                </IconButton>
+              </ListItemSecondaryAction>
+            </ListItem>
+            ):('')
+           
           ))}
         </List>
       </Paper>

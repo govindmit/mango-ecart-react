@@ -7,9 +7,9 @@ import Box from '@mui/material/Box';
 import "./style.css"
 import { Button } from '@mui/material';
 import BillingAddress from './billingaddress';
-import ProfileHeader from '../../../theme/frontend/profileheader';
 import AddressList from './addresslist';
 import { useNavigate } from 'react-router-dom';
+import Header from '../../../theme/frontend/header';
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -49,7 +49,9 @@ export default function BasicTabs() {
   const [value, setValue] = React.useState(0);
   const [isComponentVisible, setComponentVisible] = React.useState(false);
   const [isBillingComponent, setBillingComponent] = React.useState(false);
+  const [addressType, setAddressType] = React.useState('Billing');
 
+  // console.log(isBillingComponent)
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -58,21 +60,28 @@ export default function BasicTabs() {
   {
    setBillingComponent(!isBillingComponent);
     setComponentVisible(!isComponentVisible);
-    navigate("/my-new-address")
+    navigate("/my-new-address" , {state:{addressType}})
   }
 
   const handleClickBilling = ()=>
   {
+    setAddressType("Billing");
      setBillingComponent(!isBillingComponent);
+  }
+
+  const handleClickShipping = () =>
+  {
+    setAddressType("Shipping");
+    setBillingComponent(!isBillingComponent);
   }
   return (
     <>
-    <ProfileHeader/>
+    <Header/>
     <Box className="contain" sx={{ width: '90%'}} >
       <Box sx={{ borderBottom: 1, borderColor: 'divider', marginRight:'100px'}}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
           <Tab  label="Billing Address"  {...a11yProps(0)} onClick={handleClickBilling}/>
-          <Tab label="Shopping Address" {...a11yProps(1)} onClick={handleClickBilling} />
+          <Tab label="Shipping Address" {...a11yProps(1)} onClick={handleClickShipping} />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0} >
@@ -84,7 +93,12 @@ export default function BasicTabs() {
       <button className='address-btn' onClick={handleClick}> New Address</button>
       {/* {isComponentVisible ? (<BillingAddress />):""} */}
     </Box>
-    {isBillingComponent ? " ":(<AddressList 
+    {isBillingComponent ? (<AddressList 
+    isBillingComponent={isBillingComponent} 
+    setBillingComponent={setBillingComponent}
+    isComponentVisible={isComponentVisible} 
+    setComponentVisible={setComponentVisible}
+    />):(<AddressList 
     isBillingComponent={isBillingComponent} 
     setBillingComponent={setBillingComponent}
     isComponentVisible={isComponentVisible} 

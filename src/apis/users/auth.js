@@ -3,6 +3,7 @@ import configs from "../../config/config";
 import { useEffect } from "react";
 import { json } from "react-router-dom";
 const targetId = localStorage.getItem("token");
+console.log(targetId)
 
 export async function userLogin(props) {
   try {
@@ -35,9 +36,15 @@ export async function logOutUser() {
   try {
     let res = await axios({
       method:'put',
-      url:`${configs.apiUrl}/user-auth/logout`
+      url:`${configs.apiUrl}/user-auth/logout`,
+      headers:{
+        "Content-Type": "application/json", // Modify as needed
+        Authorization: `Bearer ${targetId}`, // Include the Bearer token
+      },
     })
-  } catch (error) {
+    return res;
+  } 
+  catch (error) {
     return error.response;
   }
 }
