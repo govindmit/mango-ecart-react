@@ -44,25 +44,23 @@ export async function getUser() {
   }
 }
 
-export async function updateUser()
-{
+export async function updateUser() {
   try {
     let res = await axios(
       {
-        method:'put',
+        method: 'put',
         url: `${configs.apiUrl}/user-auth/user`,
         headers: {
           "Content-Type": "application/json", // Modify as needed
           Authorization: `Bearer ${targetId}`, // Include the Bearer token
         }
       });
-      return res;
-    }
-    catch (error)
-    {
-       return error.response
-    }
+    return res;
   }
+  catch (error) {
+    return error.response
+  }
+}
 
 export async function addAddress(props) {
   try {
@@ -83,6 +81,19 @@ export async function registerUser(props) {
       method: "post",
       url: `${configs.apiUrl}/user-auth/register`,
       data: props,
+    });
+    return res;
+  } catch (error) {
+    return error.response;
+  }
+}
+
+export async function userVerification(props) {
+  try {
+    let res = await axios({
+      method: "get",
+      url: `${configs.apiUrl}/user-auth/verify/${props}`,
+
     });
     return res;
   } catch (error) {
