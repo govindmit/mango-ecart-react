@@ -1,3 +1,5 @@
+
+import "react-toastify/dist/ReactToastify.css";
 import React from 'react'
 import { Route, Routes } from 'react-router'
 import Login from '../components/admin/login'
@@ -25,15 +27,47 @@ import BcndhomePage from "../components/admin/dashboard/homepage";
 import BcndemailSub from "../components/admin/dashboard/emailsub";
 import BcndcontactAdmin from "../components/admin/dashboard/contactadmin";
 import OrderDetail from "../components/admin/order/order-detail"
+import { Dashboard } from "@mui/icons-material";
+import UserLogin from "../components/customer/login/userlogin";
+import Profile from "../components/customer/customerProfile/profile";
+import UserForgotPassword from "../components/customer/login/userforgotpassword";
+import UpdateProfile from "../components/customer/customerProfile/updateProfile";
+import ProductsPage from "../components/frontEnd/product";
 
 function routes() {
-  let adminlogin = localStorage.getItem('token');
+  let adminlogin = localStorage.getItem("token");
+  let customerlogin = localStorage.getItem("token");
   return (
     <>
      <ToastContainer />
 
       <Routes>
+      <Route path="/product" element={<ProductsPage />} />
         <Route path="/" element={<Frontend />} />
+        <Route path="/userlogin" element={<UserLogin login={true}/>} />
+        <Route path="/userforgotpassword" element={<UserForgotPassword />} />
+        <Route
+          path="/profile-table"
+          element={customerlogin ? <Profile /> : <UserLogin />}
+        ></Route>
+        <Route path="/profile" element={<UpdateProfile />}></Route>
+
+        <Route path="/admin" element={<Admin login={true} />} />
+
+        <Route path="/" element={<Frontend />} />
+        <Route
+          path="/admin/"
+          element={adminlogin ? <Dashboard /> : <Login />}
+        />
+        <Route
+          path="/admin/dashboard"
+          element={adminlogin ? <Dashboard /> : <Login />}
+        />
+        <Route
+          path="/admin/forgotpassword"
+          element={adminlogin ? <Dashboard /> : <Forgotpassword />}
+        />
+
         <Route path="/admin" element={<Admin login={false} />} />
         <Route path="/register" element={<Registration />} />
         <Route path="/" element={<Frontend />} />
@@ -63,7 +97,7 @@ function routes() {
          {/*Admin Routs End*/}
       </Routes>
     </>
-  )
+  );
 }
 
-export default routes
+export default routes;

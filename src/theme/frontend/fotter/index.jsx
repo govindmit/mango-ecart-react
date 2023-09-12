@@ -1,7 +1,27 @@
 
+import { useEffect, useState } from 'react';
+import { customerContact } from '../../../apis/users/home';
 import './style.css'
 
 const Footer = () => {
+    const [contact, setContact] = useState()
+
+    useEffect(() => {
+        customerContact()
+            .then((res) => {
+                let data = res.data;
+                if (data.isError) {
+                    toast.error(data.message);
+                } else {
+                    setContact(data.result.data)
+                }
+
+            })
+            .catch((e) => {
+                console.log("eror", e);
+            });
+    },[]);
+
 
     return (
         <>
@@ -9,9 +29,9 @@ const Footer = () => {
                 <div>
                     <h3 className="fotter-title">CONTACT US UPDATES</h3>
                     <ul class="footer-contact">
-                        <li ><span >Address :</span>"</li>
-                        <li ><span >Cell-Phone :</span>6589451236</li>
-                        <li ><span >Email :</span>tp@gmail.com</li>
+                        <li ><span >Address :</span><span>{contact?(contact[0].country):""}</span></li>
+                        <li ><span >Cell-Phone :</span><span>{contact?(contact[0].phone):""}</span></li>
+                        <li ><span >Email :</span><span>{contact?(contact[0].email):""}</span></li>
                     </ul>
                 </div>
                 <div>
@@ -31,7 +51,7 @@ const Footer = () => {
                 <div>
                     <p className="mb-0">© <a target="_blank">MangoIT E-cart </a> 2022. All Rights Reserved .</p>
                 </div>
-                <div className='image-container'> 
+                <div className='image-container'>
                     <img src='http://ecart.mangoitsol.com/assets/home_page/img/payment/1.png' />
                     <img src='http://ecart.mangoitsol.com/assets/home_page/img/payment/2.png' />
                     <img src='http://ecart.mangoitsol.com/assets/home_page/img/payment/3.png' />
