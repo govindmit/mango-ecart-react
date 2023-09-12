@@ -25,6 +25,7 @@ import Bcndcontactconfig from "../components/admin/dashboard/contactusconfig";
 import BcndhomePage from "../components/admin/dashboard/homepage";
 import BcndemailSub from "../components/admin/dashboard/emailsub";
 import BcndcontactAdmin from "../components/admin/dashboard/contactadmin";
+import OrderDetail from "../components/admin/order/order-detail"
 import { Dashboard } from "@mui/icons-material";
 import UserLogin from "../components/customer/login/userlogin";
 import Profile from "../components/customer/customerProfile/profile";
@@ -34,6 +35,7 @@ import ProfileHeader from "../theme/frontend/profileheader";
 import BasicTabs from "../components/customer/customerBilling/basictabs";
 import AddressList from "../components/customer/customerBilling/addresslist";
 import BillingAddress from "../components/customer/customerBilling/billingaddress";
+import ProductsPage from "../components/frontEnd/product";
 
 function routes() {
   let adminlogin = localStorage.getItem("token");
@@ -44,6 +46,7 @@ function routes() {
       <ToastContainer />
 
       <Routes>
+      <Route path="/product" element={<ProductsPage />} />
         <Route path="/" element={<Frontend />} />
         <Route path="/userlogin" element={<UserLogin />} />
         <Route path="/userforgotpassword" element={<UserForgotPassword />} />
@@ -160,6 +163,28 @@ function routes() {
           element={adminlogin ? <Bcndashboard /> : <Adminresetpassword />}
         />
         {/*Admin Routs End*/}
+        <Route path="/admin/" element={adminlogin ? <Bcndashboard /> : <Login />} />
+        <Route path="/admin/dashboard" element={adminlogin ? <Bcndashboard /> : <Login />} />
+        <Route path="/admin/category-list" element={adminlogin ? <Bcndcategory /> : <Login />} />
+        <Route path="/admin/attribute-list" element={adminlogin ? <Bcndattribute /> : <Login />} />
+        <Route path="/admin/attribute-family" element={adminlogin ? <Bcndattributefamily /> : <Login />} />
+        <Route path="/admin/products" element={adminlogin ? <Bcndproducts /> : <Login />} />
+        <Route path="/admin/banners" element={adminlogin ? <Bcndbanners /> : <Login />} />
+        <Route path="/admin/orders" element={adminlogin ? <Bcndorders /> : <Login />} />
+        <Route path="/admin/invoices" element={adminlogin ? <Bcndinvoices /> : <Login />} />
+        <Route path="/admin/shipmments" element={adminlogin ? <Bcndshipmments /> : <Login />} />
+        <Route path="/admin/refunds" element={adminlogin ? <Bcndrefunds /> : <Login />} />
+        <Route path="/admin/pages-list" element={adminlogin ? <BcndstaticPage /> : <Login />} />
+        <Route path="/admin/configure" element={adminlogin ? <Bcndconfiguration /> : <Login />} />
+        <Route path="/admin/contactUs-configure" element={adminlogin ? <Bcndcontactconfig /> : <Login />} />
+        <Route path="/admin/manage-home-page" element={adminlogin ? <BcndhomePage /> : <Login />} />
+        <Route path="/admin/email-subscribe-list" element={adminlogin ? <BcndemailSub /> : <Login />} />
+        <Route path="/admin/contact-to-admin" element={adminlogin ? <BcndcontactAdmin /> : <Login />} />
+        <Route path="/admin/forgotpassword" element={adminlogin ? <Bcndashboard /> : <Forgotpassword />} />
+        <Route path="/admin/reset-password" element={adminlogin ? <Bcndashboard /> : <Adminresetpassword />} />
+        <Route path = "/admin/order-details/:id" element = {adminlogin? <OrderDetail /> : <Login />}/>
+
+         {/*Admin Routs End*/}
       </Routes>
     </>
   );

@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import { useRef, useState } from 'react';
 import NavBar from '../../../theme/frontend/header/navBar';
 import Header from '../../../theme/frontend/header';
+import Banner from '../../../theme/frontend/banner';
 
 const Registration = () => {
 
@@ -57,6 +58,7 @@ const Registration = () => {
     <div>
       <Header/>
       <NavBar />
+      <Banner data={"registration"}/>
       <div className='main-container'>
         {isRegister ? (
           <div>

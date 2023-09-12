@@ -1,0 +1,26 @@
+
+.banner-container {
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('http://ecart.mangoitsol.com/assets/home_page/img/bg/1.jpg') no-repeat center center / cover;
+    color: #fff;
+    min-height: 318px;
+    position: relative;
+    text-align: center;
+}
+
+.banner-data h1 {
+    position: absolute;
+    min-width: 100%;
+    top: 25%;
+    text-align: center;
+}
+.banner-data h4{
+    position: absolute;
+    bottom: 6px;;
+    left: 10px;
+
+}
+
+.banner-data h1,
+h4 {
+    text-transform: uppercase;
+}

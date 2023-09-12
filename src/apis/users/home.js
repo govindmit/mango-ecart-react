@@ -86,3 +86,20 @@ export async function getHomeData() {
   }
 
 }
+
+
+export async function allProduct() {
+
+  try {
+    let res = await axios({
+      method: 'get',
+      url: `${configs.apiUrl}/user-product/get-all-products?page=1&pageSize=10&filter=true&catId=`,
+    });
+
+    return res;
+
+  } catch (error) {
+    return error.response;
+  }
+
+}

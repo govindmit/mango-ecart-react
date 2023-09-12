@@ -18,12 +18,11 @@ function categoryTable({ data }) {
   const [searchText, setSearchText] = useState("");
   const [sortedData, setSortedData] = useState(data);
 
-  console.log(sortedData);
   const handleSearch = (event) => {
     const value = event.target.value.toLowerCase();
     setSearchText(value);
     const filteredData = data.filter((item) =>
-      item.customerFirstName.toLowerCase().includes(value)
+      item.categoryTranslations[0].name.toLowerCase().includes(value)
     );
     setSortedData(filteredData);
     setPage(0);
@@ -65,8 +64,8 @@ function categoryTable({ data }) {
                 <TableRow key={item.id}>
                   <TableCell>{item.categoryTranslations[0].name}</TableCell>
                   <TableCell>{item.position}</TableCell>
-                  <TableCell>{item.is_filter? 'Yes':'No'}</TableCell>
-                  <TableCell>{item.status? 'Yes': 'No'}</TableCell>
+                  <TableCell>{item.is_filter ? "Yes" : "No"}</TableCell>
+                  <TableCell>{item.status ? "Yes" : "No"}</TableCell>
                   <TableCell>
                     <RemoveRedEyeIcon />
                   </TableCell>
@@ -85,7 +84,6 @@ function categoryTable({ data }) {
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
     </div>
-   
   );
 }
 

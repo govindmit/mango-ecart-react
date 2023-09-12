@@ -1,0 +1,97 @@
+.myDivxyz {
+    display: flex;
+    color: #999;
+        margin-bottom: 60px;
+}
+
+.sideBarDiv {
+    margin-left: 28px;
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.sideBar {
+    max-width: 240px;
+    text-align: center;
+    margin-inline: 80px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 7px;
+}
+
+.search-basic {
+    margin-left: 80px;
+    max-width: 240px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 7px;
+}
+
+.icon-container {
+    margin-top: 38px;
+    margin-bottom: 10px;
+    min-height: 36px;
+    padding-top: 12px;
+    padding-left: 20px;
+    display: flex;
+    max-width: 95%;
+    gap: 20px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 7px;
+}
+
+.range-div {
+    display: flex;
+    max-width: 140px;
+    gap: 4px;
+}
+
+.price-slider {
+    max-width: 160px;
+    color: cornflowerblue;
+}
+
+.range-slider-div {
+    max-width: 240px;
+    padding-left: 10px;
+    margin-inline: 80px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 7px;
+}
+
+.range-slider-div h3 {
+    padding-top: 10px;
+}
+
+.checkbox-box {
+    max-width: 16px;
+    max-height: 16px;
+}
+
+.side-bar-div-compo {
+    max-width: 240px;
+    padding-left: 10px;
+    margin-inline: 80px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 7px;
+}
+
+.side-bar-div-compo label {
+    color: black;
+    margin-left: 12px;
+    padding-left: 4px;
+    padding: 12px;
+}
+
+.side-bar-div-compo button {
+    color: azure;
+    background-color: orange;
+    text-align: center;
+    margin: 30px;
+}
+
+.side-bar-div-compo img {
+    text-align: center;
+    margin-inline: 4px;
+    margin-left: -4px;
+}
+
+.price-content-container{
+    text-align: -webkit-center;
+    margin-inline-end: 24px;
+}
