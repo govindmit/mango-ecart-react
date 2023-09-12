@@ -26,6 +26,7 @@ import Bcndcontactconfig from "../components/admin/dashboard/contactusconfig";
 import BcndhomePage from "../components/admin/dashboard/homepage";
 import BcndemailSub from "../components/admin/dashboard/emailsub";
 import BcndcontactAdmin from "../components/admin/dashboard/contactadmin";
+import OrderDetail from "../components/admin/order/order-detail"
 import { Dashboard } from "@mui/icons-material";
 import UserLogin from "../components/customer/login/userlogin";
 import Profile from "../components/customer/customerProfile/profile";
@@ -91,6 +92,8 @@ function routes() {
         <Route path="/admin/contact-to-admin" element={adminlogin ? <BcndcontactAdmin /> : <Login />} />
         <Route path="/admin/forgotpassword" element={adminlogin ? <Bcndashboard /> : <Forgotpassword />} />
         <Route path="/admin/reset-password" element={adminlogin ? <Bcndashboard /> : <Adminresetpassword />} />
+        <Route path = "/admin/order-details/:id" element = {adminlogin? <OrderDetail /> : <Login />}/>
+
          {/*Admin Routs End*/}
       </Routes>
     </>

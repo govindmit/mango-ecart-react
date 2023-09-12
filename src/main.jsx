@@ -34,7 +34,7 @@ function autologout() {
     window.location.reload(false);
   }
 }
-setInterval(autologout, 5000000);
+setInterval(autologout, 300000);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
