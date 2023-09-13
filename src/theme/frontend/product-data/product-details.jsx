@@ -3,10 +3,12 @@ import React, { useEffect, useState, useRef } from 'react';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { CardActionArea } from '@mui/material';
+import { CardActionArea, FormControl, IconButton, MenuItem, Select } from '@mui/material';
 import './style.css'; // Import your CSS file
 import configs from '../../../config/config';
 
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 const productData = [
     {
@@ -133,9 +135,9 @@ const productData = [
 
 
 const ProductDetailsCard = () => {
-    const cardsPerPage = 9;
-    const [currentPage, setCurrentPage] = useState(1);
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const [cardsPerPage, setCardsPerPage] = useState(9);
     const totalPages = Math.ceil(productData.length / cardsPerPage);
 
     const paginate = (pageNumber) => {
@@ -148,6 +150,10 @@ const ProductDetailsCard = () => {
         return productData.slice(startIndex, endIndex);
     };
 
+    const handleChange = (e) => {
+        setCardsPerPage(e.target.value);
+        setCurrentPage(1)
+    }
     const pageData = getPageData();
 
     return (
@@ -184,27 +190,40 @@ const ProductDetailsCard = () => {
                 ))}
             </div>
             <div className='pagination'>
-                <button
-                    onClick={() => paginate(currentPage - 1)}
-                    disabled={currentPage === 1}
-                >
-                    Previous
-                </button>
-                {Array.from({ length: totalPages }, (_, index) => (
-                    <button
-                        key={index}
-                        onClick={() => paginate(index + 1)}
-                        className={currentPage === index + 1 ? 'active' : ''}
+            <p>Items per Page:</p>
+                <div>
+                    <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }} >
+                        <Select
+                            labelId="demo-simple-select-standard-label"
+                            id="demo-simple-select-standard"
+                            value={cardsPerPage}
+                            onChange={handleChange}
+                        >
+                            <MenuItem value="9">10</MenuItem>
+                            <MenuItem value="24">25</MenuItem>
+                            <MenuItem value="49">50</MenuItem>
+                            <MenuItem value="99">100</MenuItem>
+                        </Select>
+                    </FormControl>
+
+                </div>
+                <div>
+                    {currentPage} - {Math.min(currentPage * cardsPerPage, productData.length)} of {productData.length}
+                </div>
+                <div>
+                    <IconButton
+                        onClick={() => paginate(currentPage - 1)}
+                        disabled={currentPage === 1}>
+                        <ArrowBackIosIcon />
+                    </IconButton>
+
+                    <IconButton
+                        onClick={() => paginate(currentPage + 1)}
+                        disabled={currentPage === totalPages}
                     >
-                        {index + 1}
-                    </button>
-                ))}
-                <button
-                    onClick={() => paginate(currentPage + 1)}
-                    disabled={currentPage === totalPages}
-                >
-                    Next
-                </button>
+                        <ArrowForwardIosIcon />
+                    </IconButton>
+                </div>
             </div>
         </div>
     );

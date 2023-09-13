@@ -9,7 +9,7 @@ import './style.css'; // Import your CSS file
 import configs from '../../../config/config';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-// const cardsPerPage = 9;
+
 const productData = [
   {
     "id": 2,
@@ -180,6 +180,7 @@ const ProductDataCard = () => {
         ))}
       </div>
       <div className='pagination'>
+      <p>Items per Page:</p>
         <div>
           <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }} >
             <Select

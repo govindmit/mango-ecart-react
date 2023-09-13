@@ -35,8 +35,12 @@ import BasicTabs from "../components/customer/customerBilling/basictabs";
 import AddressList from "../components/customer/customerBilling/addresslist";
 import BillingAddress from "../components/customer/customerBilling/billingaddress";
 import ProductsPage from "../components/frontEnd/product";
+<<<<<<< HEAD
 import Aboutus from "../components/frontEnd/aboutus";
 import Contact from "../components/frontEnd/contactus";
+=======
+import Verification from "../components/customer/verification";
+>>>>>>> 65cf51c0b691d99c1c9f36108c9e6eee13b9983d
 
 function routes() {
   let adminlogin = localStorage.getItem("token");
@@ -89,6 +93,8 @@ function routes() {
         <Route path="/admin" element={<Admin login={false} />} />
         <Route path="/register" element={<Registration />} />
         <Route path="/" element={<Frontend />} />
+        <Route path="/verification" element={<Verification />} />
+
 
         {/*Admin Routs Start */}
         <Route

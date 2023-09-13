@@ -3,14 +3,15 @@ import Aboutus from '../../../components/frontEnd/aboutus';
 import './style.css'
 
 const NavBar =()=>{
+  
     return(
         <div className="navContainer"> 
             <div>
                 <img src="http://ecart.mangoitsol.com/assets/home_page/img/home/ecart-logo.png"/>
             </div>
             <div className='navContainer-2'>
-                <h4>Home</h4>
-                <h4>Products</h4>
+                <Link to={'/'}><h4>Home</h4></Link> 
+                <Link to={'/product'}><h4 >Products</h4></Link>         
                 <h4>Apparels</h4>
                 <h4>Furniture</h4>
                 <h4>Appliances</h4>
