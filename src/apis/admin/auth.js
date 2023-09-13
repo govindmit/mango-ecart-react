@@ -7,6 +7,7 @@ export async function funLogin(props){
         let res = await axios({
           method: 'post',
           url: `${configs.apiUrl}/admin-auth/login`,
+          data: props
         });
         return res;
       

@@ -9,14 +9,22 @@ import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import TablePagination from "@mui/material/TablePagination";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import { Link, useNavigate  } from "react-router-dom";
+import { format } from 'date-fns';
 
 const rowsPerPageOptions = [10, 25, 50];
 
 function FunCustomTable({ data }) {
+  const Navigate = useNavigate();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [searchText, setSearchText] = useState("");
   const [sortedData, setSortedData] = useState(data);
+
+  const handleIconClick = (orderId) => {
+    // Your logic here
+    Navigate('/admin/order-details/'+orderId)
+  };
 
   const handleSearch = (event) => {
     const value = event.target.value.toLowerCase();
@@ -67,11 +75,11 @@ function FunCustomTable({ data }) {
                   <TableCell>{item.id}</TableCell>
                   <TableCell>{item.customerFirstName}</TableCell>
                   <TableCell>{item.customerEmail}</TableCell>
-                  <TableCell>{item.subTotal}</TableCell>
-                  <TableCell>{item.updatedAt}</TableCell>
+                  <TableCell>${item.grandTotal}</TableCell>
+                  <TableCell>{item.updatedAt }</TableCell>
                   <TableCell>{item.status}</TableCell>
                   <TableCell>
-                    <RemoveRedEyeIcon />
+                    <RemoveRedEyeIcon  onClick={() => handleIconClick(item.id)}/>
                   </TableCell>
                 </TableRow>
               ))}

@@ -65,104 +65,18 @@ function routes() {
         <Route path="/my-address" element={customerlogin ? <BasicTabs/> : <UserLogin/>}/>
   
         <Route path="/my-new-address" element={<BillingAddress/>}/>
-        <Route path="/admin" element={<Admin login={true} />} />
+      
 
         <Route path="/" element={<Frontend />} />
-        <Route
-          path="/admin/"
-          element={adminlogin ? <Dashboard /> : <Login />}
-        />
-        <Route
-          path="/admin/dashboard"
-          element={adminlogin ? <Dashboard /> : <Login />}
-        />
-        <Route
-          path="/admin/forgotpassword"
-          element={adminlogin ? <Dashboard /> : <Forgotpassword />}
-        />
+        
+       
+       
 
-        <Route path="/admin" element={<Admin login={false} />} />
         <Route path="/register" element={<Registration />} />
         <Route path="/" element={<Frontend />} />
 
         {/*Admin Routs Start */}
-        <Route
-          path="/admin/"
-          element={adminlogin ? <Bcndashboard /> : <Login />}
-        />
-        <Route
-          path="/admin/dashboard"
-          element={adminlogin ? <Bcndashboard /> : <Login />}
-        />
-        <Route
-          path="/admin/category-list"
-          element={adminlogin ? <Bcndcategory /> : <Login />}
-        />
-        <Route
-          path="/admin/attribute-list"
-          element={adminlogin ? <Bcndattribute /> : <Login />}
-        />
-        <Route
-          path="/admin/attribute-family"
-          element={adminlogin ? <Bcndattributefamily /> : <Login />}
-        />
-        <Route
-          path="/admin/products"
-          element={adminlogin ? <Bcndproducts /> : <Login />}
-        />
-        <Route
-          path="/admin/banners"
-          element={adminlogin ? <Bcndbanners /> : <Login />}
-        />
-        <Route
-          path="/admin/orders"
-          element={adminlogin ? <Bcndorders /> : <Login />}
-        />
-        <Route
-          path="/admin/invoices"
-          element={adminlogin ? <Bcndinvoices /> : <Login />}
-        />
-        <Route
-          path="/admin/shipmments"
-          element={adminlogin ? <Bcndshipmments /> : <Login />}
-        />
-        <Route
-          path="/admin/refunds"
-          element={adminlogin ? <Bcndrefunds /> : <Login />}
-        />
-        <Route
-          path="/admin/pages-list"
-          element={adminlogin ? <BcndstaticPage /> : <Login />}
-        />
-        <Route
-          path="/admin/configure"
-          element={adminlogin ? <Bcndconfiguration /> : <Login />}
-        />
-        <Route
-          path="/admin/contactUs-configure"
-          element={adminlogin ? <Bcndcontactconfig /> : <Login />}
-        />
-        <Route
-          path="/admin/manage-home-page"
-          element={adminlogin ? <BcndhomePage /> : <Login />}
-        />
-        <Route
-          path="/admin/email-subscribe-list"
-          element={adminlogin ? <BcndemailSub /> : <Login />}
-        />
-        <Route
-          path="/admin/contact-to-admin"
-          element={adminlogin ? <BcndcontactAdmin /> : <Login />}
-        />
-        <Route
-          path="/admin/forgotpassword"
-          element={adminlogin ? <Bcndashboard /> : <Forgotpassword />}
-        />
-        <Route
-          path="/admin/reset-password"
-          element={adminlogin ? <Bcndashboard /> : <Adminresetpassword />}
-        />
-        {/*Admin Routs End*/}
+      
         <Route path="/admin/" element={adminlogin ? <Bcndashboard /> : <Login />} />
         <Route path="/admin/dashboard" element={adminlogin ? <Bcndashboard /> : <Login />} />
         <Route path="/admin/category-list" element={adminlogin ? <Bcndcategory /> : <Login />} />
