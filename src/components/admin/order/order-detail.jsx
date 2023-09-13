@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import PersistentDrawerRight from "../../../theme/backend/sidebar/index";
 import ReplyAllRoundedIcon from "@mui/icons-material/ReplyAllRounded";
@@ -9,6 +9,11 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import Information from "../../../theme/backend/order/information";
+import Shipments from "../../../theme/backend/order/shipments";
+import Invoices from "../../../theme/backend/order/invoices";
+import Transactions from "../../../theme/backend/order/transactions";
+import { funOrderDeatils } from "../../../apis/admin/order/";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -38,8 +43,17 @@ function a11yProps(index) {
 }
 
 function orderDetail() {
-  const { id } = useParams();
   const history = useNavigate();
+  const { id } = useParams();
+  const [orderData, setorderData] = useState([]);
+  const orderDetailFor = { ID: id, token: localStorage.getItem("token") };
+
+  useEffect(() => {
+    // Call the function and update the state with the result
+    funOrderDeatils(orderDetailFor).then((response) => {
+      setorderData(response?.data?.result?.data[0]);
+    });
+  }, []);
 
   // Define a function to handle the back button click
   const handleBackClick = () => {
@@ -62,7 +76,7 @@ function orderDetail() {
     fontSize: ".650rem",
     fontWeight: "1000", // Change this to your desired text color
   };
-
+  console.log(orderData);
   return (
     <>
       <PersistentDrawerRight />
@@ -70,7 +84,7 @@ function orderDetail() {
         <ReplyAllRoundedIcon onClick={handleBackClick} />
         <h2>Orders Details</h2>
       </div>
-      <Box sx={{ bgcolor: "background.paper", width: 500 }}>
+      <Box sx={{ bgcolor: "background.paper" }}>
         <AppBar position="static" sx={{ bgcolor: "#FFFFFF" }}>
           <Tabs
             value={value}
@@ -97,16 +111,19 @@ function orderDetail() {
           onChangeIndex={handleChangeIndex}
         >
           <TabPanel value={value} index={0} dir={theme.direction}>
-            Item One
+            <Information />
+            {orderData && orderData.length > 0 && (
+              <Information data={orderData} />
+            )}
           </TabPanel>
           <TabPanel value={value} index={1} dir={theme.direction}>
-            Item Two
+            <Shipments />
           </TabPanel>
           <TabPanel value={value} index={2} dir={theme.direction}>
-            Item Three
+            <Invoices />
           </TabPanel>
           <TabPanel value={value} index={3} dir={theme.direction}>
-            Item Four
+            <Transactions />
           </TabPanel>
         </SwipeableViews>
       </Box>

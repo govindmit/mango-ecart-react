@@ -3,7 +3,6 @@ import configs from "../../config/config";
 import { useEffect } from "react";
 import { json } from "react-router-dom";
 const targetId = localStorage.getItem("token");
-console.log(targetId)
 
 export async function userLogin(props) {
   try {
