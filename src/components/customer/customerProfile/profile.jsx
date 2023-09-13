@@ -3,7 +3,7 @@ import "./style.css";
 import { useContext, useEffect, useState } from "react";
 import { getUser } from "../../../apis/users/auth";
 import { useUser } from "../../../context/usercontext";
-import ProfileHeader from "../../../theme/frontend/profileheader";
+import Header from "../../../theme/frontend/header";
 
 
 const Profile = () => {
@@ -28,7 +28,7 @@ const Profile = () => {
 
   return (
     <>
-    <ProfileHeader/>
+    <Header/>
       <div className="my-account-area">
         <div className="container">
           <div className="my-account">

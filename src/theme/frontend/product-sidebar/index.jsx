@@ -8,7 +8,7 @@ import ProductSideBar from "./sideBar";
 import { useState } from "react";
 import ProductDetailsCard from "../product-data/product-details";
 import PriceSlider from "./price-slider";
-import { CheckBox } from "@mui/icons-material";
+
 
 
 
@@ -32,9 +32,6 @@ export default function ProductBanner() {
     const handleProductShow = () => {
         setIsProductData(!isProductData);
     }
-
-
-
     const handleGreenCheckboxChange = () => {
         setIsGreenChecked(!isGreenChecked);
     }

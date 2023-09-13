@@ -1,0 +1,28 @@
+.verification-div-container {
+    height: 350px;
+    /* You can adjust the height as needed */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0;
+}
+
+.verification-content-div {
+    text-align: center;
+    background-color: white;
+    padding: 12px;
+    width: 45%;
+    height: 50%;
+    box-shadow: 0 .15rem 1.75rem #3a3b4526!important;
+    border-radius: 12px;
+}
+
+/* Style the button */
+.verifyBtn {
+    background-color: orange;
+    padding: 4px 26px;
+    border: none;
+    border-radius: 0px;
+    max-height: 30px;
+    cursor: pointer;
+}

@@ -7,16 +7,19 @@ import {
 } from "../../../apis/users/auth";
 import { toast } from "react-toastify";
 import { useUser } from "../../../context/usercontext";
-import { Link, useNavigate } from "react-router-dom";
-import ProfileHeader from "../../../theme/frontend/profileheader";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import Header from "../../../theme/frontend/header";
 
 const BillingAddress = (props) => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const {addressType} = location.state;
+  console.log(addressType)
   const { addressId } = useUser();
   const [errors, setErrors] = useState({});
   const { addresses, setAddresses } = useUser();
   const [formData, setFormData] = useState({
-    addressType: "Billing",
+    addressType: addressType,
     firstName: "",
     lastName: "",
     gender: "",
@@ -175,12 +178,22 @@ const BillingAddress = (props) => {
   };
   return (
     <>
-      <ProfileHeader />
+    <Header/>
       <div className="customer-column">
         <div className="customer-billing-details">
+          { 
+    addressId  ?  <h4>{( formValue?.addressType)}</h4>
+     :(addressType === "Billing" ? (
           <div className="heading-container">
-            <h4>Billing details</h4>
-          </div>
+          <h4>Billing details</h4>
+        </div>
+        ):(
+          <div className="heading-container">
+          <h4>Shipping details</h4>
+        </div>
+        )) 
+          }
+          
           <form
             autoComplete="on"
             onSubmit={(e) => {
@@ -341,8 +354,7 @@ const BillingAddress = (props) => {
             <br />
             <button type="submit">Save and Deliver Here</button>
             <button type="submit">
-              {" "}
-              <Link to="/my-address"> Cancel </Link>{" "}
+              <Link to="/my-address"> Cancel </Link>
             </button>
           </form>
 

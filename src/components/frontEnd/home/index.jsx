@@ -10,7 +10,6 @@ import FeatureProductsCard from '../../../theme/frontend/products-card/feature-p
 import LatestsProductsCard from '../../../theme/frontend/products-card/latest-product'
 import TrendingProductsCard from '../../../theme/frontend/products-card/trending-product'
 import { getHomeData } from '../../../apis/users/home'
-import ProfileHeader from "../../../theme/frontend/profileheader";
 
 
 function index() {
