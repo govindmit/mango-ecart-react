@@ -103,3 +103,19 @@ export async function allProduct() {
   }
 
 }
+
+export async function contactUs(props)
+{
+  console.log(props);
+  try{
+    let res = await axios({
+      method:'post',
+      url:`${configs.apiUrl}/admin-contact/create`,
+      data:props
+    });
+    return res;
+  }catch (error)
+  {
+    return error.response;
+  }
+}

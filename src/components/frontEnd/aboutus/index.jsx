@@ -1,10 +1,18 @@
+import Footer from '../../../theme/frontend/fotter';
+import Header from '../../../theme/frontend/header';
+import NavBar from '../../../theme/frontend/header/navBar';
+import './style.css'
+
+
 const Aboutus = () => {
   return (
     <>
-      <div>
-        <div className="container">
-          <div className="row">
-            <div>
+    <Header/>
+    <NavBar/>
+      <div className="product-area">
+        <div className="about-container">
+          <div className="about-row">
+            <div className="about-column">
               <div className="our-story">
                 <h2>Our Story</h2>
                 <p>
@@ -37,15 +45,19 @@ const Aboutus = () => {
                 </p>
               </div>
             </div>
-            <div>
-              <div className="our img">
-                <img src="" alt="" />
+            <div className='img-column'>
+              <div className="our-img">
+                <img src="http://103.127.29.85:3006/uploads/portfolio-5.jpg" alt="Portfolio Image" />
               </div>
             </div>
           </div>
+          <div className='row mt-5'></div>
         </div>
       </div>
+
+      <Footer/>
     </>
+
   );
 };
 export default Aboutus;

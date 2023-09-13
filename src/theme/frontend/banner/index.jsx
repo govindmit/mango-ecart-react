@@ -7,7 +7,6 @@ return(
             <h1>{data}</h1>
         <h4>HOME / {data}</h4>
         </div>
-       
     </div>
 )
 

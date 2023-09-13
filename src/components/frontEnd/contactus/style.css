@@ -1,0 +1,147 @@
+.contact-container{
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    max-width: 1140px;
+    
+}
+.text-center
+{
+    text-align: center!important;
+}
+.section-title h2
+{
+    color: #0E1133;
+    font-size: 42px;
+    font-weight: 900;
+    line-height: 22px;
+    margin-bottom: 25px;
+    padding-bottom: 22px;
+    font-family: 'Josefin Sans', sans-serif;
+}
+.product-area .section-title p{
+    max-width: 100%;
+}
+.text-center p{
+    margin: 0 auto;
+    line-height: 20px;
+    font-size: 14px;
+}
+.contact-row
+{
+    margin-top: 3rem !important;
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+.contact .info
+{
+    border-top: 3px solid #FB9400;
+    border-bottom: 3px solid #FB9400;
+    padding: 30px;
+    background: #fff;
+    width: 100%;
+    box-shadow: 0 0 24px #0000001a;
+}
+.contact .contact-form
+{
+    width: 100%;
+    border-top: 3px solid #FB9400;
+    border-bottom: 3px solid #FB9400;
+    padding: 30px;
+    background: #fff;
+    box-shadow: 0 0 24px #0000001f;
+}
+.contact-form-group 
+{
+    margin-top: 20px;
+    margin-bottom: 1rem;
+}
+.contact .contact-form  label {
+    padding-bottom: 8px;
+}
+.contact .contact-form input {
+    height: 45px;
+    box-shadow: none;
+    font-size: 14px;
+    border-radius: 4px;
+}
+label{
+    display: inline-block;
+    margin-bottom: 0.5rem;
+}
+.contact-form-control
+{
+    background: #f6f6f6 none repeat scroll 0 0;
+    color: black;
+    margin-bottom: 15px;
+    padding: 0 20px;
+    transition: all 0.5s ease 0s;
+    width: 90%;
+    border: 1px solid #e1e1e1;
+    outline: none;
+    display: block;
+    font-family: inherit;
+}
+.contact-col
+{
+    max-width: 32%;
+    position: relative;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 90px;
+}
+.form-col
+{
+    max-width: 42%;
+    position: relative;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 75px;
+}
+.info-icon
+{
+    font-size: 20px;
+    color: #fb9400;
+    float: left;
+    width: 44px;
+    height: 44px;
+    background: #fb920051;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    transition: all .3s ease-in-out;
+}
+.contact .info h4{
+    padding: 0 0 0 60px;
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #fb9a2d;
+}
+.contact .info .email p{
+    padding-top: 5px;
+}
+.contact .info p{
+    padding: 0 0 10px 60px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #333;
+}
+.contact .contact-form textarea{
+    padding: 10px 12px;
+    font-size: 1rem;
+}
+textarea .contact-form-control{
+    height: auto;
+}
+.space-email
+{
+    margin-right: -60px;
+    margin-left: 40px;
+}
+.space-name
+{
+    margin-right: -30px;
+}

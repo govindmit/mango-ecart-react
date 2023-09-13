@@ -1,15 +1,15 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import "./style.css"
-import { Button } from '@mui/material';
-import BillingAddress from './billingaddress';
-import AddressList from './addresslist';
-import { useNavigate } from 'react-router-dom';
-import Header from '../../../theme/frontend/header';
+import * as React from "react";
+import PropTypes from "prop-types";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import "./style.css";
+import { Button } from "@mui/material";
+import BillingAddress from "./billingaddress";
+import AddressList from "./addresslist";
+import { useNavigate } from "react-router-dom";
+import Header from "../../../theme/frontend/header";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -40,7 +40,7 @@ CustomTabPanel.propTypes = {
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
   };
 }
 
@@ -49,64 +49,81 @@ export default function BasicTabs() {
   const [value, setValue] = React.useState(0);
   const [isComponentVisible, setComponentVisible] = React.useState(false);
   const [isBillingComponent, setBillingComponent] = React.useState(false);
-  const [addressType, setAddressType] = React.useState('Billing');
+  const [isShippingComponent, setShippingComponent] = React.useState(false);
+  const [addressType, setAddressType] = React.useState("Billing");
 
-  // console.log(isBillingComponent)
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  const handleClick =()=>
-  {
-   setBillingComponent(!isBillingComponent);
-    setComponentVisible(!isComponentVisible);
-    navigate("/my-new-address" , {state:{addressType}})
-  }
-
-  const handleClickBilling = ()=>
-  {
-    setAddressType("Billing");
-     setBillingComponent(!isBillingComponent);
-  }
-
-  const handleClickShipping = () =>
-  {
-    setAddressType("Shipping");
+  const handleClick = () => {
     setBillingComponent(!isBillingComponent);
-  }
+    setComponentVisible(!isComponentVisible);
+    navigate("/my-new-address", { state: { addressType } });
+  };
+
+  const handleClickBilling = () => {
+    setAddressType("Billing");
+    setBillingComponent(true);
+    setShippingComponent(false);
+  };
+
+  const handleClickShipping = () => {
+    setAddressType("Shipping");
+    setBillingComponent(false);
+    setShippingComponent(true);
+  };
   return (
     <>
-    <Header/>
-    <Box className="contain" sx={{ width: '90%'}} >
-      <Box sx={{ borderBottom: 1, borderColor: 'divider', marginRight:'100px'}}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab  label="Billing Address"  {...a11yProps(0)} onClick={handleClickBilling}/>
-          <Tab label="Shipping Address" {...a11yProps(1)} onClick={handleClickShipping} />
-        </Tabs>
+      <Header />
+      <Box className="contain" sx={{ width: "90%" }}>
+        <Box
+          sx={{ borderBottom: 1, borderColor: "divider", marginRight: "100px" }}
+        >
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            aria-label="basic tabs example"
+          >
+            <Tab
+              label="Billing Address"
+              {...a11yProps(0)}
+              onClick={handleClickBilling}
+            />
+            <Tab
+              label="Shipping Address"
+              {...a11yProps(1)}
+              onClick={handleClickShipping}
+            />
+          </Tabs>
+        </Box>
+        <CustomTabPanel value={value} index={0}>
+          <p className="content">Billing Address</p>
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={1}>
+          <p className="content"> Shipping Address</p>
+        </CustomTabPanel>
+        <button className="address-btn" onClick={handleClick}>
+          New Address
+        </button>
       </Box>
-      <CustomTabPanel value={value} index={0} >
-        <p className='content'>Billing Address</p>
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
-       <p className='content'> Shipping Address</p>
-      </CustomTabPanel>
-      <button className='address-btn' onClick={handleClick}> New Address</button>
-      {/* {isComponentVisible ? (<BillingAddress />):""} */}
-    </Box>
-    {isBillingComponent ? (<AddressList 
-    isBillingComponent={isBillingComponent} 
-    setBillingComponent={setBillingComponent}
-    isComponentVisible={isComponentVisible} 
-    setComponentVisible={setComponentVisible}
-    />):(<AddressList 
-    isBillingComponent={isBillingComponent} 
-    setBillingComponent={setBillingComponent}
-    isComponentVisible={isComponentVisible} 
-    setComponentVisible={setComponentVisible}
-    />)}
-
-    
-    
+      
+      {isBillingComponent && (
+        <AddressList
+          isBillingComponent={isBillingComponent}
+          setBillingComponent={setBillingComponent}
+          isComponentVisible={isComponentVisible}
+          setComponentVisible={setComponentVisible}
+        />
+      ) }
+      {isShippingComponent &&  (
+        <AddressList
+          isBillingComponent={isBillingComponent}
+          setBillingComponent={setBillingComponent}
+          isComponentVisible={isComponentVisible}
+          setComponentVisible={setComponentVisible}
+        />
+  )}
     </>
   );
 }

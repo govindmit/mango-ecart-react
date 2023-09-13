@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import Aboutus from '../../../components/frontEnd/aboutus';
 import './style.css'
 
@@ -15,8 +16,8 @@ const NavBar =()=>{
                 <h4>Appliances</h4>
                 <h4>Mobile Accessories</h4>
                 <h4>Virtual Products</h4>
-                <h4>About US</h4>
-                <h4>Contact</h4>
+                <h4> <Link to="/about-us"> About US </Link></h4>
+                <h4> <Link to="/contact"> Contact </Link></h4>
             </div>
         </div>
     )

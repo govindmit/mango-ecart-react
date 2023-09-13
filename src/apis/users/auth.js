@@ -3,7 +3,6 @@ import configs from "../../config/config";
 import { useEffect } from "react";
 import { json } from "react-router-dom";
 const targetId = localStorage.getItem("token");
-console.log(targetId)
 
 export async function userLogin(props) {
   try {
@@ -97,6 +96,7 @@ export async function registerUser(props) {
 
 export async function addAddress(props) {
   try {
+   
     let res = await axios({
       method: "post",
       url: "http://103.127.29.85:3006/api/user-address/create-address",

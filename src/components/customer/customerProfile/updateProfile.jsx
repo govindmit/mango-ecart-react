@@ -4,6 +4,7 @@ import "./style.css";
 import { useEffect, useState } from "react";
 import { getUser, updateUser } from "../../../apis/users/auth";
 import { useUser } from "../../../context/usercontext";
+import { toast } from "react-toastify";
 
 const UpdateProfile = () => {
   const navigate = useNavigate();
@@ -37,10 +38,15 @@ const UpdateProfile = () => {
     e.preventDefault();
     updateUser(data)
       .then((data) => {
-        navigate("/profile-table");
+        if (data.isError) {
+          toast.error(data.data.message);
+        } else {
+          toast.success(data.data.result.message);
+          navigate("/profile-table");
+        }
       })
       .catch((e) => {
-        console.log("error", e);
+        toast.error("Something wrong,Api not working");
       });
   };
 
@@ -67,7 +73,6 @@ const UpdateProfile = () => {
                               placeholder="Enter First name"
                               name="firstName"
                               value={editedUser.firstName}
-                              
                               onChange={handleChange}
                             />
                           </div>

@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { getUser } from "../../../apis/users/auth";
 import { useUser } from "../../../context/usercontext";
 import Header from "../../../theme/frontend/header";
+import { toast } from "react-toastify";
 
 
 const Profile = () => {
@@ -17,7 +18,7 @@ const Profile = () => {
       setUser(data.data.result.data);
     })
     .catch((e) => {
-      console.log("error", e);
+     toast.error("Something wrong Api not working");
     });
   },[])  
   
