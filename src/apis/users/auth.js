@@ -176,3 +176,15 @@ export async function deleteAddress(id) {
     return error.response;
   }
 }
+export async function userVerify(props) {
+  try {
+    let res = await axios({
+      method: "get",
+      url: `${configs.apiUrl}/user-auth/verify/${props}`,
+    
+    });
+    return res;
+  } catch (error) {
+    return error.response;
+  }
+}

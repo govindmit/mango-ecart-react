@@ -9,6 +9,7 @@ import { useRef, useState } from 'react';
 import NavBar from '../../../theme/frontend/header/navBar';
 import Header from '../../../theme/frontend/header';
 import Banner from '../../../theme/frontend/banner';
+import Footer from '../../../theme/frontend/fotter';
 
 const Registration = () => {
 
@@ -33,7 +34,7 @@ const Registration = () => {
 
         const res = registerUser(userDetails)
           .then((res) => {
-           
+                      
             let data = res.data;
             if (data.isError) {
               toast.error(data.message);
@@ -46,6 +47,7 @@ const Registration = () => {
           })
           .catch((e) => {
             console.log("eror", e);
+            toast.error("there is some technical issue you can try after some time");
           });
       } else {
         // ReCAPTCHA was not checked
@@ -66,7 +68,7 @@ const Registration = () => {
               <h1 >User Registration successful!</h1>
               <p>Verification link has been sent to your email</p>
               You can proceed for login after verification
-              <a routerlink="/auth/login" className="font-weight-bold small" href="/auth/login"> Log-In </a>
+              <Link to={'/userLogin'}>Log-In</Link>
             </div>
           </div>
         ) : (
@@ -97,9 +99,7 @@ const Registration = () => {
                     )}
                     <input type="text"
                       placeholder="Enter last name"
-                      name="lastName"
-                      formcontrolname={`custom-input form-control ${errors.lastName ? 'error-input' : ''}`}
-                      className='custom-input'
+                      className={`custom-input form-control ${errors.lastName ? 'error-input' : ''}`}
                       {...register("lastName",
                         {
                           required: true,
@@ -220,6 +220,7 @@ const Registration = () => {
           </div>
         )}
       </div>
+      <Footer />
     </div>
   );
 }
