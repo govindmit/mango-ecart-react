@@ -41,34 +41,32 @@ const UserLogin = () => {
         userLogin(userLoginDetails)
           .then((res) => {
             let data = res.data;
-            if(data.isError)
-            {
+            if (data.isError) {
               toast.error(data.message);
-            }
-            else
-            {
+            } else {
               let token = data.result.token;
               let user = data.result.user.id;
-              toast.success(data.result.message)
-              localStorage.setItem('token',token)
-              localStorage.setItem('user',user);
-              navigate('/profile-header')
+              let fullname =
+                data.result.user.firstName + " " + data.result.user.lastName;
+              toast.success(data.result.message);
+              localStorage.setItem("token", token);
+              localStorage.setItem("user", user);
+              localStorage.setItem("fullname", fullname);
+              navigate("/");
             }
           })
           .catch((e) => {
             console.log("error", e);
           });
       }
+    } else {
+      toast.error("Please complete the reCAPTCHA challenge.");
     }
-      else
-      {
-        toast.error("Please complete the reCAPTCHA challenge.");
-      }
   };
   return (
     <>
-    <Header/>
-    <NavBar/>
+      <Header />
+      <NavBar />
       <div className="login-area">
         <div className="container">
           <form onSubmit={handleSubmit} autoComplete="on">
@@ -78,7 +76,9 @@ const UserLogin = () => {
                   <h4 className="title-1">Registered Customers</h4>
                   <p className="text-gray">
                     If you do not have an account with us, Please{" "}
-                    <Link className="font-weight-bold small" to='/register'>Register</Link>{" "}
+                    <Link className="font-weight-bold small" to="/register">
+                      Register
+                    </Link>{" "}
                   </p>
                   <div className="form-group">
                     <input
@@ -87,7 +87,9 @@ const UserLogin = () => {
                       placeholder="Enter Email"
                       name="email"
                       value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      onChange={(e) => {
+                        setEmail(e.target.value), setErrors(" ");
+                      }}
                     />
                     {errors.email && (
                       <span className="danger ng-star-inserted">
@@ -103,7 +105,9 @@ const UserLogin = () => {
                       name="password"
                       value={password}
                       error
-                      onChange={(e) => setPassword(e.target.value)}
+                      onChange={(e) => {
+                        setPassword(e.target.value), setErrors("");
+                      }}
                       //   autoComplete="on"
                     />
                     {errors.password && (
@@ -114,16 +118,24 @@ const UserLogin = () => {
                   </div>
                   <br />
                   <div className="form-group">
-                    <ReCAPTCHA sitekey={configs.RECAPTCHA_KEY}  onChange={(value) => setRecaptchaValue(value)}/>
+                    <ReCAPTCHA
+                      sitekey={configs.RECAPTCHA_KEY}
+                      onChange={(value) => setRecaptchaValue(value)}
+                    />
                   </div>
                   <p>
-                    <Link className="font-weight-bold small" to="/userforgotpassword">Forgot Password?</Link>
+                    <Link
+                      className="font-weight-bold small"
+                      to="/userforgotpassword"
+                    >
+                      Forgot Password?
+                    </Link>
                   </p>
                   <button
                     type="submit"
                     className="button-one submit-button mt-15"
                   >
-                   Login 
+                    Login
                   </button>
                 </div>
               </div>
@@ -132,7 +144,7 @@ const UserLogin = () => {
           <br />
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 };

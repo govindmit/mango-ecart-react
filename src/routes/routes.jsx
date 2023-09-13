@@ -31,7 +31,6 @@ import UserLogin from "../components/customer/login/userlogin";
 import Profile from "../components/customer/customerProfile/profile";
 import UserForgotPassword from "../components/customer/login/userforgotpassword";
 import UpdateProfile from "../components/customer/customerProfile/updateProfile";
-import ProfileHeader from "../theme/frontend/profileheader";
 import BasicTabs from "../components/customer/customerBilling/basictabs";
 import AddressList from "../components/customer/customerBilling/addresslist";
 import BillingAddress from "../components/customer/customerBilling/billingaddress";
@@ -40,7 +39,7 @@ import ProductsPage from "../components/frontEnd/product";
 function routes() {
   let adminlogin = localStorage.getItem("token");
   let customerlogin = localStorage.getItem("token");
-  // console.log(customerlogin)
+  
   return (
     <>
       <ToastContainer />
@@ -51,12 +50,8 @@ function routes() {
         <Route path="/userlogin" element={<UserLogin />} />
         <Route path="/userforgotpassword" element={<UserForgotPassword />} />
         <Route
-          path="/profile-header"
-          element={customerlogin ? <ProfileHeader /> : <Frontend />}
-        />
-        <Route
           path="/profile-table"
-          element={customerlogin ? <Profile /> : <UserLogin />}
+          element={customerlogin ? <Profile/> : <UserLogin/> }
         />
         <Route
           path="/profile"
@@ -64,7 +59,7 @@ function routes() {
         />
         <Route path="/my-address" element={customerlogin ? <BasicTabs/> : <UserLogin/>}/>
   
-        <Route path="/my-new-address" element={<BillingAddress/>}/>
+        <Route path="/my-new-address" element={customerlogin ? <BillingAddress/>:<UserLogin/>}/>
         <Route path="/admin" element={<Admin login={true} />} />
 
         <Route path="/" element={<Frontend />} />
