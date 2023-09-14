@@ -81,10 +81,8 @@
 .side-bar-div-compo button {
     color: azure;
     background-color: orange;
-    text-align: center;
-    margin: 30px;
+    margin-inline: 28%;
 }
-
 .side-bar-div-compo img {
     text-align: center;
     margin-inline: 4px;
@@ -92,6 +90,7 @@
 }
 
 .price-content-container{
-    text-align: -webkit-center;
-    margin-inline-end: 24px;
+    color: #212529;
+   
+    padding: 20px 30px;
 }
