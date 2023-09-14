@@ -9,15 +9,16 @@ import { toast } from "react-toastify";
 import { useUser } from "../../../context/usercontext";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Header from "../../../theme/frontend/header";
+import NavBar from "../../../theme/frontend/header/navBar";
+import Footer from "../../../theme/frontend/fotter";
 
 const BillingAddress = (props) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const {addressType} = location.state;
-  console.log(addressType)
+  const { addressType } = location.state;
+  console.log(addressType);
   const { addressId } = useUser();
   const [errors, setErrors] = useState({});
-  const { addresses, setAddresses } = useUser();
   const [formData, setFormData] = useState({
     addressType: addressType,
     firstName: "",
@@ -31,7 +32,6 @@ const BillingAddress = (props) => {
     email: "",
     phone: "",
     countrycode: "",
-    fullname: "",
   });
 
   const formValue = formData[0];
@@ -39,88 +39,87 @@ const BillingAddress = (props) => {
     if (addressId) {
       getUserAddressById(addressId)
         .then((data) => {
-          const addressData = data.data.result.addressData;
-          const { firstName, lastName } = addressData;
-          const fullName = `${firstName} ${lastName}`;
-          setFormData({
-            ...addressData,
-            firstName: firstName,
-            lastName: lastName,
-            fullname: fullName,
-          });
+          // console.log(data.data.result.message);
+          if(data.isError)
+          {
+            toast.error(data.data.message);
+          }
+          else{
+            toast.success(data.data.result.message);
+            setFormData(data.data.result.addressData);
+          }  
         })
         .catch((e) => {
-          console.log(e, "error");
+         toast.error("Something went wrong Api not working")
         });
     }
   }, [addressId]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === "firstName" || name === "lastName") {
-      setFormData({
-        ...formData,
-        fullname: `${formData.firstName} ${formData.lastName}`,
-        [name]: value,
-      });
-    } else {
+    // if (name === "firstName" || name === "lastName") {
+    //   setFormData({
+    //     ...formData,
+    //     fullname: `${formData.firstName} ${formData.lastName}`,
+    //     [name]: value,
+    //   });
+    // } else {
       setFormData({
         ...formData,
         [name]: value,
       });
       setErrors("");
-    }
 
     if (addressId) {
-      if (name === "fullname") {
-        const [newFirstName, newLastName] = value.split("");
-        setFormData({
-          ...formValue,
-          firstName: newFirstName,
-          lastName: newLastName,
-          [name]: value,
-        });
-      } else {
+      // if (name === "fullname") {
+      //   const [newFirstName, newLastName] = value.split("");
+      //   setFormData({
+      //     ...formValue,
+      //     firstName: newFirstName,
+      //     lastName: newLastName,
+      //     [name]: value,
+      //   });
+      // } else {
         setFormData({
           ...formValue,
           [name]: value,
         });
         setErrors("");
       }
-    }
-  };
+    };
 
   const handleSubmit = () => {
     const newErrors = {};
     if (addressId) {
-      if(formValue?.email === "")
-      {
+      if (formValue?.email === "") {
         newErrors.email = "Email is required";
       }
       setErrors(newErrors);
-      if(Object.keys(newErrors).length === 0)
-      {
+      if (Object.keys(newErrors).length === 0) {
         updateAddress(addressId, formData)
-        .then((res) => {
-          let data = res.data;
-          if (data.isError) {
-            toast.error(data.message);
-          } else {
-            toast.success(data.result.message);
-            navigate("/my-address");
-          }
-        })
-        .catch((e) => {
-          console.log(e, "error");
-        });
+          .then((res) => {
+            let data = res.data;
+            if (data.isError) {
+              toast.error(data.message);
+            } else {
+              toast.success(data.result.message);
+              navigate("/my-address");
+            }
+          })
+          .catch((e) => {
+            console.log(e, "error");
+          });
       }
-     
     } else {
-      if (formData.fullname.trim() === "") {
-        newErrors.fullname = "Full Name is required";
+      if (formData.firstName.trim() === "") {
+        newErrors.firstName = "Full Name is required";
       }
 
-      if (formData.email.trim() === ""){
+      if (formData.lastName.trim() === "") {
+        newErrors.lastName = "Full Name is required";
+      }
+
+      if (formData.email.trim() === "") {
         newErrors.email = "Email is required";
       } else if (
         !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(formData.email)
@@ -155,12 +154,7 @@ const BillingAddress = (props) => {
       setErrors(newErrors);
 
       if (Object.keys(newErrors).length === 0) {
-        const [firstName, lastName] = formData.fullname.split(" ");
-        addAddress({
-          ...formData,
-          firstName,
-          lastName,
-        })
+        addAddress(formData)
           .then((res) => {
             let data = res.data;
             if (data.isError) {
@@ -178,22 +172,22 @@ const BillingAddress = (props) => {
   };
   return (
     <>
-    <Header/>
+      <Header />
+      <NavBar/>
       <div className="customer-column">
         <div className="customer-billing-details">
-          { 
-    addressId  ?  <h4>{( formValue?.addressType)}</h4>
-     :(addressType === "Billing" ? (
-          <div className="heading-container">
-          <h4>Billing details</h4>
-        </div>
-        ):(
-          <div className="heading-container">
-          <h4>Shipping details</h4>
-        </div>
-        )) 
-          }
-          
+          {addressId ? (
+            <h4>{formValue?.addressType}</h4>
+          ) : addressType === "Billing" ? (
+            <div className="heading-container">
+              <h4>Billing details</h4>
+            </div>
+          ) : (
+            <div className="heading-container">
+              <h4>Shipping details</h4>
+            </div>
+          )}
+
           <form
             autoComplete="on"
             onSubmit={(e) => {
@@ -202,22 +196,35 @@ const BillingAddress = (props) => {
             }}
           >
             <div className="form-group">
-              <label>Full Name:</label>
+              <label>First Name:</label>
               <input
                 className="form-control"
                 type="text"
-                name="fullname"
-                value={
-                  addressId
-                    ? `${formValue?.firstName} ${formValue?.lastName}`
-                    : formData.fullname
-                }
+                name="firstName"
+                value={addressId ? formValue?.firstName : formData.firstName}
                 placeholder="Enter full Name"
                 onChange={handleChange}
               />
-              {errors.fullname && (
+              {errors.firstName && (
                 <span className="danger ng-star-inserted">
-                  {errors.fullname}
+                  {errors.firstName}
+                </span>
+              )}
+            </div>
+            <br />
+            <div className="form-group">
+              <label>Last Name:</label>
+              <input
+                className="form-control"
+                type="text"
+                name="lastName"
+                value={addressId ? formValue?.lastName : formData.lastName}
+                placeholder="Enter full Name"
+                onChange={handleChange}
+              />
+              {errors.lastName && (
+                <span className="danger ng-star-inserted">
+                  {errors.lastName}
                 </span>
               )}
             </div>
@@ -368,6 +375,7 @@ const BillingAddress = (props) => {
           </div>
         </div>
       </div>
+      <Footer/>
     </>
   );
 };

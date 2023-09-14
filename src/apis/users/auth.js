@@ -31,14 +31,14 @@ export async function forgetPasswordUser(props) {
   }
 }
 
-export async function logOutUser() {
+export async function logOutUser(customerLoginDetails) {
   try {
     let res = await axios({
       method:'put',
       url:`${configs.apiUrl}/user-auth/logout`,
       headers:{
         "Content-Type": "application/json", // Modify as needed
-        Authorization: `Bearer ${targetId}`, // Include the Bearer token
+        Authorization: `Bearer ${customerLoginDetails}`, // Include the Bearer token
       },
     })
     return res;
@@ -176,7 +176,7 @@ export async function deleteAddress(id) {
     return error.response;
   }
 }
-export async function userVerify(props) {
+export async function userVerification(props) {
   try {
     let res = await axios({
       method: "get",

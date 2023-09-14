@@ -61,7 +61,7 @@ const AddressList = (props) => {
       });
   };
   return (
-    <Container>
+    <Container sx={{marginBottom:'50px'}}>
       <Typography variant="h4" gutterBottom sx={{marginTop:'65px'}}>
         Customer Address List
       </Typography>

@@ -8,11 +8,23 @@ import Footer from "../../../theme/frontend/fotter";
 import NearMeIcon from "@mui/icons-material/NearMe";
 import EmailIcon from "@mui/icons-material/Email";
 import PhoneEnabledIcon from "@mui/icons-material/PhoneEnabled";
-import { useEffect, useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { contactUs } from "../../../apis/users/home";
 import { toast } from "react-toastify";
+import {
+  GoogleMapsProvider,
+  useGoogleMap,
+} from "@ubilabs/google-maps-react-hooks";
 
 const Contact = () => {
+  const mapOptions = {
+    zoom: 12,
+    center: {
+      lat: 48.7691524,
+      lng: 9.906997,
+    },
+  };
+  const [mapContainer, setMapContainer] = useState(null);
   const [contactData, setContactData] = useState({
     name: "",
     email: "",
@@ -85,10 +97,8 @@ const Contact = () => {
         .catch((error) => {
           toast.error("Something went wrong, Api not working", error);
         });
-    }
-    else
-    {
-        toast.error("Please Complete the Recaptcha Challange")
+    } else {
+      toast.error("Please Complete the Recaptcha Challange");
     }
   };
   return (
@@ -136,7 +146,18 @@ const Contact = () => {
                     </div>
 
                     <div>
-                      <div>map</div>
+                      <div>
+                        <GoogleMapsProvider
+                          googleMapsAPIKey="AIzaSyBngY4Jr2YE7SYcHLdnVW_cSrcU6S6AXvg"
+                          mapOptions={mapOptions}
+                          mapContainer={mapContainer}
+                        >
+                          <div
+                            ref={(node) => setMapContainer(node)}
+                            style={{ height: "70vh" }}
+                          />
+                        </GoogleMapsProvider>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -230,3 +251,15 @@ const Contact = () => {
   );
 };
 export default Contact;
+// function Location()
+// {
+//    const [lat, setLat] = useState(43.68);
+//    const [lng, setLng] = useState(-79.43);
+
+//    return(<>
+//    <div className="lat-lng ">
+//     <input type="number" value={lat} onChange={(event)=> setLat(parseFloat(event.target.value))}
+//     step={0.01}/>
+//    </div>
+//    </>)
+// }

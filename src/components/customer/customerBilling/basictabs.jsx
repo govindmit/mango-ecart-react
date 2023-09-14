@@ -10,6 +10,8 @@ import BillingAddress from "./billingaddress";
 import AddressList from "./addresslist";
 import { useNavigate } from "react-router-dom";
 import Header from "../../../theme/frontend/header";
+import NavBar from "../../../theme/frontend/header/navBar";
+import Footer from "../../../theme/frontend/fotter";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -48,7 +50,7 @@ export default function BasicTabs() {
   const navigate = useNavigate();
   const [value, setValue] = React.useState(0);
   const [isComponentVisible, setComponentVisible] = React.useState(false);
-  const [isBillingComponent, setBillingComponent] = React.useState(false);
+  const [isBillingComponent, setBillingComponent] = React.useState(true);
   const [isShippingComponent, setShippingComponent] = React.useState(false);
   const [addressType, setAddressType] = React.useState("Billing");
 
@@ -57,7 +59,8 @@ export default function BasicTabs() {
   };
 
   const handleClick = () => {
-    setBillingComponent(!isBillingComponent);
+    setBillingComponent(false);
+    setShippingComponent(false);
     setComponentVisible(!isComponentVisible);
     navigate("/my-new-address", { state: { addressType } });
   };
@@ -75,7 +78,9 @@ export default function BasicTabs() {
   };
   return (
     <>
+    <div style={{backgroundColor:"#f6f6f6;"}}>
       <Header />
+      <NavBar/>
       <Box className="contain" sx={{ width: "90%" }}>
         <Box
           sx={{ borderBottom: 1, borderColor: "divider", marginRight: "100px" }}
@@ -107,23 +112,17 @@ export default function BasicTabs() {
           New Address
         </button>
       </Box>
-      
-      {isBillingComponent && (
+
+{(isBillingComponent || isShippingComponent) && (
         <AddressList
           isBillingComponent={isBillingComponent}
           setBillingComponent={setBillingComponent}
           isComponentVisible={isComponentVisible}
           setComponentVisible={setComponentVisible}
         />
-      ) }
-      {isShippingComponent &&  (
-        <AddressList
-          isBillingComponent={isBillingComponent}
-          setBillingComponent={setBillingComponent}
-          isComponentVisible={isComponentVisible}
-          setComponentVisible={setComponentVisible}
-        />
-  )}
+      )}
+  <Footer/>
+  </div>
     </>
   );
 }

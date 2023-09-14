@@ -5,6 +5,9 @@ import { useEffect, useState } from "react";
 import { getUser, updateUser } from "../../../apis/users/auth";
 import { useUser } from "../../../context/usercontext";
 import { toast } from "react-toastify";
+import NavBar from "../../../theme/frontend/header/navBar";
+import Banner from "../../../theme/frontend/banner";
+import Footer from "../../../theme/frontend/fotter";
 
 const UpdateProfile = () => {
   const navigate = useNavigate();
@@ -53,6 +56,8 @@ const UpdateProfile = () => {
   return (
     <>
       <Header />
+      <NavBar/>
+      <Banner data={"My Account"}/>
       <div className="my-account-area">
         <div className="container profile-container">
           <div className="console.log(editedUser)my-account">
@@ -155,6 +160,7 @@ const UpdateProfile = () => {
           </div>
         </div>
       </div>
+      <Footer/>
     </>
   );
 };

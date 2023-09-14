@@ -19,10 +19,31 @@ const Header = () => {
   };
 
   const handleClickLogOut = () => {
-    localStorage.removeItem("token");
-    setIslogin(false);
-    toast.success("User Log-out Successfully");
-    navigate("/")
+    // localStorage.removeItem("token");
+    // setIslogin(false);
+    // toast.success("User Log-out Successfully");
+    // navigate("/")
+    logOutUser(customerLoginDetails)
+    .then((res)=>
+    {
+      let data = res.data
+      // console.log(data,"jhky")
+      if(data.isError)
+      {
+        toast.error(data.message);
+      }
+      else
+      {
+        localStorage.removeItem('token');
+        setIslogin(false)
+        navigate("/");
+        toast.success(data.result);
+      }
+    })
+    .catch((e)=>
+    {
+      toast.error("Something went wrong, Api is not working")
+    })
   };
   return (
     <>
