@@ -9,6 +9,7 @@ import './style.css'; // Import your CSS file
 import configs from '../../../config/config';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { useNavigate } from 'react-router-dom';
 
 const productData = [
   {
@@ -135,6 +136,7 @@ const productData = [
 
 
 const ProductDataCard = () => {
+  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [cardsPerPage, setCardsPerPage] = useState(9);
   const totalPages = Math.ceil(productData.length / cardsPerPage);
@@ -154,12 +156,17 @@ const ProductDataCard = () => {
   }
 
   const pageData = getPageData();
+  
+  const handleClick = (Id)=>
+  {
+     navigate("/product-details", {state:{Id}})
+  }
 
   return (
     <div className='product-card-container'>
       <div className='product-card-slider'>
         {pageData.map((product, index) => (
-          <Card key={index} className='product-card'>
+          <Card key={index} className='product-card' onClick={()=>{handleClick(product.id)}}>
             <CardActionArea>
               <CardMedia
                 component='img'

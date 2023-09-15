@@ -1,4 +1,4 @@
-import React, { Children } from "react";
+import React, { Children, useEffect, useState } from "react";
 import {
   Grid,
   Typography,
@@ -10,12 +10,21 @@ import {
   ListItem,
   ListItemText,
   List,
+  IconButton,
+  TextField,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import Header from "../header";
 import NavBar from "../header/navBar";
 import Footer from "../fotter";
 import Banner from "../banner";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+import { useLocation } from "react-router-dom";
+import { getProductDetails } from "../../../apis/users/home";
+import { toast } from "react-toastify";
+import configs from "../../../config/config";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,15 +40,21 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "80px",
     display: "flex",
   },
-  //   card: {
-  //     display: "flex",
-  //     maxWidth: 800,
-  //   },
   media: {
-    width: 380,
-    height: 290,
-    marginBottom: 100,
-    marginTop: 30,
+    width: "350px",
+    height: "280px",
+    marginTop: "30px",
+    cursor: "pointer",
+  },
+  media1: {
+    width: "100px",
+    height: "110px",
+    marginBottom: "15px",
+    border: "1px solid black",
+    marginTop: "20px",
+    marginLeft: "10px",
+    marginRight: "20px",
+    cursor: "pointer",
   },
   details: {
     display: "flex",
@@ -78,6 +93,52 @@ const useStyles = makeStyles((theme) => ({
 
 function ProductDetails() {
   const classes = useStyles();
+  const location = useLocation();
+  const { Id } = location.state;
+  const [quantity, setQuantity] = useState(0);
+  const [product, setProduct] = useState(null);
+  const [image, setImage] = useState([]);
+  const [selectedImage, setSelectedImage] = useState([]);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+
+  const handleImageClick = (image, index) => {
+    setSelectedImage(image);
+    setSelectedImageIndex(index);
+  };
+
+  const handleIncrement = () => {
+    if (quantity < 5) {
+      setQuantity(quantity + 1);
+    } else {
+      window.alert("You can't add more than 5 items to the cart.");
+    }
+  };
+
+  const handleDecrement = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
+  };
+
+  const handleQuantityChange = (event) => {
+    const newQuantity = parseInt(event.target.value, 10);
+    if (!isNaN(newQuantity) && newQuantity >= 1) {
+      setQuantity(newQuantity);
+    }
+  };
+
+  useEffect(() => {
+    getProductDetails(Id)
+      .then((data) => {
+        console.log(data.data.result.productData.ProductImages);
+        setProduct(data.data.result.productData.ProductFlat);
+        setImage(data.data.result.productData.ProductImages);
+        setSelectedImage(data.data.result.productData.ProductImages[0]);
+      })
+      .catch((e) => {
+        toast.error("Something went wrong, Api not working");
+      });
+  }, []);
 
   return (
     <>
@@ -89,28 +150,47 @@ function ProductDetails() {
           className={classes.container}
           sx={{ display: "flex", marginLeft: "80px", marginRight: "80px" }}
         >
-          {/* <Card className={classes.card}> */}
           <Container>
             <CardMedia
               className={classes.media}
-              image="http://103.127.29.85:3006/uploads/imagejeans.jpeg"
+              image={`${configs.baseUrl}${selectedImage?.path}`}
               title="Product Image"
             />
+            <Grid style={{ display: "flex" }}>
+              {image.map((ImageData, index) => (
+                <CardMedia
+                  className={classes.media1}
+                  image={`${configs.baseUrl}${ImageData?.path}`}
+                  onClick={() => handleImageClick(ImageData, index)}
+                  title="Product Image"
+                  style={{
+                    border:
+                      selectedImageIndex === index ? "2px solid red" : "none",
+                  }}
+                />
+              ))}
+            </Grid>
           </Container>
-          <div className={classes.details}>
+          <div
+            className={classes.details}
+            style={{
+              float: "left",
+              width: "100%",
+              marginRight: "200px",
+            }}
+          >
             <CardContent>
               <Typography
                 variant="h4"
                 className={classes.name}
                 sx={{
                   fontSize: 16,
-                  //   marginBottom: 5,
                   marginLeft: "-30px",
                   fontWeight: 500,
                   fontFamily: "Josefin Sans', sans-serif",
                 }}
               >
-                Jeans
+                {product?.name}
               </Typography>
               <Typography
                 variant="subtitle1"
@@ -123,7 +203,7 @@ function ProductDetails() {
                   marginTop: "10px",
                 }}
               >
-                $450.00
+                {`$ ${product?.price}`}
               </Typography>
               <Typography
                 variant="body1"
@@ -132,16 +212,10 @@ function ProductDetails() {
                   marginTop: "10px",
                   marginLeft: "-30px",
                   fontSize: "16px",
-                  // fontWeight:"bold",
+                  width: "180%",
                 }}
               >
-                <p>
-                  Jeans are a type of pants traditionally made from denim (a
-                  kind of cotton fabric). The word most commonly refers to denim
-                  blue jeans. Jeans can be other colors, but they're most
-                  commonly blue. The defining feature of most jeans is that
-                  they're made out of some kind of denim or denim-like fabric.
-                </p>
+                {product?.description}
               </Typography>
               <div className={classes.colorSize}>
                 <List>
@@ -162,7 +236,13 @@ function ProductDetails() {
                         marginLeft: "25px",
                       }}
                     >
-                      Black
+                      <div
+                        style={{
+                          backgroundColor: `${product?.color}`,
+                          height: "15px",
+                          width: "15px",
+                        }}
+                      ></div>
                     </Typography>
                   </ListItem>
 
@@ -176,24 +256,98 @@ function ProductDetails() {
                     >
                       Size
                     </Typography>
-                    <Typography variant="body1" sx={{
-                          marginLeft: "35px",
-                    }}>M</Typography>
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        marginLeft: "35px",
+                      }}
+                    >
+                      {product?.size}
+                    </Typography>
                   </ListItem>
                 </List>
               </div>
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.addToCartButton}
-              >
-                Add to Cart
-              </Button>
+
+              <Grid container spacing={2} alignItems="center">
+                <Grid item>
+                  <IconButton
+                    color="black"
+                    style={{
+                      color: "black",
+                      borderRadius: "1px",
+                      marginLeft: "-35px",
+                      backgroundColor: "#F6F6F6",
+                    }}
+                    onClick={handleDecrement}
+                  >
+                    <RemoveIcon />
+                  </IconButton>
+                </Grid>
+                <Grid
+                  item
+                  sx={{
+                    marginLeft: "-13px",
+                  }}
+                >
+                  <TextField
+                    style={{
+                      color: "black",
+                      backgroundColor: "#F6F6F6",
+                      width: "30%",
+                      border: "1px solid black",
+                      fontSize: "25px",
+                    }}
+                    type="number"
+                    variant="outlined"
+                    size="small"
+                    value={quantity}
+                    onChange={handleQuantityChange}
+                    inputProps={{
+                      min: 1,
+                    }}
+                  />
+                </Grid>
+                <Grid item>
+                  <IconButton
+                    color="black"
+                    style={{
+                      color: "black",
+                      borderRadius: "1px",
+                      marginLeft: "-145px",
+                      backgroundColor: "#F6F6F6",
+                    }}
+                    onClick={handleIncrement}
+                  >
+                    <AddIcon />
+                  </IconButton>
+                </Grid>
+
+                <Grid item>
+                  <IconButton
+                    color="black"
+                    style={{
+                      backgroundColor: "#F6F6F6",
+                      borderRadius: "1px",
+                      marginLeft: "-90px",
+                      color: "black",
+                    }}
+                  >
+                    <AddShoppingCartIcon />
+                  </IconButton>
+                </Grid>
+              </Grid>
             </CardContent>
           </div>
-
-          {/* </Card> */}
         </Container>
+
+        <div style={{display:"flex"}}>
+          <Container style={{backgroundColor:"#fff"}}>
+            <a> Description </a>
+          </Container>
+          <Container style={{backgroundColor:"#fff"}}>
+            Hello
+          </Container>
+        </div>
       </Grid>
       <Footer />
     </>

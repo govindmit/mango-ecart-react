@@ -133,7 +133,6 @@ const productData = [
     }
 ];
 
-
 const ProductDetailsCard = () => {
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -146,7 +145,7 @@ const ProductDetailsCard = () => {
 
     const getPageData = () => {
         const startIndex = (currentPage - 1) * cardsPerPage;
-        const endIndex = startIndex + cardsPerPage;
+        const endIndex = startIndex + productcardsPerPage;
         return productData.slice(startIndex, endIndex);
     };
 

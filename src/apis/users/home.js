@@ -104,6 +104,22 @@ export async function allProduct() {
 
 }
 
+export async function getProductDetails(id)
+{
+  try{
+    let res  = await axios({
+      method:'get',
+      url:`${configs.apiUrl}/user-product/product-details/${id}`
+    });
+    console.log(res,"jgjykjhk");
+    return res;
+  }
+   catch(error)
+  {
+    return error.response;
+  }
+}
+
 export async function contactUs(props)
 {
   console.log(props);

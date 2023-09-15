@@ -47,7 +47,7 @@ const Aboutus = () => {
             </div>
             <div className='img-column'>
               <div className="our-img">
-                <img src="http://103.127.29.85:3006/uploads/portfolio-5.jpg" alt="Portfolio Image" />
+                <img className='about-img' src="http://103.127.29.85:3006/uploads/portfolio-5.jpg" alt="Portfolio Image" />
               </div>
             </div>
           </div>
