@@ -1,5 +1,3 @@
-
-
 import React, { useState } from "react";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -12,9 +10,9 @@ import './style.css';
 
 const ProductSideBar = (props) => {
     const data = props.data;
-    const selectedCategory = props.selectedCategory;
     const setSelectedCategory = props.setSelectedCategory;
     const [openItems, setOpenItems] = useState([]);
+    const [checkboxState, setCheckboxState] = useState({});
 
     const handleClick = (id) => {
         if (openItems.includes(id)) {
@@ -25,24 +23,14 @@ const ProductSideBar = (props) => {
     };
 
     const handleCheckboxClick = (id) => {
-        console.log("Clicked checkbox with ID:", id);
-        console.log("Selected Category before:", selectedCategory);
-        const selectedCategoryArray = selectedCategory.split(',').filter((item) => item !== '');
+        const isChecked = checkboxState[id] || false;
+        const updatedCheckboxState = { ...checkboxState };
+        updatedCheckboxState[id] = !isChecked;
+        setCheckboxState(updatedCheckboxState);
 
-        if (selectedCategoryArray.includes(id)) {
-
-            const updatedCategoryArray = selectedCategoryArray.filter((item) => item !== id);
-
-            setSelectedCategory(updatedCategoryArray.join(','));
-        } else {
-
-            const updatedCategoryArray = [...selectedCategoryArray, id];
-
-            setSelectedCategory(updatedCategoryArray.join(','));
-        }
-
-        console.log("Selected Category after:", selectedCategory);
-    };
+        const checkedIds = Object.keys(updatedCheckboxState).filter((key) => updatedCheckboxState[key]);
+        setSelectedCategory(checkedIds.join(','));
+    }
 
     const renderListItems = (items) => {
         return (
@@ -53,8 +41,7 @@ const ProductSideBar = (props) => {
                             <ListItemButton onClick={() => handleClick(item.id)}>
                                 <Checkbox
                                     edge="start"
-                                    checked={selectedCategory.split(',').includes(item.id)}
-
+                                    checked={checkboxState[item.id] || false}
                                     tabIndex={-1}
                                     disableRipple
                                     disablePadding
@@ -62,6 +49,7 @@ const ProductSideBar = (props) => {
                                         e.stopPropagation();
                                         handleCheckboxClick(item.id);
                                     }}
+                                    id={`checkbox-${item.id}`}
                                 />
                                 <ListItemText primary={item.name} />
                                 {item.children && item.children.length > 0 ? (

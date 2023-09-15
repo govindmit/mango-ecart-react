@@ -22,13 +22,10 @@ export default function ProductBanner() {
     const [selectedItem, setSelectedItem] = useState('');
     const [selectedSize, setSelectedSize] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('');
-    
+    const [selectedPrice, setSelectedPrice] = useState('');
     const [isProductData, setIsProductData] = useState(true);
-
-console.log(selectedItem,"color");
-console.log(selectedSize,"selectedSize");
-console.log(selectedCategory,"selectedCategory");
-
+    const [productItems, setProductItems] = useState([]);
+    const [searchValue, setSearchValue] = useState('');
 
     const myParentChildArray = [];
 
@@ -50,7 +47,6 @@ console.log(selectedCategory,"selectedCategory");
             });
         }
     });
-    // Assuming myParentChildArray contains the data as mentioned
 
     const uniqueMyParentChildArray = myParentChildArray.filter((item, index, self) => {
         return (
@@ -76,63 +72,71 @@ console.log(selectedCategory,"selectedCategory");
         return result;
     }
 
-    // Assuming myParentChildArray contains the data as mentioned
+    // data store in parent child combination 
     const hierarchicalData = buildHierarchy(uniqueMyParentChildArray);
 
 
+
+    //function for selected Color
     const handleCheckboxClick = (id) => {
         const selectedColorArray = selectedItem.split(',').filter((item) => item !== '');
-    
+
         if (selectedColorArray.includes(id)) {
-          // Remove the size from the array
-          const updatedSizeArray = selectedColorArray.filter((item) => item !== id);
-          // Join the array back into a comma-separated string, or an empty string if there are no sizes left
-          setSelectedItem(updatedSizeArray.join(','));
-        } else {
-          // Add the size to the array
-          const updatedSizeArray = [...selectedColorArray, id];
-          // Join the array back into a comma-separated string
-          setSelectedItem(updatedSizeArray.join(','));
+            const updatedSizeArray = selectedColorArray.filter((item) => item !== id);
+            setSelectedItem(updatedSizeArray.join(','));
+        }
+        else {
+            const updatedSizeArray = [...selectedColorArray, id];
+            setSelectedItem(updatedSizeArray.join(','));
         }
     };
-  
 
 
+    //function for Price Side bar
+    const handlePriceChange = (formattedPrice) => {
+        setSelectedPrice(formattedPrice)
+        console.log('Selected Price:', formattedPrice);
+    };
+
+    //search value
+    const handleSearchChange = (event) => {
+        const newValue = event.target.value;
+        setSearchValue(newValue);
+    };
+
+    //function for Size check
     const handleSizeCheckboxClick = (id) => {
-        // Split the selectedSize string into an array
         const selectedSizeArray = selectedSize.split(',').filter((item) => item !== '');
-    
-        if (selectedSizeArray.includes(id)) {
-          // Remove the size from the array
-          const updatedSizeArray = selectedSizeArray.filter((item) => item !== id);
-          // Join the array back into a comma-separated string, or an empty string if there are no sizes left
-          setSelectedSize(updatedSizeArray.join(','));
-        } else {
-          // Add the size to the array
-          const updatedSizeArray = [...selectedSizeArray, id];
-          // Join the array back into a comma-separated string
-          setSelectedSize(updatedSizeArray.join(','));
-        }
-      };
-    
 
+        if (selectedSizeArray.includes(id)) {
+            const updatedSizeArray = selectedSizeArray.filter((item) => item !== id);
+            setSelectedSize(updatedSizeArray.join(','));
+        } else {
+            const updatedSizeArray = [...selectedSizeArray, id];
+            setSelectedSize(updatedSizeArray.join(','));
+        }
+    };
+
+    //function for product show in chich fromate
     const handleProductShow = () => {
         setIsProductData(!isProductData);
     }
 
+    //function for refresh the value
     const reloadPage = () => {
         window.location.reload();
     };
 
     useEffect(() => {
-        getAllProduct(`page=${page}&pageSize=${pageSize}&filter=true&${myfilterData}`)
+
+        getAllProduct(myfilterData)
             .then((res) => {
                 let data = res.data;
-
+                // console.log(data,"ss");
                 if (data.isError) {
                     toast.error(data.message);
                 } else {
-
+                    // console.log(data?.result?.data?.rows,"dsdfs");
                     setProductData(data?.result?.data?.rows
                         .map((item) => item.categories).flat()
                     );
@@ -168,7 +172,7 @@ console.log(selectedCategory,"selectedCategory");
 
                     toast.error(data.message);
                 } else {
-                 
+
                     setSize(data?.result?.size);
                 }
             })
@@ -176,6 +180,57 @@ console.log(selectedCategory,"selectedCategory");
                 console.log("error", e);
             })
     }, [])
+
+    useEffect(() => {
+        getAllProduct(myfilterData)
+            .then((res) => {
+                let data = res.data;
+
+                if (data.isError) {
+                    toast.error(data.message);
+                } else {
+                    setProductItems(data?.result?.data?.rows);
+                }
+            })
+            .catch((e) => {
+                console.log("error", e);
+            });
+
+
+    }, [myfilterData])
+
+
+    useEffect(() => {
+        const filters = {};
+
+        // Add values to the object if they exist
+        if (selectedCategory) {
+            filters.catId = selectedCategory;
+        }
+
+        if (selectedItem) {
+            const sanitizedSelectedItem = selectedItem.replace(/#/g, '%');
+            filters.color = sanitizedSelectedItem;
+        }
+
+        if (selectedSize) {
+            filters.size = selectedSize;
+        }
+
+        // if (selectedPrice!="0,1000") {
+        //     filters.price = selectedPrice
+        // }
+        if (searchValue) {
+            filters.search = searchValue;
+        }
+
+        // Create the filterString by converting the filters object to a query string
+        const filterString = `?page=${page}&pageSize=${pageSize}&filter=true${Object.keys(filters).map(key => `&${key}=${filters[key]}`).join('')}`;
+
+        // Update the filterData state with the new filterString
+        setMyfilterData(filterString);
+    }, [selectedCategory, selectedItem, selectedSize, selectedPrice,searchValue, page, pageSize]);
+
 
     return (
         <div className="myDivxyz">
@@ -186,13 +241,20 @@ console.log(selectedCategory,"selectedCategory");
                         label="Search"
                         variant="standard"
                         size="medium"
+                        value={searchValue}
+                        onChange={handleSearchChange}
                     />
                 </div>
                 <div>
-                    <ProductSideBar data={hierarchicalData} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory}/>
+                    <ProductSideBar
+                        data={hierarchicalData}
+                        setSelectedCategory={setSelectedCategory}
+                    />
                 </div>
                 <div>
-                    <PriceSlider />
+                    <PriceSlider
+                        onPriceChange={handlePriceChange}
+                    />
                 </div>
                 <div className="side-bar-div-compo">
                     <h3>COLOR</h3>
@@ -203,7 +265,7 @@ console.log(selectedCategory,"selectedCategory");
                                 <ListItemButton>
                                     <Checkbox
                                         edge="start"
-                                
+
                                         checked={selectedItem.split(',').includes(color.optionValue)}
                                         tabIndex={-1}
                                         disableRipple
@@ -256,9 +318,21 @@ console.log(selectedCategory,"selectedCategory");
                 </div>
                 <div>
                     {isProductData ? (
-                        <ProductDataCard />
+                        <ProductDataCard
+                            productData={productItems}
+                            page={page}
+                            setPage={setPage}
+                            pageSize={pageSize}
+                            setpageSize={setpageSize}
+                        />
                     ) : (
-                        <ProductDetailsCard />
+                        <ProductDetailsCard
+                            productData={productItems}
+                            page={page}
+                            setPage={setPage}
+                            pageSize={pageSize}
+                            setpageSize={setpageSize}
+                        />
                     )}
 
                 </div>
