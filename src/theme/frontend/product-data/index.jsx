@@ -19,24 +19,16 @@ const ProductDataCard = (props) => {
   const cardsPerPage = props.pageSize;
   const setCardsPerPage = props.setpageSize;
 
-  const totalPages = Math.ceil(productData.length / cardsPerPage);
+  const totalPages = Math.ceil(productData.length);
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
-  };
-
-  const getPageData = () => {
-    const startIndex = (currentPage - 1) * cardsPerPage;
-    const endIndex = startIndex + cardsPerPage;
-    return productData?.slice(startIndex, endIndex);
   };
 
   const handleChange = (e) => {
     setCardsPerPage(e.target.value);
     setCurrentPage(1)
   }
-  const pageData = getPageData();
-
   return (
     <div className='product-card-container'>
       <div className='product-card-slider'>
@@ -83,7 +75,10 @@ const ProductDataCard = (props) => {
 
         </div>
         <div>
-          {currentPage} - {Math.min(currentPage * cardsPerPage, productData.length)} of {productData.length}
+          {cardsPerPage > productData.length
+            ? `${((currentPage - 1) * cardsPerPage) + 1} - ${(((currentPage - 1) * cardsPerPage) + 1)+productData.length} of ${productData.length}`
+            : `${((currentPage - 1) * cardsPerPage) + 1} - ${Math.min(currentPage * cardsPerPage, productData.length*currentPage)} of ${productData.length}`
+          }
         </div>
         <div>
           <IconButton
@@ -94,7 +89,7 @@ const ProductDataCard = (props) => {
 
           <IconButton
             onClick={() => paginate(currentPage + 1)}
-            disabled={currentPage === totalPages}
+            disabled={productData.length < cardsPerPage}
           >
             <ArrowForwardIosIcon />
           </IconButton>

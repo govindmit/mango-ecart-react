@@ -22,20 +22,15 @@ const ProductDetailsCard = (props) => {
     console.log(productData, "sds");
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
-        setCardsPerPage(cardsPerPage);
+      
     };
 
-    const getPageData = () => {
-        const startIndex = (currentPage - 1) * cardsPerPage;
-        const endIndex = startIndex + cardsPerPage;
-        return productData?.slice(startIndex, endIndex);
-    };
+
 
     const handleChange = (e) => {
         setCardsPerPage(e.target.value);
         setCurrentPage(1)
     }
-    const pageData = getPageData();
 
     return (
         <div className='card-details-container'>
@@ -90,19 +85,22 @@ const ProductDetailsCard = (props) => {
 
                 </div>
                 <div>
-                    {currentPage} - {Math.min(currentPage * cardsPerPage, productData.length)} of {productData.length}
+                    {cardsPerPage > productData.length
+                        ? `${((currentPage - 1) * cardsPerPage) + 1} - ${(((currentPage - 1) * cardsPerPage) + 1) + productData.length} of ${productData.length}`
+                        : `${((currentPage - 1) * cardsPerPage) + 1} - ${Math.min(currentPage * cardsPerPage, productData.length * currentPage)} of ${productData.length}`
+                    }
                 </div>
                 <div>
                     <IconButton
-                        onClick={() => paginate(currentPage - 1)}
-                    
+                        onClick={() => paginate(currentPage - 1)}                 
+                        disabled={currentPage === 1}
                     >
                         <ArrowBackIosIcon />
                     </IconButton>
 
                     <IconButton
                         onClick={() => paginate(currentPage + 1)}
-                        // disabled={currentPage === totalPages}
+                        disabled={productData.length < cardsPerPage}
                     >
                         <ArrowForwardIosIcon />
                     </IconButton>
