@@ -28,10 +28,10 @@ import configs from "../../../config/config";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "flex-start",
-    padding: theme.spacing(2),
+    // display: "flex",
+    // justifyContent: "center",
+    // alignItems: "flex-start",
+    // padding: theme.spacing(2),
     backgroundColor: "#f6f6f6",
   },
   container: {
@@ -340,15 +340,44 @@ function ProductDetails() {
           </div>
         </Container>
 
-        <div style={{display:"flex"}}>
-          <Container style={{backgroundColor:"#fff"}}>
-            <a> Description </a>
+        <div style={{ display: "flex" }}>
+          <Container
+            style={{
+              // backgroundColor: "#fff",
+            }}
+          >
+            <a style={{backgroundColor:"#ffba5a", fontSize:"20px",fontWeight:"600"}}> Description </a>
           </Container>
-          <Container style={{backgroundColor:"#fff"}}>
-            Hello
+          <Container
+            style={
+              {
+                backgroundColor: "#fff",
+                // display: "inline-block",
+                // width: "50%",
+                // boxSizing: "border-box",
+                // padding: "10px",
+              }
+            }
+          >
+            <CardContent>
+              <Typography
+                variant="h4"
+                className={classes.name}
+                sx={{
+                  fontSize: 16,
+                  marginLeft: "-30px",
+                  fontWeight: 500,
+                  fontFamily: "Josefin Sans', sans-serif",
+                }}
+              >
+                {product?.name}
+              </Typography>
+              <Typography variant="p">{product?.description}</Typography>
+            </CardContent>
           </Container>
         </div>
       </Grid>
+
       <Footer />
     </>
   );
