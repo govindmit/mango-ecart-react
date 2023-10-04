@@ -88,12 +88,15 @@ export async function getHomeData() {
 }
 
 
-export async function allProduct() {
+export async function getAllProduct(props) {
+  if (props == null) {
+    props='?page=1&pageSize=10&filter=true';
+}
 
   try {
     let res = await axios({
       method: 'get',
-      url: `${configs.apiUrl}/user-product/get-all-products?page=1&pageSize=10&filter=true&catId=`,
+      url: `${configs.apiUrl}/user-product/get-all-products${props}`,
     });
 
     return res;
@@ -132,6 +135,35 @@ export async function contactUs(props)
     return res;
   }catch (error)
   {
+    return error.response;
+  }
+=======
+export async function getColor() {
+
+  try {
+    let res = await axios({
+      method: 'get',
+      url: `${configs.apiUrl}/user-product/get-color`,
+    });
+
+    return res;
+
+  } catch (error) {
+    return error.response;
+  }
+
+}
+export async function getSize() {
+
+  try {
+    let res = await axios({
+      method: 'get',
+      url: `${configs.apiUrl}/user-product/get-size`,
+    });
+
+    return res;
+
+  } catch (error) {
     return error.response;
   }
 }

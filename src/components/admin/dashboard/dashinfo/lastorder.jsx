@@ -14,6 +14,7 @@ function lastorder() {
       setorder(result?.data?.result?.data?.rows);
     });
   }, []);
+
   return (
     <Grid item xs={12}>
       <Paper style={{ height: "100%", padding: "20px" }}>

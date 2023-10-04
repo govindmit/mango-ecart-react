@@ -21,6 +21,7 @@
   }
 
 }
+
 /* a {
   font-weight: 500;
   color: #646cff;
@@ -40,19 +41,15 @@ a:hover {
   color: #ffba5a;
 }
 
-body {
-  margin: 0;
-  /* display: flex; */
-  /* place-items: center; */
-  min-width: 320px;
-  /* min-height: 100vh; */
-}
 
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
 }
 
+.css-1vw5i9y-MuiButtonBase-root-MuiTab-root.Mui-selected {
+  color: #fb9400 !important;
+}
 /* button {
 h2 {
   font-size: 26px;
