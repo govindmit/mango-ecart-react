@@ -214,9 +214,10 @@ function ProductDetails() {
                   fontSize: "16px",
                   width: "180%",
                 }}
-              >
-                {product?.description}
-              </Typography>
+                dangerouslySetInnerHTML={{
+                  __html: product?.description,
+                }}
+              ></Typography>
               <div className={classes.colorSize}>
                 <List>
                   <ListItem className={classes.listItem}>
@@ -343,21 +344,21 @@ function ProductDetails() {
         <div style={{ display: "flex" }}>
           <Container
             style={{
-              // backgroundColor: "#fff",
+              maxWidth: "240px",
+              maxHeight: "40px",
+              paddingTop: "4px",
+              color: "black",
+              marginLeft: "75px",
+              backgroundColor: "rgb(250, 179, 49)",
+              border:"2px solid black"
             }}
           >
-            <a style={{backgroundColor:"#ffba5a", fontSize:"20px",fontWeight:"600"}}> Description </a>
+            Description
           </Container>
           <Container
-            style={
-              {
-                backgroundColor: "#fff",
-                // display: "inline-block",
-                // width: "50%",
-                // boxSizing: "border-box",
-                // padding: "10px",
-              }
-            }
+            style={{
+              backgroundColor: "#fff",
+            }}
           >
             <CardContent>
               <Typography
@@ -372,7 +373,12 @@ function ProductDetails() {
               >
                 {product?.name}
               </Typography>
-              <Typography variant="p">{product?.description}</Typography>
+              <Typography
+                variant="p"
+                dangerouslySetInnerHTML={{
+                  __html: product?.description,
+                }}
+              ></Typography>
             </CardContent>
           </Container>
         </div>

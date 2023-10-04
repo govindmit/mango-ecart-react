@@ -11,12 +11,14 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { toast } from 'react-toastify';
 import configs from '../../../../config/config';
 import { featureProduct } from '../../../../apis/users/home';
+import { useNavigate } from 'react-router-dom';
 
 const FeatureProductsCard = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [productData, setProductData] = useState([]);
    
     const autoSlideIntervalRef = useRef(null);
+    const navigate = useNavigate();
 
     // Function to go to the next card
     const goToNext = () => {
@@ -65,6 +67,10 @@ const FeatureProductsCard = () => {
         productData[(currentIndex + 3) % productData.length],
     ];
 
+    const handleClick=(Id)=>
+    {
+        navigate("/product-details", { state: { Id } });
+    }
     return (
         <div className='card-container'>
             <div className='card-slider'>
@@ -72,7 +78,7 @@ const FeatureProductsCard = () => {
                     <ArrowBackIosIcon />
                 </button>
                 {visibleProducts.map((product, index) => (
-                    <Card key={index} className='card'>
+                    <Card key={index} className='card' onClick={()=>handleClick(product.id)}>
                         <CardActionArea>
                             <CardMedia
                                 component='img'
