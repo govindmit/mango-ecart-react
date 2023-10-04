@@ -238,7 +238,7 @@ const ProductDataCard = (props) => {
   const currentPage = props.page;
   const setCurrentPage = props.setPage;
   const cardsPerPage = props.pageSize;
-  const setCardsPerPage = props.setpageSize;
+  const setCardsPerPage = props.setPageSize;
 
   const totalPages = Math.ceil(productData.length);
 const navigate = useNavigate();
