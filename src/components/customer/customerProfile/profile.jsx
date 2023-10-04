@@ -4,6 +4,10 @@ import { useContext, useEffect, useState } from "react";
 import { getUser } from "../../../apis/users/auth";
 import { useUser } from "../../../context/usercontext";
 import Header from "../../../theme/frontend/header";
+import NavBar from '../../../theme/frontend/header/navBar'
+import { toast } from "react-toastify";
+import Banner from "../../../theme/frontend/banner";
+import Footer from "../../../theme/frontend/fotter";
 
 
 const Profile = () => {
@@ -17,7 +21,7 @@ const Profile = () => {
       setUser(data.data.result.data);
     })
     .catch((e) => {
-      console.log("error", e);
+     toast.error("Something wrong Api not working");
     });
   },[])  
   
@@ -29,6 +33,8 @@ const Profile = () => {
   return (
     <>
     <Header/>
+    <NavBar/>
+    <Banner data={"My-Account"}/>
       <div className="my-account-area">
         <div className="container">
           <div className="my-account">
@@ -84,6 +90,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
+      <Footer/>
     </>
   );
 };

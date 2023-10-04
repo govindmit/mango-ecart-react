@@ -9,8 +9,16 @@ import './style.css'; // Import your CSS file
 import configs from '../../../config/config';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { useNavigate } from 'react-router-dom';
 
 
+
+
+const ProductDataCard = () => {
+  const navigate = useNavigate();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [cardsPerPage, setCardsPerPage] = useState(9);
+  const totalPages = Math.ceil(productData.length / cardsPerPage);
 
 const ProductDataCard = (props) => {
   const productData = props.productData;
@@ -21,6 +29,7 @@ const ProductDataCard = (props) => {
 
   const totalPages = Math.ceil(productData.length);
 
+
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -29,6 +38,39 @@ const ProductDataCard = (props) => {
     setCardsPerPage(e.target.value);
     setCurrentPage(1)
   }
+
+
+  const pageData = getPageData();
+  
+  const handleClick = (Id)=>
+  {
+     navigate("/product-details", {state:{Id}})
+  }
+
+  return (
+    <div className='product-card-container'>
+      <div className='product-card-slider'>
+        {pageData.map((product, index) => (
+          <Card key={index} className='product-card' onClick={()=>{handleClick(product.id)}}>
+            <CardActionArea>
+              <CardMedia
+                component='img'
+                height='140'
+                image={`${configs.baseUrl}${product?.path}`}
+              />
+              <button className='product-media-button'>New</button>
+              <CardContent>
+                <Typography gutterBottom variant='h5' component='div'>
+                  {product?.name}
+                </Typography>
+                <Typography variant='body2' color='text.secondary'>
+                  ${product?.price}
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        ))}
+
   return (
     <div className='product-card-container'>
       <div className='product-card-slider'>
@@ -54,6 +96,7 @@ const ProductDataCard = (props) => {
             </Card>
           ))
         }
+
 
       </div>
       <div className='pagination'>

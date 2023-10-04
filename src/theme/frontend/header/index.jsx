@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 const Header = () => {
   const customerLoginDetails = localStorage.getItem("token");
   console.log(customerLoginDetails);
+  
   const [showProfile, setShowProfile] = useState(false);
   const [islogin, setIslogin] = useState(true);
   const navigate = useNavigate();
@@ -18,10 +19,31 @@ const Header = () => {
   };
 
   const handleClickLogOut = () => {
-    localStorage.removeItem("token");
-    setIslogin(false);
-    toast.success("User Log-out Successfully");
-    navigate("/")
+    // localStorage.removeItem("token");
+    // setIslogin(false);
+    // toast.success("User Log-out Successfully");
+    // navigate("/")
+    logOutUser(customerLoginDetails)
+    .then((res)=>
+    {
+      let data = res.data
+      // console.log(data,"jhky")
+      if(data.isError)
+      {
+        toast.error(data.message);
+      }
+      else
+      {
+        localStorage.removeItem('token');
+        setIslogin(false)
+        navigate("/");
+        toast.success(data.result);
+      }
+    })
+    .catch((e)=>
+    {
+      toast.error("Something went wrong, Api is not working")
+    })
   };
   return (
     <>

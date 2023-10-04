@@ -4,6 +4,10 @@ import "./style.css";
 import { useEffect, useState } from "react";
 import { getUser, updateUser } from "../../../apis/users/auth";
 import { useUser } from "../../../context/usercontext";
+import { toast } from "react-toastify";
+import NavBar from "../../../theme/frontend/header/navBar";
+import Banner from "../../../theme/frontend/banner";
+import Footer from "../../../theme/frontend/fotter";
 
 const UpdateProfile = () => {
   const navigate = useNavigate();
@@ -37,16 +41,23 @@ const UpdateProfile = () => {
     e.preventDefault();
     updateUser(data)
       .then((data) => {
-        navigate("/profile-table");
+        if (data.isError) {
+          toast.error(data.data.message);
+        } else {
+          toast.success(data.data.result.message);
+          navigate("/profile-table");
+        }
       })
       .catch((e) => {
-        console.log("error", e);
+        toast.error("Something wrong,Api not working");
       });
   };
 
   return (
     <>
       <Header />
+      <NavBar/>
+      <Banner data={"My Account"}/>
       <div className="my-account-area">
         <div className="container profile-container">
           <div className="console.log(editedUser)my-account">
@@ -67,7 +78,6 @@ const UpdateProfile = () => {
                               placeholder="Enter First name"
                               name="firstName"
                               value={editedUser.firstName}
-                              
                               onChange={handleChange}
                             />
                           </div>
@@ -150,6 +160,7 @@ const UpdateProfile = () => {
           </div>
         </div>
       </div>
+      <Footer/>
     </>
   );
 };

@@ -37,7 +37,7 @@ const UserForgotPassword = () => {
             }
           })
           .catch((e) => {
-            console.log("error", e);
+           toast.error("Something wrong, Api is not working")
           });
       }
     }

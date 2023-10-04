@@ -29,11 +29,10 @@ const AddressList = (props) => {
   useEffect(() => {
     allAddress()
       .then((data) => {
-        console.log(data);
         setAddresses(data.data.result.addressData);
       })
       .catch((e) => {
-        console.log(e, "error");
+        toast.error("Something wrong, Api is not working");
       });
   }, []);
 
@@ -41,7 +40,7 @@ const AddressList = (props) => {
     setAddressId(Id);
     setBillingComponent(!isBillingComponent);
     setComponentVisible(!isComponentVisible);
-    navigate("/my-new-address" , {state:{addressId}})
+    navigate("/my-new-address", { state: { addressId } });
   };
 
   const handleDeleteClick = (Id) => {
@@ -62,75 +61,75 @@ const AddressList = (props) => {
       });
   };
   return (
-    <Container>
-      <Typography variant="h4" gutterBottom>
+    <Container sx={{marginBottom:'50px'}}>
+      <Typography variant="h4" gutterBottom sx={{marginTop:'65px'}}>
         Customer Address List
       </Typography>
       <Paper elevation={3}>
         <List>
-          {addresses.map((address) => (
-            (address.addressType == "Shipping" && isBillingComponent)?(
+          {addresses.map((address) =>
+            address.addressType == "Shipping" && !isBillingComponent ? (
               <ListItem key={address.id}>
-              <ListItemText
-                primary={`${address.firstName} ${address.lastName}`}
-                secondary={`${address.email}, ${address.countrycode}, ${address.phone}, ${address.address1}, ${address.country}, ${address.state}, ${address.city}, ${address.postcode}`}
-              />
-              <ListItemSecondaryAction>
-                <IconButton
-                  edge="end"
-                  aria-label="delete"
-                  style={{ margin: "5px" }}
-                  onClick={() => {
-                    handleDeleteClick(address.id);
-                  }}
-                >
-                  <DeleteIcon />
-                </IconButton>
-                <IconButton
-                  edge="end"
-                  aria-label="edit"
-                  style={{ margin: "5px" }}
-                  onClick={() => {
-                    handleEditClick(address.id);
-                  }}
-                >
-                  <Edit />
-                </IconButton>
-              </ListItemSecondaryAction>
-            </ListItem>
-
-            ):(address.addressType == "Billing" && (!isBillingComponent))?(
-            <ListItem key={address.id}>
-              <ListItemText
-                primary={`${address.firstName} ${address.lastName}`}
-                secondary={`${address.email}, ${address.countrycode}, ${address.phone}, ${address.address1}, ${address.country}, ${address.state}, ${address.city}, ${address.postcode}`}
-              />
-              <ListItemSecondaryAction>
-                <IconButton
-                  edge="end"
-                  aria-label="delete"
-                  style={{ margin: "5px" }}
-                  onClick={() => {
-                    handleDeleteClick(address.id);
-                  }}
-                >
-                  <DeleteIcon />
-                </IconButton>
-                <IconButton
-                  edge="end"
-                  aria-label="edit"
-                  style={{ margin: "5px" }}
-                  onClick={() => {
-                    handleEditClick(address.id);
-                  }}
-                >
-                  <Edit />
-                </IconButton>
-              </ListItemSecondaryAction>
-            </ListItem>
-            ):('')
-           
-          ))}
+                <ListItemText
+                  primary={`${address.firstName} ${address.lastName}`}
+                  secondary={`${address.email}, ${address.countrycode}, ${address.phone}, ${address.address1}, ${address.country}, ${address.state}, ${address.city}, ${address.postcode}`}
+                />
+                <ListItemSecondaryAction>
+                  <IconButton
+                    edge="end"
+                    aria-label="delete"
+                    style={{ margin: "5px" }}
+                    onClick={() => {
+                      handleDeleteClick(address.id);
+                    }}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                  <IconButton
+                    edge="end"
+                    aria-label="edit"
+                    style={{ margin: "5px" }}
+                    onClick={() => {
+                      handleEditClick(address.id);
+                    }}
+                  >
+                    <Edit />
+                  </IconButton>
+                </ListItemSecondaryAction>
+              </ListItem>
+            ) : address.addressType == "Billing" && isBillingComponent ? (
+              <ListItem key={address.id}>
+                <ListItemText
+                  primary={`${address.firstName} ${address.lastName}`}
+                  secondary={`${address.email}, ${address.countrycode}, ${address.phone}, ${address.address1}, ${address.country}, ${address.state}, ${address.city}, ${address.postcode}`}
+                />
+                <ListItemSecondaryAction>
+                  <IconButton
+                    edge="end"
+                    aria-label="delete"
+                    style={{ margin: "5px" }}
+                    onClick={() => {
+                      handleDeleteClick(address.id);
+                    }}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                  <IconButton
+                    edge="end"
+                    aria-label="edit"
+                    style={{ margin: "5px" }}
+                    onClick={() => {
+                      handleEditClick(address.id);
+                    }}
+                  >
+                    <Edit />
+                  </IconButton>
+                </ListItemSecondaryAction>
+              </ListItem>
+            ) : (
+              ""
+            )
+          )}
         </List>
       </Paper>
     </Container>
