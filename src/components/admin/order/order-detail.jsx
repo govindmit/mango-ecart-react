@@ -72,11 +72,11 @@ function orderDetail() {
   };
 
   const tabStyle = {
-    color: "#000000",
-    fontSize: ".650rem",
-    fontWeight: "1000", // Change this to your desired text color
+    color: "#000000",     //Change this to your desired text font color
+    fontSize: ".650rem", // Change this to your desired text font size
+    fontWeight: "1000", // Change this to your desired text font Weight
   };
-  console.log(orderData);
+  
   return (
     <>
       <PersistentDrawerRight />
@@ -127,7 +127,7 @@ function orderDetail() {
           </TabPanel>
         </SwipeableViews>
       </Box>
-    </>
+    </>    
   );
 }
 
