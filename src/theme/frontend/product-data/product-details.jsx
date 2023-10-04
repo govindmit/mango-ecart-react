@@ -14,6 +14,7 @@ import configs from "../../../config/config";
 
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import { useNavigate } from "react-router-dom";
 
 const ProductDetailsCard = (props) => {
   const productData = props.productData;
@@ -22,7 +23,8 @@ const ProductDetailsCard = (props) => {
   const cardsPerPage = props.pageSize;
   const setCardsPerPage = props.setPageSize;
   const totalPages = Math.ceil(productData?.length / cardsPerPage);
-  console.log(productData, "sds");
+  const navigate = useNavigate();
+
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -38,11 +40,18 @@ const ProductDetailsCard = (props) => {
     setCurrentPage(1);
   };
 
+  const handleClick = (Id) => {
+    navigate("/product-details", { state: { Id } });
+  };
   return (
     <div className="card-details-container">
       <div className="card-details-slider">
         {productData.map((product, index) => (
-          <Card key={index} className="card-details">
+          <Card
+            key={index}
+            className="card-details"
+            onClick={() => handleClick(product.id)}
+          >
             <CardActionArea>
               <div className="myDetailsCardDiv">
                 <div className="card-media-div">
