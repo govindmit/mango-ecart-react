@@ -3,7 +3,6 @@ import configs from "../../config/config";
 import { useEffect } from "react";
 import { json } from "react-router-dom";
 const targetId = localStorage.getItem("token");
-console.log(targetId)
 
 export async function userLogin(props) {
   try {
@@ -176,7 +175,7 @@ export async function deleteAddress(id) {
     return error.response;
   }
 }
-export async function userVerify(props) {
+export async function userVerification(props) {
   try {
     let res = await axios({
       method: "get",
