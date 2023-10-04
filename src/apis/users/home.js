@@ -137,7 +137,7 @@ export async function contactUs(props)
   {
     return error.response;
   }
-=======
+}
 export async function getColor() {
 
   try {

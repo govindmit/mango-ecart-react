@@ -28,7 +28,7 @@ const Footer = () => {
             <div className='fotter-container'>
                 <div>
                     <h3 className="fotter-title">CONTACT US UPDATES</h3>
-                    <ul class="footer-contact">
+                    <ul className="footer-contact">
                         <li ><span >Address :</span><span>{contact?(contact[0].country):""}</span></li>
                         <li ><span >Cell-Phone :</span><span>{contact?(contact[0].phone):""}</span></li>
                         <li ><span >Email :</span><span>{contact?(contact[0].email):""}</span></li>
@@ -36,9 +36,9 @@ const Footer = () => {
                 </div>
                 <div>
                     <h3 className="fotter-title">EMAIL NEWSLETTERS</h3>
-                    <div class="footer-subscribe">
-                        <form novalidate="" class="ng-untouched ng-pristine ng-invalid">
-                            <div class="form-group">
+                    <div className="footer-subscribe">
+                        <form noValidate="" className="ng-untouched ng-pristine ng-invalid">
+                            <div className="form-group">
                                 <input type="text" placeholder="Enter email" name="email" className="fotter-email-input" />
                             </div>
                             <button type="submit" data-text="Subscribe" className="footer-button">Subscribe</button>

@@ -12,13 +12,6 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 
 
-const ProductDetailsCard = () => {
-
-    const [currentPage, setCurrentPage] = useState(1);
-    const [cardsPerPage, setCardsPerPage] = useState(9);
-    const totalPages = Math.ceil(productData.length / cardsPerPage);
-
-
 const ProductDetailsCard = (props) => {
     const productData = props.productData;
     const currentPage = props.page;

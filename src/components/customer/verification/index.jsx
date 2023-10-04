@@ -64,7 +64,7 @@ const handleVerifyUser = ()=>{
                     <h4>Verify Email</h4>
                     <p>Click here to verify email</p>
                     <button
-                        class="verifyBtn"
+                        className="verifyBtn"
                         onClick={()=>handleVerifyUser()}
                     >
                         Verify
