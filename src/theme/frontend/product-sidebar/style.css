@@ -1,7 +1,8 @@
 .myDivxyz {
     display: flex;
     color: #999;
-        margin-bottom: 60px;
+    margin-bottom: 60px;
+    background: #f6f6f6;
 }
 
 .sideBarDiv {
@@ -81,8 +82,7 @@
 .side-bar-div-compo button {
     color: azure;
     background-color: orange;
-    text-align: center;
-    margin: 30px;
+    margin-inline: 28%;
 }
 
 .side-bar-div-compo img {
@@ -91,7 +91,8 @@
     margin-left: -4px;
 }
 
-.price-content-container{
-    text-align: -webkit-center;
-    margin-inline-end: 24px;
+.price-content-container {
+    color: #212529;
+
+    padding: 20px 30px;
 }

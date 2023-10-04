@@ -1,21 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Slider from '@mui/material/Slider';
 import Typography from '@mui/material/Typography';
 import { Divider, TextField } from '@mui/material';
 import './style.css';
 
-const PriceSlider = () => {
+const PriceSlider = ({ onPriceChange }) => {
     const [price, setPrice] = useState([0, 1000]);
+    const [formattedPrice, setFormattedPrice] = useState('');
 
     const handleChange = (event, newValue) => {
         setPrice(newValue);
     };
 
+    useEffect(() => {
+        const formatted = price.join(',');
+        setFormattedPrice(formatted);
+        onPriceChange(formatted);
+    }, [price, onPriceChange]);
+
     return (
-        <div className="range-slider-div" >
+        <div className="range-slider-div">
             <h3>PRICE</h3>
             <Divider />
-            <Typography >
+            <Typography>
                 <h4>Your Range:</h4>
             </Typography>
 
@@ -33,7 +40,6 @@ const PriceSlider = () => {
                     min={0}
                     max={1000}
                     step={10}
-
                 />
             </div>
         </div>
