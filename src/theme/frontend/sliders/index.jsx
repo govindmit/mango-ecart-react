@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Paper, Typography } from '@mui/material';
-import './style.css';
-import { toast } from 'react-toastify';
-import { bannerData } from '../../../apis/users/home';
-import configs from '../../../config/config';
+import React, { useState, useEffect, useRef } from "react";
+import { Paper, Typography } from "@mui/material";
+import "./style.css";
+import { toast } from "react-toastify";
+import { bannerData } from "../../../apis/users/home";
+import configs from "../../../config/config";
 
 const ImageSlider = () => {
   const [images, setImages] = useState([]);
@@ -50,7 +50,7 @@ const ImageSlider = () => {
         />
         <Typography variant="caption" className="description">
           <h1>{visibleProduct?.title}</h1>
-          <p>{visibleProduct?.content}</p>
+          <p dangerouslySetInnerHTML={{ __html: visibleProduct?.content }} />
         </Typography>
       </Paper>
     </div>
