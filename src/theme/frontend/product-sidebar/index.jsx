@@ -15,7 +15,7 @@ import ProductSideBar from "./sideBar";
 import { useEffect, useState } from "react";
 import ProductDetailsCard from "../product-data/product-details";
 import PriceSlider from "./price-slider";
-import { getAllProduct, getColor, getSize } from "../../../apis/users/home";
+import { getAllProduct, getCategory, getColor, getSize } from "../../../apis/users/home";
 import { toast } from "react-toastify";
 
 export default function ProductBanner() {
@@ -103,7 +103,6 @@ export default function ProductBanner() {
   //function for Price Side bar
   const handlePriceChange = (formattedPrice) => {
     setSelectedPrice(formattedPrice);
-    console.log("Selected Price:", formattedPrice);
   };
 
   //search value
@@ -138,22 +137,20 @@ export default function ProductBanner() {
   };
 
   useEffect(() => {
-    getAllProduct(myFilterData)
-      .then((res) => {
-        let data = res.data;
-        // console.log(data,"ss");
-        if (data.isError) {
-          toast.error(data.message);
-        } else {
-          // console.log(data?.result?.data?.rows,"dsdfs");
-          setProductData(
-            data?.result?.data?.rows.map((item) => item.categories).flat()
-          );
-        }
-      })
-      .catch((e) => {
-        console.log("error", e);
-      });
+    getCategory()
+    .then((res) => {
+      let data = res.data;
+      if (data.isError) {
+        toast.error(data.message);
+      } else {
+        setProductData(
+          data?.result?.data?.rows.filter((product) => product.status === 1)
+        );
+      }
+    })
+    .catch((e) => {
+      console.log("error", e);
+    });
 
     getColor()
       .then((res) => {

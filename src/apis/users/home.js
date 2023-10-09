@@ -167,3 +167,18 @@ export async function getSize() {
     return error.response;
   }
 }
+
+export async function getCategory() {
+
+  try {
+    let res = await axios({
+      method: 'get',
+      url: `${configs.apiUrl}/user-product/get-categories`,
+    });
+
+    return res;
+
+  } catch (error) {
+    return error.response;
+  }
+}
