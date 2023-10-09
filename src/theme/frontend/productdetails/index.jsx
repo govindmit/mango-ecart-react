@@ -22,7 +22,7 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { useLocation } from "react-router-dom";
-import { getProductDetails } from "../../../apis/users/home";
+import { getProductDetails , addTocart} from "../../../apis/users/home";
 import { toast } from "react-toastify";
 import configs from "../../../config/config";
 
@@ -119,6 +119,32 @@ function ProductDetails() {
       setQuantity(quantity - 1);
     }
   };
+
+  const addToCart = () => {
+    var user_id =   localStorage.getItem("user");
+    const user_token = localStorage.getItem("token");
+    
+    if ( ! user_id || !user_token ) {
+        toast.error("Please login first");
+    }
+    else{
+      const cart_detail = { customerId: user_id, quantity: quantity, productId:Id };
+      addTocart(cart_detail)
+      .then((res) => {
+        console.log(res);
+        let data = res.data;
+        if (data?.isError) {
+          toast.error(data?.message);
+        } else {
+          console.log(data?.result?.message);
+          toast.success(data?.result?.message);
+        }
+      })
+      .catch((e) => {
+        console.log("eror", e);
+      });
+    }
+  }
 
   const handleQuantityChange = (event) => {
     const newQuantity = parseInt(event.target.value, 10);
@@ -333,7 +359,7 @@ function ProductDetails() {
                       color: "black",
                     }}
                   >
-                    <AddShoppingCartIcon />
+                    <AddShoppingCartIcon onClick={addToCart}/>
                   </IconButton>
                 </Grid>
               </Grid>

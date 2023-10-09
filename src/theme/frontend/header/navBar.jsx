@@ -3,18 +3,16 @@ import "./style.css";
 import { useEffect, useState } from "react";
 import { getCategory } from "../../../apis/users/home";
 import NavItem from "./navItem";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { getquantity } from "../../../apis/users/home";
 
-const parentData = [
-  { id: 72, name: "Appareals", parentId: null },
-  { id: 73, name: "Appliances", parentId: null },
-  { id: 74, name: "Furniture", parentId: null },
-  { id: 75, name: "Mobile", parentId: 2 },
-  { id: 76, name: "Virtual", parentId: null },
-];
 const NavBar = () => {
   const [navBarData, setNavBarData] = useState();
   const [itemId, setItemId] = useState(null);
   const navData = [];
+  const [quantity, setQuantity] = useState(0);
+  const user_token = localStorage.getItem("token");
+    const user_id = localStorage.getItem("user");
 
   //create a new array  where to get name id amd parenID
   navBarData?.forEach((product) => {
@@ -66,6 +64,21 @@ const NavBar = () => {
   console.log(hierarchy, "hierarchy");
 
   useEffect(() => {
+    if (user_id  && user_token) {
+      getquantity()
+        .then((data) => {
+          if (data?.data?.isError) {
+            setQuantity(0);
+          } else {
+                setQuantity(data?.data?.result?.data?.itemsQty);
+          }
+        })
+        .catch((e) => {
+          toast.error("Something went wrong, Api not working");
+        });
+    } else {
+      setQuantity(0);
+    }
     getCategory()
       .then((res) => {
         let data = res.data;
@@ -104,6 +117,8 @@ const NavBar = () => {
         <Link to="/contact">
           <h4>Contact</h4>
         </Link>
+        <span>{quantity}</span>
+        <ShoppingCartIcon />
       </div>
     </div>
   );
