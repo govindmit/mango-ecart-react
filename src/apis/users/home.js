@@ -1,168 +1,188 @@
 import axios from "axios";
-import configs from "../../config/config"
+import configs from "../../config/config";
+
 
 export async function bannerData() {
-
   try {
     let res = await axios({
-      method: 'get',
+      method: "get",
       url: `${configs.apiUrl}/admin-banner/get-banners`,
-
     });
     return res;
   } catch (error) {
     return error.response;
   }
-
 }
-
 
 export async function customerContact() {
   try {
     let res = await axios({
-      method: 'get',
+      method: "get",
       url: `${configs.apiUrl}/admin-contactus-config/get-contact-config`,
-
     });
     return res;
-
   } catch (error) {
     return error.response;
   }
-
 }
 
 export async function featureProduct() {
-
   try {
     let res = await axios({
-      method: 'get',
+      method: "get",
       url: `${configs.apiUrl}/user-product/feature-product`,
     });
 
     return res;
-
   } catch (error) {
     return error.response;
   }
-
 }
 
-
-
 export async function latestProduct(props) {
-  let options = 'newArrival';
+  let options = "newArrival";
   if (props) {
     options = "mostView";
   }
   try {
     let res = await axios({
-      method: 'get',
+      method: "get",
       url: `${configs.apiUrl}/user-product/latest-product?option=${options}`,
-
     });
 
     return res;
-
-
   } catch (error) {
     return error.response;
   }
-
 }
 
 export async function getHomeData() {
-
   try {
     let res = await axios({
-      method: 'get',
+      method: "get",
       url: `${configs.apiUrl}/admin-home-manage/get-home-settings`,
     });
 
     return res;
-
   } catch (error) {
     return error.response;
   }
-
 }
-
 
 export async function getAllProduct(props) {
   if (props == null) {
-    props='?page=1&pageSize=10&filter=true';
-}
+    props = "?page=1&pageSize=10&filter=true";
+  }
 
   try {
     let res = await axios({
-      method: 'get',
+      method: "get",
       url: `${configs.apiUrl}/user-product/get-all-products${props}`,
     });
 
     return res;
-
   } catch (error) {
     return error.response;
   }
-
 }
 
-export async function getProductDetails(id)
-{
-  try{
-    let res  = await axios({
-      method:'get',
-      url:`${configs.apiUrl}/user-product/product-details/${id}`
+export async function getProductDetails(id) {
+  try {
+    let res = await axios({
+      method: "get",
+      url: `${configs.apiUrl}/user-product/product-details/${id}`,
     });
-    console.log(res,"jgjykjhk");
+    console.log(res, "jgjykjhk");
     return res;
-  }
-   catch(error)
-  {
+  } catch (error) {
     return error.response;
   }
 }
 
-export async function contactUs(props)
-{
+export async function contactUs(props) {
   console.log(props);
-  try{
+  try {
     let res = await axios({
-      method:'post',
-      url:`${configs.apiUrl}/admin-contact/create`,
-      data:props
+      method: "post",
+      url: `${configs.apiUrl}/admin-contact/create`,
+      data: props,
     });
     return res;
-  }catch (error)
-  {
+  } catch (error) {
     return error.response;
   }
 }
 export async function getColor() {
-
   try {
     let res = await axios({
-      method: 'get',
+      method: "get",
       url: `${configs.apiUrl}/user-product/get-color`,
     });
 
     return res;
-
   } catch (error) {
     return error.response;
   }
-
 }
 export async function getSize() {
-
   try {
     let res = await axios({
-      method: 'get',
+      method: "get",
       url: `${configs.apiUrl}/user-product/get-size`,
     });
 
     return res;
+  } catch (error) {
+    return error.response;
+  }
+}
 
+export async function getProductDetailstest(id) {
+  try {
+    let res = await axios({
+      method: "get",
+      url: "${configs.apiUrl}/user-product/product-details/${id}",
+    });
+
+    return res;
+  } catch (error) {
+    return error.response;
+  }
+}
+
+export async function addTocart(props) {
+  try {
+    const user_token = localStorage.getItem("token");
+    let res = await axios({ 
+      method: "post",
+      url: `${configs.apiUrl}/user-cart/create`,
+      headers: {
+        "Content-Type": "application/json", // Modify as needed
+        Authorization: `Bearer ${user_token}`, // Include the Bearer token
+      },
+      data: props,
+    });
+
+    return res;
+  } catch (error) {
+    return error.response;
+  }
+}
+export async function getquantity(props) {
+  try {
+    const user_token = localStorage.getItem("token");
+    const user_id = localStorage.getItem("user");
+    let res = await axios({ 
+      method: "get",
+      url: `${configs.apiUrl}/user-cart/items/customer/${user_id}`,
+      headers: {
+        "Content-Type": "application/json", // Modify as needed
+        Authorization: `Bearer ${user_token}`, // Include the Bearer token
+      },
+      data: props,
+    });
+
+    return res;
   } catch (error) {
     return error.response;
   }

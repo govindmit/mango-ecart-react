@@ -39,6 +39,8 @@ import Aboutus from "../components/frontEnd/aboutus";
 import Contact from "../components/frontEnd/contactus";
 import Verification from "../components/customer/verification";
 import ProductDetails from "../theme/frontend/productdetails";
+import Cart from "../components/customer/cart/cart"
+
 
 function routes() {
   let adminlogin = localStorage.getItem("token");
@@ -56,6 +58,7 @@ function routes() {
         <Route path="/contact" element={<Contact/>} />
         <Route path="/userlogin" element={<UserLogin />} />
         <Route path="/userforgotpassword" element={<UserForgotPassword />} />
+        <Route path="/cart" element={<Cart/>}/>
         <Route
           path="/profile-table"
           element={customerlogin ? <Profile /> : <UserLogin />}
